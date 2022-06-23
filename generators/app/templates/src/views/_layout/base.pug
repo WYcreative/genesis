@@ -1,0 +1,22 @@
+include ../_abstracts/index
+
+-
+	let title = 'Starter';
+
+block variables
+
+doctype html
+html
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover")
+		title= title
+		block styles
+			link(href="/styles/main.css" rel="stylesheet")
+		block scripts-head
+
+	body
+		block body
+
+	block scripts
+		script(src="/scripts/main.js")

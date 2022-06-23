@@ -1,0 +1,25 @@
+{
+	"name": "starter",
+	"version": "0.0.0",
+	"description": "The WYcreative Starter",
+	"main": "index.js",
+	"scripts": {
+		"test": "xo"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/WYcreative/starter.git"
+	},
+	"author": "WYcreative Engineering Team",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/WYcreative/starter/issues"
+	},
+	"homepage": "https://github.com/WYcreative/starter#readme",
+	"devDependencies": {
+		"xo": "^0.50.0"
+	},
+	"xo": {
+		"ignore": "generators/app/templates/**"
+	}
+}
