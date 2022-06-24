@@ -1,5 +1,6 @@
 {
 	"name": "starter-template",
+	"private": true,
 	"type": "module",
 	"scripts": {
 		"start": "gulp",
