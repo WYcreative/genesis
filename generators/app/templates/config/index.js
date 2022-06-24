@@ -23,6 +23,7 @@ const config = {
 		images: `${build}images/**/*.{png,jpg,jpeg,gif,svg}`,
 		scripts: `${build}scripts/**/*.js`,
 		views: `${build}**/*.html`,
+		libs: `${build}libs/**`,
 	},
 	dist: {
 		base: dist,
@@ -31,7 +32,10 @@ const config = {
 		images: `${dist}images/**/*.{png,jpg,jpeg,gif,svg}`,
 		scripts: `${dist}scripts/**/*.js`,
 		views: `${dist}**/*.html`,
+		libs: `${dist}libs/**`,
 	},
+	libs: {
+	}
 };
 
 

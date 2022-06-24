@@ -7,6 +7,7 @@ import * as symbols from './gulp/symbols.js';
 import * as images from './gulp/images.js';
 import * as scripts from './gulp/scripts.js';
 import * as views from './gulp/views.js';
+import * as libs from './gulp/libs.js';
 import * as browser from './gulp/browser.js';
 import * as watch from './gulp/watch.js';
 
@@ -23,6 +24,7 @@ export default series(
 		images.build,
 		scripts.build,
 		views.build,
+		libs.build,
 	),
 	browser.build,
 	watch.build,
@@ -41,6 +43,7 @@ export const dist = parallel(
 	images.dist,
 	scripts.dist,
 	views.dist,
+	libs.dist,
 );
 
 
