@@ -1,0 +1,50 @@
+{
+	"name": "<%= packageName %>",
+	"version": "0.0.0",
+	"description": "<%= description %>",
+	"author": "WYcreative Engineering Team",
+	"license": "UNLICENSED",
+	"private": true,
+	"type": "module",
+	"engines": {
+		"node": ">=<%= nodeVersion %>"
+	},
+	"scripts": {
+		"start": "gulp",
+		"serve": "gulp serve",
+		"test": "xo",
+		"dist": "gulp dist",
+		"clean": "gulp clean"
+	},
+	"dependencies": {},
+	"devDependencies": {},
+	"browserslist": [
+		"defaults",
+		"not IE 11"
+	],
+	"babel": {
+		"presets": [
+			"@babel/env"
+		],
+		"only": [
+			"./src/**"
+		]
+	},
+	"xo": {
+		"envs": [
+			"browser",
+			"node"
+		],
+		"rules": {
+			"no-multiple-empty-lines": [
+				1,
+				{
+					"max": 3
+				}
+			]
+		}
+	},
+	"starter": {
+		"version": "<%= starterVersion %>"
+	}
+}

@@ -1,11 +1,21 @@
 {
-	"name": "starter",
+	"name": "generator-starter",
 	"version": "0.0.0",
 	"description": "The WYcreative Starter",
-	"main": "index.js",
+	"keywords": [
+		"yeoman-generator"
+	],
+	"type": "module",
+	"exports": "./generators/app/index.js",
+	"engines": {
+		"node": ">=18"
+	},
 	"scripts": {
 		"test": "xo"
 	},
+	"files": [
+		"generators"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/WYcreative/starter.git"
@@ -16,10 +26,28 @@
 		"url": "https://github.com/WYcreative/starter/issues"
 	},
 	"homepage": "https://github.com/WYcreative/starter#readme",
+	"dependencies": {
+		"@sindresorhus/slugify": "^2.1.0",
+		"chalk": "^5.0.1",
+		"semver": "^7.3.7",
+		"validate-npm-package-name": "^4.0.0",
+		"yeoman-generator": "^5.6.1",
+		"yosay": "^2.0.2"
+	},
 	"devDependencies": {
 		"xo": "^0.50.0"
 	},
 	"xo": {
-		"ignore": "generators/app/templates/**"
+		"rules": {
+			"no-multiple-empty-lines": [
+				1,
+				{
+					"max": 3
+				}
+			]
+		},
+		"ignores": [
+			"generators/app/templates/**"
+		]
 	}
 }
