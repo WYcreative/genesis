@@ -23,8 +23,8 @@ export default series(
 		symbols.build,
 		images.build,
 		scripts.build,
-		views.build,
 		libs.build,
+		views.build,
 	),
 	browser.build,
 	watch.build,
@@ -42,8 +42,8 @@ export const dist = parallel(
 	fonts.dist,
 	images.dist,
 	scripts.dist,
-	views.dist,
 	libs.dist,
+	views.dist,
 );
 
 

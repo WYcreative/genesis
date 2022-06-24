@@ -22,8 +22,8 @@ const config = {
 		fonts: `${build}fonts/**/*.woff2`,
 		images: `${build}images/**/*.{png,jpg,jpeg,gif,svg}`,
 		scripts: `${build}scripts/**/*.js`,
-		views: `${build}**/*.html`,
 		libs: `${build}libs/**`,
+		views: `${build}**/*.html`,
 	},
 	dist: {
 		base: dist,
@@ -31,8 +31,8 @@ const config = {
 		fonts: `${dist}fonts/**/*.woff2`,
 		images: `${dist}images/**/*.{png,jpg,jpeg,gif,svg}`,
 		scripts: `${dist}scripts/**/*.js`,
-		views: `${dist}**/*.html`,
 		libs: `${dist}libs/**`,
+		views: `${dist}**/*.html`,
 	},
 	libs: {
 	}
