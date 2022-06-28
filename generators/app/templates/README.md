@@ -1,4 +1,8 @@
 # <%= name %>
+<% if(description) { -%>
+
+> <%= description %>
+<% } -%>
 
 ## Requirements
 
