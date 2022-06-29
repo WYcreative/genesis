@@ -1,27 +1,41 @@
 //- @pugdoc
 	Creates an SVG symbol.
 
-	@param {String} [file='/assets/images/symbols.svg'] - The SVG file containing the symbol.
+	@param {String} [file = '/assets/images/symbols.svg'] - The SVG file containing the symbol.
+		If the value doesn't start with `/`, `./`, or `../`, it will have `/assets/images/` prepended to it.
 		The `.svg` extension is appended automatically, if not specified.
 	@param {String} id - The symbol ID.
+	@param {Number | Length | Percentage} width - The width of the SVG element.
+	@param {Number | Length | Percentage} [height = width] - The height of the SVG element.
 
 	@attributes * - The attributes for the `svg` element.
 
 	@returns {SVGElement} The SVG symbol instance.
 
-mixin symbol(file, id)
+mixin symbol(file, id, width, height)
 
-	if typeof id === 'undefined'
-		- [file, id] = [undefined, file]
+	if ['undefined', 'number'].includes(typeof id) || /^\.?\d/.test(id)
+		- [file, id, width, height] = [undefined, file, id, width]
 
 	if typeof file === 'undefined'
 		- file = 'symbols'
 
-	if file.startsWith('/') === false
+	if /^\.{0,2}\//.test(file) === false
 		- file = `/assets/images/${file}`
 
 	if file.endsWith('.svg') === false
 		- file += '.svg'
+
+	if typeof width !== 'undefined' && typeof height === 'undefined'
+		- height = width
+
+	each value, name in {width, height}
+		if attributes[name]
+			- throw new Error(`[Symbol Mixin] The argument '${name}' and the attribute '${name}' are both defined (\`${value}\` and \`${attributes[name]}\`). You should use only one.`)
+
+		else if value
+			- attributes[name] = value
+
 
 	svg(aria-hidden="true")&attributes(attributes)
 		use(xlink:href=`${file}#${id}`)
