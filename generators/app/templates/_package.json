@@ -24,7 +24,12 @@
 	],
 	"babel": {
 		"presets": [
-			"@babel/env"
+			[
+				"@babel/env",
+				{
+					"modules": false
+				}
+			]
 		],
 		"only": [
 			"./src/**"
