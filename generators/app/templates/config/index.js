@@ -34,8 +34,6 @@ const config = {
 		libs: `${dist}assets/libs/**`,
 		views: `${dist}**/*.html`,
 	},
-	libs: {
-	}
 };
 
 

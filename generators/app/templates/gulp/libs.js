@@ -4,6 +4,7 @@ import gulp from 'gulp';
 import rename from 'gulp-rename';
 
 import config from '../config/index.js';
+import libs from '../config/libs.js';
 import {getDirectory} from './utilities.js';
 
 
@@ -11,7 +12,7 @@ const {src, dest} = gulp;
 
 
 function build(done) {
-	for (let [destPath, srcPath] of Object.entries(config.libs)) {
+	for (let [destPath, srcPath] of Object.entries(libs)) {
 		if (srcPath.startsWith('node_modules') === false && srcPath.startsWith('./') === false && srcPath.startsWith('/') === false) {
 			srcPath = join('node_modules', srcPath);
 		}
