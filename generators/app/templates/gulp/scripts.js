@@ -28,7 +28,7 @@ function dist() {
 
 
 build.displayName = 'scripts:build';
-build.displayName = 'scripts:dist';
+dist.displayName = 'scripts:dist';
 
 export {
 	build,

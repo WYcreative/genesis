@@ -32,7 +32,7 @@ function dist() {
 
 
 build.displayName = 'libs:build';
-build.displayName = 'libs:dist';
+dist.displayName = 'libs:dist';
 
 export {
 	build,
