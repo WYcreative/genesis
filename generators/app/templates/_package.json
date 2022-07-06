@@ -32,7 +32,7 @@
 			]
 		],
 		"only": [
-			"./src/**"
+			"./@(config|data|src)/**"
 		]
 	},
 	"xo": {
