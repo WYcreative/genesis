@@ -9,10 +9,8 @@ import slugify from '@sindresorhus/slugify';
 import validatePackageName from 'validate-npm-package-name';
 
 
-
-// TODO: Use import assertions once we start supporting only Node 18+.
+// TODO [2022-10-25]: Use import assertions once they become stable, assuming they will be when Node 18 enters LTS mode.
 const pkg = createRequire(import.meta.url)('../../package.json');
-
 
 
 export default class Starter extends Generator {

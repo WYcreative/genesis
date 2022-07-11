@@ -1,5 +1,8 @@
-import pkg from '../package.json' assert {type: 'json'};
+import {createRequire} from 'node:module';
 
+
+// TODO [2022-10-25]: Use import assertions once they become stable, assuming they will be when Node 18 enters LTS mode.
+const pkg = createRequire(import.meta.url)('../../package.json');
 
 const src = './src/';
 const build = './build/';
