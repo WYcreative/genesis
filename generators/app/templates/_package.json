@@ -14,7 +14,8 @@
 		"serve": "gulp serve",
 		"test": "xo",
 		"dist": "gulp dist",
-		"clean": "gulp clean"
+		"clean": "gulp clean",
+		"deploy": "gulp deploy"
 	},
 	"dependencies": {},
 	"devDependencies": {},

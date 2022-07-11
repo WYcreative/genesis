@@ -10,22 +10,26 @@ import * as views from './gulp/views.js';
 import * as libs from './gulp/libs.js';
 import * as browser from './gulp/browser.js';
 import * as watch from './gulp/watch.js';
+import * as deployTasks from './gulp/deploy.js';
 
 
 const {series, parallel} = gulp;
 
 
+const build = parallel(
+	styles.build,
+	fonts.build,
+	symbols.build,
+	images.build,
+	scripts.build,
+	libs.build,
+	views.build,
+);
+
+
 export default series(
 	clean,
-	parallel(
-		styles.build,
-		fonts.build,
-		symbols.build,
-		images.build,
-		scripts.build,
-		libs.build,
-		views.build,
-	),
+	build,
 	browser.build,
 	watch.build,
 );
@@ -44,6 +48,15 @@ export const dist = parallel(
 	scripts.dist,
 	libs.dist,
 	views.dist,
+);
+
+
+export const deploy = series(
+	clean,
+	deployTasks.release,
+	build,
+	dist,
+	deployTasks.upload,
 );
 
 

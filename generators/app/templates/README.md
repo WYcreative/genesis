@@ -24,6 +24,7 @@ Command | Description
 `npm test` | Checks for code-style issues.
 `npm run dist` | Prepares de built code for distribution.
 `npm run clean` | Deletes the compiled code in `build` and `dist` directories.
+`npm run deploy` | Runs the whole build and distribution process, prepares a release, and deploys the project.
 
 ## Starter
 

@@ -17,7 +17,23 @@ function getDirectory(path) {
 }
 
 
+function formatBytes(bytes, decimals = 2) {
+	if (bytes === 0) {
+		return '0 Bytes';
+	}
+
+	decimals = Math.max(0, decimals);
+
+	const multiplier = 1024;
+	const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+	const unitIndex = Math.floor(Math.log(bytes) / Math.log(multiplier));
+
+	return Number.parseFloat((bytes / (multiplier ** unitIndex)).toFixed(decimals)) + ' ' + units[unitIndex];
+}
+
+
 export {
 	getBrowserSync,
 	getDirectory,
+	formatBytes,
 };

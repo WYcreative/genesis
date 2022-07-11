@@ -186,9 +186,13 @@ export default class Starter extends Generator {
 		const devDependencies = {
 			'@babel/core': '',
 			'@babel/preset-env': '',
+			'basic-ftp': '',
 			'browser-sync': '',
+			chalk: '',
+			conf: '',
 			cssnano: '',
 			del: '',
+			execa: '',
 			globby: '',
 			gulp: '',
 			'gulp-babel': '',
@@ -200,9 +204,12 @@ export default class Starter extends Generator {
 			'gulp-sass': '',
 			'gulp-svgstore': '',
 			'gulp-uglify-es': '',
+			inquirer: '',
+			ora: '',
 			postcss: '',
 			'postcss-preset-env': '',
 			sass: '',
+			semver: '',
 			xo: '',
 		};
 
