@@ -98,6 +98,45 @@ export default class Starter extends Generator {
 				message: 'Will the project have multiple themes?',
 				default: false,
 			},
+			{
+				name: 'design',
+				message: 'Design File URL:',
+				filter: answer => answer.trim(),
+			},
+			{
+				name: 'prototypeDesktop',
+				message: 'Desktop Prototype URL:',
+				filter: answer => answer.trim(),
+			},
+			{
+				name: 'prototypeMobile',
+				message: 'Mobile Prototype URL:',
+				filter: answer => answer.trim(),
+			},
+			{
+				name: 'subdomain',
+				message: 'Subdomain for the development environments:',
+				default: answers => answers.packageName,
+				transformer: (answer, answers, {isFinal}) =>
+					['dev', 'stage']
+						.map(env => `\n  ${isFinal ? ' ' : chalk.yellow.bold('>')} ${chalk.dim('https://')}${isFinal ? chalk.cyan(answer) : answer || chalk.dim(answers.packageName)}${chalk.dim(`.${env}.byclients.com`)}`)
+						.join(''),
+				filter: answer => answer.trim(),
+			},
+			{
+				name: 'homepage',
+				message: 'Production website:',
+				default: answers => `${answers.packageName}.com`,
+				filter: answer => answer.trim(),
+			},
+			{
+				name: 'repository',
+				message: 'Repository Name:',
+				default: answers => answers.packageName,
+				transformer: (answer, answers, {isFinal}) =>
+					`\n  ${isFinal ? ' ' : chalk.yellow.bold('>')} ${chalk.dim('https://dev.azure.com/Bycom/_git/')}${isFinal ? chalk.cyan(answer) : answer || chalk.dim(answers.packageName)}`,
+				filter: answer => answer.trim(),
+			},
 		]));
 
 		this.log(yosay([

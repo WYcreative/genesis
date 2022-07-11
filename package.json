@@ -47,7 +47,8 @@
 			]
 		},
 		"ignores": [
-			"generators/app/templates/**"
+			"generators/app/templates/config/guide.js",
+			"generators/app/templates/src/**"
 		]
 	}
 }
