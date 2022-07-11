@@ -41,7 +41,7 @@ export default class Starter extends Generator {
 		}));
 
 		if (!hasMinimumNode) {
-			exit(0);
+			exit(1);
 		}
 	}
 
