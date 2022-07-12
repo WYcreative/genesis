@@ -7,6 +7,7 @@
 ## Requirements
 
 - [Node.js](https://nodejs.org/en/) <%= nodeVersion %> or later
+- [npm](https://www.npmjs.com/) <%= npmVersion %> or later
 - [Gulp CLI](https://gulpjs.com) 2.2.0 or later
 
 ## Installation

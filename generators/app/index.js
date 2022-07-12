@@ -1,5 +1,6 @@
 import {createRequire} from 'node:module';
 import {version as nodeVersion, exit} from 'node:process';
+import {execSync} from 'node:child_process';
 
 import Generator from 'yeoman-generator';
 import semver from 'semver';
@@ -11,11 +12,22 @@ import validatePackageName from 'validate-npm-package-name';
 
 // TODO [2022-10-25]: Use import assertions once they become stable, assuming they will be when Node 18 enters LTS mode.
 const pkg = createRequire(import.meta.url)('../../package.json');
-
+const npmVersion = execSync('npm -v', {
+	encoding: 'utf8',
+}).trim();
 
 export default class Starter extends Generator {
 	initializing() {
-		const hasMinimumNode = semver.satisfies(nodeVersion, pkg.engines.node);
+		const versions = {
+			Node: {
+				version: semver.coerce(nodeVersion),
+				hasMinimum: semver.satisfies(nodeVersion, pkg.engines.node),
+			},
+			NPM: {
+				version: semver.coerce(npmVersion),
+				hasMinimum: semver.satisfies(npmVersion, pkg.engines.npm),
+			},
+		};
 
 		const intro = [
 			`Welcome to the ${chalk.bold('WYcreative Starter')}!`,
@@ -23,22 +35,25 @@ export default class Starter extends Generator {
 			'',
 		];
 
-		if (hasMinimumNode) {
+		if (Object.values(versions).every(({hasMinimum}) => hasMinimum)) {
 			intro.push('We\'re going to start by filling some questions.');
 		} else {
+			const current = Object.entries(versions).map(([name, {version}]) => `${name} ${version}`).join(' and ');
+			const minimum = Object.keys(versions).map(name => `${name} ${pkg.engines[name.toLowerCase()]}`).join(' and ');
+
 			intro.push(
-				chalk.red(`You have Node ${nodeVersion},`),
-				chalk.red(`but we need to be Node ${pkg.engines.node}.`),
+				chalk.red(`You have ${current},`),
+				chalk.red(`but we need ${minimum}.`),
 				'',
 				'Stopping now...',
 			);
 		}
 
 		this.log(yosay(intro.join('\n'), {
-			maxLength: 35,
+			maxLength: 40,
 		}));
 
-		if (!hasMinimumNode) {
+		if (Object.values(versions).some(({hasMinimum}) => !hasMinimum)) {
 			exit(1);
 		}
 	}
@@ -144,20 +159,28 @@ export default class Starter extends Generator {
 			'',
 			'Preparing files...',
 		].join('\n'), {
-			maxLength: 35,
+			maxLength: 40,
 		}));
 	}
 
 
 	configuring() {
 		const minNodeVersion = '18';
+		const minNPMVersion = '8.6';
+
 		const currentNodeVersion = semver.coerce(nodeVersion);
+		const currentNPMVersion = semver.coerce(npmVersion);
 
 		const projectNodeVersion = semver.gt(currentNodeVersion.version, semver.coerce(minNodeVersion).version)
 			? currentNodeVersion.major + (currentNodeVersion.minor > 0 ? `.${currentNodeVersion.minor}` : '')
 			: minNodeVersion;
 
+		const projectNPMVersion = semver.gt(currentNPMVersion.version, semver.coerce(minNPMVersion).version)
+			? currentNPMVersion.major + (currentNPMVersion.minor > 0 ? `.${currentNPMVersion.minor}` : '')
+			: minNPMVersion;
+
 		this.answers.nodeVersion = projectNodeVersion;
+		this.answers.npmVersion = projectNPMVersion;
 		this.answers.starterVersion = this.rootGeneratorVersion();
 	}
 
@@ -234,7 +257,7 @@ export default class Starter extends Generator {
 			'',
 			'You can start by committing these newly added files.',
 		].join('\n'), {
-			maxLength: 35,
+			maxLength: 40,
 		}));
 	}
 }
