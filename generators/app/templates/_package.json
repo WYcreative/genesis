@@ -18,6 +18,11 @@
 		"clean": "gulp clean",
 		"deploy": "gulp deploy"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://dev.azure.com/Bycom/_git/<%= repository %>"
+	},
+	"homepage": "<%= homepage %>",
 	"dependencies": {},
 	"devDependencies": {},
 	"browserslist": [
