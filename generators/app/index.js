@@ -9,6 +9,8 @@ import yosay from 'yosay';
 import slugify from '@sindresorhus/slugify';
 import validatePackageName from 'validate-npm-package-name';
 
+import {validateDate, formatDate} from './utilities.js';
+
 
 // TODO [2022-10-25]: Use import assertions once they become stable, assuming they will be when Node 18 enters LTS mode.
 const pkg = createRequire(import.meta.url)('../../package.json');
@@ -152,6 +154,78 @@ export default class Starter extends Generator {
 					`\n  ${isFinal ? ' ' : chalk.yellow.bold('>')} ${chalk.dim('https://dev.azure.com/Bycom/_git/')}${isFinal ? chalk.cyan(answer) : answer || chalk.dim(answers.packageName)}`,
 				filter: answer => answer.trim(),
 			},
+			{
+				name: 'designStart',
+				message: 'Start of Design:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
+			{
+				name: 'designEnd',
+				message: 'End of Design:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
+			{
+				name: 'frontendStart',
+				message: 'Start of Front-End Development:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
+			{
+				name: 'frontendEnd',
+				message: 'End of Front-End Development:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
+			{
+				name: 'backendStart',
+				message: 'Start of Back-End Development:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
+			{
+				name: 'backendEnd',
+				message: 'End of Back-End Development:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
+			{
+				name: 'stageStart',
+				message: 'Start of Stage:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
+			{
+				name: 'stageEnd',
+				message: 'End of Stage:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
+			{
+				name: 'preproductionStart',
+				message: 'Start of Pre-Production:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
+			{
+				name: 'preproductionEnd',
+				message: 'End of Pre-Production:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
+			{
+				name: 'productionStart',
+				message: 'Start of Production:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
+			{
+				name: 'productionEnd',
+				message: 'End of Production:',
+				validate: validateDate,
+				transformer: formatDate,
+			},
 		]));
 
 		this.log(yosay([
@@ -181,6 +255,30 @@ export default class Starter extends Generator {
 
 		this.answers.nodeVersion = projectNodeVersion;
 		this.answers.npmVersion = projectNPMVersion;
+
+		const dates = [
+			'designStart',
+			'designEnd',
+			'frontendStart',
+			'frontendEnd',
+			'backendStart',
+			'backendEnd',
+			'stageStart',
+			'stageEnd',
+			'preproductionStart',
+			'preproductionEnd',
+			'productionStart',
+			'productionEnd',
+		];
+
+		for (const date of dates) {
+			const year = this.answers[date].slice(0, 4);
+			const month = this.answers[date].slice(4, 6);
+			const day = this.answers[date].slice(6);
+
+			this.answers[date] = `new Date('${year}-${month}-${day}')`;
+		}
+
 		this.answers.starterVersion = this.rootGeneratorVersion();
 	}
 

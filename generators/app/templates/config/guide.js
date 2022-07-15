@@ -12,6 +12,32 @@ const guide = {
 		production: 'https://<%= homepage %>',
 	},
 	timeline: {
+		design: {
+			start: <%- designStart %>,
+			end: <%- designEnd %>,
+		},
+		development: {
+			frontend: {
+				start: <%- frontendStart %>,
+				end: <%- frontendEnd %>,
+			},
+			backend: {
+				start: <%- backendStart %>,
+				end: <%- backendEnd %>,
+			},
+		},
+		stage: {
+			start: <%- stageStart %>,
+			end: <%- stageEnd %>,
+		},
+		preproduction: {
+			start: <%- preproductionStart %>,
+			end: <%- preproductionEnd %>,
+		},
+		production: {
+			start: <%- productionStart %>,
+			end: <%- productionEnd %>,
+		},
 	},
 	tokens: {
 
