@@ -1,6 +1,6 @@
 import {createRequire} from 'node:module';
 import {exit} from 'node:process';
-import {relative, dirname, join} from 'node:path';
+import {relative, dirname, join} from 'node:path/posix';
 import {readFileSync} from 'node:fs';
 
 import {execa} from 'execa';
@@ -209,7 +209,7 @@ function upload(done) {
 		}
 
 		const root = join('/', new URL(guide.url.development).hostname, 'design-guide');
-		const files = globbySync(`${config.dist.base}**`, {
+		const files = globbySync(join(config.dist.base, '**'), {
 			stats: true,
 		});
 		const totalSize = files
