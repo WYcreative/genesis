@@ -17,7 +17,11 @@ const config = {
 		symbols: `${src}symbols/**/*.svg`,
 		images: `${src}images/**/*.{png,jp?(e)g,gif,svg}`,
 		scripts: `${src}scripts/**/*.js`,
-		views: `${src}views/**/*.pug`,
+		views: [
+			`${src}views/**/*.pug`,
+			'!**/_*/**',
+			'!**/_*',
+		],
 	},
 	build: {
 		base: build,

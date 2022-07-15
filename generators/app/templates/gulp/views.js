@@ -10,11 +10,7 @@ const {src, dest} = gulp;
 
 
 function build() {
-	return src([
-		config.src.views,
-		'!**/_*/**',
-		'!**/_*',
-	])
+	return src(config.src.views)
 		.pipe(plumber())
 		.pipe(pug({
 			pretty: true,

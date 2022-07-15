@@ -19,7 +19,7 @@ function build(done) {
 	watch(config.src.symbols, series(symbols.build, reload));
 	watch(config.src.images, series(images.build, reload));
 	watch(config.src.scripts, series(scripts.build, reload));
-	watch(config.src.views, series(views.build, reload));
+	watch(config.src.views[0], series(views.build, reload));
 
 	done();
 }
