@@ -1,5 +1,46 @@
 import chalk from 'chalk';
 
+import {members} from '@WYcreative/team';
+
+
+function getMemberChoices() {
+	const groupedMembers = [];
+
+	for (const member of members) {
+		const {team} = member;
+
+		if (typeof groupedMembers.find(group => group.name === team) === 'undefined') {
+			groupedMembers.push({
+				name: team,
+				list: [],
+			});
+		}
+
+		const teamIndex = groupedMembers.findIndex(group => group.name === team);
+
+		groupedMembers[teamIndex].list.push(member);
+	}
+
+	const choices = [];
+
+	for (const group of groupedMembers) {
+		choices.push({
+			type: 'separator',
+			line: `\n   ${group.name}\n`,
+		});
+
+		for (const member of group.list) {
+			choices.push({
+				name: `${member.name} ${member.surname} ${chalk.dim(`(${member.email})`)}`,
+				value: member.email,
+				short: `\n    ${member.name} ${member.surname} ${chalk.dim(`(${member.email})`)}`,
+			});
+		}
+	}
+
+	return choices;
+}
+
 
 function validateDate(answer) {
 	return /^2\d{3}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])$/.test(answer)
@@ -27,6 +68,7 @@ function formatDate(answer, _, {isFinal}) {
 
 
 export {
+	getMemberChoices,
 	validateDate,
 	formatDate,
 };

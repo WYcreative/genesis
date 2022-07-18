@@ -1,5 +1,5 @@
 import {createRequire} from 'node:module';
-import {version as nodeVersion, exit} from 'node:process';
+import {version as nodeVersion, exit, stdout} from 'node:process';
 import {execSync} from 'node:child_process';
 
 import Generator from 'yeoman-generator';
@@ -9,7 +9,7 @@ import yosay from 'yosay';
 import slugify from '@sindresorhus/slugify';
 import validatePackageName from 'validate-npm-package-name';
 
-import {validateDate, formatDate} from './utilities.js';
+import {getMemberChoices, validateDate, formatDate} from './utilities.js';
 
 
 // TODO [2022-10-25]: Use import assertions once they become stable, assuming they will be when Node 18 enters LTS mode.
@@ -108,6 +108,15 @@ export default class Starter extends Generator {
 				name: 'description',
 				message: 'Description:',
 				filter: answer => answer.trim(),
+			},
+			{
+				type: 'checkbox',
+				name: 'team',
+				message: 'Team:',
+				validate: answer => answer.length > 0 ? true : 'At least one team member is required!',
+				choices: getMemberChoices,
+				pageSize: stdout.rows - 3,
+				loop: false,
 			},
 			{
 				type: 'confirm',
@@ -255,6 +264,9 @@ export default class Starter extends Generator {
 
 		this.answers.nodeVersion = projectNodeVersion;
 		this.answers.npmVersion = projectNPMVersion;
+		this.answers.team = JSON.stringify(this.answers.team, null, '\t\t')
+			.replaceAll('"', '\'')
+			.replace('\n]', ',\n\t]');
 
 		const dates = [
 			'designStart',

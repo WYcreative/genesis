@@ -1,5 +1,6 @@
 const guide = {
 	name: '<%= name %>',
+	team: <%- team %>,
 	url: {
 		design: '<%= design %>',
 		prototype: {
