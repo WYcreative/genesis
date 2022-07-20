@@ -7,7 +7,7 @@ const pkg = createRequire(import.meta.url)('../package.json');
 
 const src = './src';
 const build = './build';
-const dist = './build';
+const dist = './dist';
 
 const examples = 'examples';
 
