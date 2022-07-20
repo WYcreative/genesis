@@ -1,10 +1,10 @@
-import del from 'del';
+import {deleteAsync} from 'del';
 
 import config from '../config/index.js';
 
 
 function clean() {
-	return del([
+	return deleteAsync([
 		config.build.base,
 		config.dist.base,
 	]);
