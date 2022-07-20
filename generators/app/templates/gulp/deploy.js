@@ -159,7 +159,7 @@ async function release(done) {
 				};
 			}),
 			pageSize: Number.POSITIVE_INFINITY,
-			default: Object.keys(relative).indexOf('minor'),
+			default: Object.keys(releaseTypes).indexOf('minor'),
 		},
 	]).then(async answers => {
 		// Enforce empty line between terminal messages.
