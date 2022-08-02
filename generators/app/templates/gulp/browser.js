@@ -8,7 +8,7 @@ const browserSyncInstance = getBrowserSync();
 function build(done) {
 	browserSyncInstance.init({
 		server: config.build.base,
-		ghostMode: true,
+		ghostMode: false,
 	});
 
 	done();
