@@ -19,6 +19,14 @@ const npmVersion = execSync('npm -v', {
 }).trim();
 
 export default class Starter extends Generator {
+	constructor(args, options) {
+		super(args, options);
+
+		// HACK: Avoid Yeoman Environment printing a misleading error to the terminal.
+		this.env.options.nodePackageManager = 'npm';
+	}
+
+
 	initializing() {
 		const versions = {
 			Node: {
