@@ -367,6 +367,17 @@ export default class Starter extends Generator {
 	}
 
 
+	install() {
+		this.log(yosay([
+			chalk.green('Installing dependencies!'),
+			'',
+			'Please wait...',
+		].join('\n'), {
+			maxLength: 40,
+		}));
+	}
+
+
 	end() {
 		this.spawnCommandSync('git', ['init', '--quiet']);
 
