@@ -37,12 +37,12 @@
 		"package-json": "^8.1.0",
 		"semver": "^7.3.7",
 		"validate-npm-package-name": "^4.0.0",
-		"yeoman-generator": "^5.6.1",
+		"yeoman-generator": "^5.7.0",
 		"yosay": "^2.0.2"
 	},
 	"devDependencies": {
 		"np": "^7.6.2",
-		"xo": "^0.50.0"
+		"xo": "^0.51.0"
 	},
 	"xo": {
 		"rules": {
