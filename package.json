@@ -29,8 +29,9 @@
 	"homepage": "https://github.com/WYcreative/starter#readme",
 	"dependencies": {
 		"@sindresorhus/slugify": "^2.1.0",
-		"@wycreative/team": "github:WYcreative/team#v1.1.0",
+		"@wycreative/team": "^1.2.2",
 		"chalk": "^5.0.1",
+		"package-json": "^8.1.0",
 		"semver": "^7.3.7",
 		"validate-npm-package-name": "^4.0.0",
 		"yeoman-generator": "^5.6.1",

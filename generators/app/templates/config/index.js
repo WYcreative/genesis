@@ -33,6 +33,13 @@ const config = {
 		scripts: join(build, examples, 'assets/scripts/**/*.js'),
 		libs: join(build, examples, 'assets/libs/**'),
 		views: join(build, examples, '**/*.html'),
+		guide: {
+			assets: join(build, 'assets/**/*.{css,woff?(2),@(o|t)tf,png,jp?(e)g,gif,svg,js}'),
+			views: [
+				join(build, '**/*.html'),
+				'!examples/**',
+			],
+		},
 	},
 	dist: {
 		base: dist,
@@ -42,6 +49,13 @@ const config = {
 		scripts: join(dist, examples, 'assets/scripts/**/*.js'),
 		libs: join(dist, examples, 'assets/libs/**'),
 		views: join(dist, examples, '**/*.html'),
+		guide: {
+			assets: join(dist, 'assets/**/*.{css,woff?(2),@(o|t)tf,png,jp?(e)g,gif,svg,js}'),
+			views: [
+				join(dist, '**/*.html'),
+				'!examples/**',
+			],
+		},
 	},
 };
 

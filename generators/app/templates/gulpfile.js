@@ -6,8 +6,9 @@ import * as fonts from './gulp/fonts.js';
 import * as symbols from './gulp/symbols.js';
 import * as images from './gulp/images.js';
 import * as scripts from './gulp/scripts.js';
-import * as views from './gulp/views.js';
 import * as libs from './gulp/libs.js';
+import * as views from './gulp/views.js';
+import * as guide from './gulp/guide.js';
 import * as browser from './gulp/browser.js';
 import * as watch from './gulp/watch.js';
 import * as deployTasks from './gulp/deploy.js';
@@ -24,6 +25,7 @@ const build = parallel(
 	scripts.build,
 	libs.build,
 	views.build,
+	guide.build,
 );
 
 
@@ -48,6 +50,7 @@ export const dist = parallel(
 	scripts.dist,
 	libs.dist,
 	views.dist,
+	guide.dist,
 );
 
 

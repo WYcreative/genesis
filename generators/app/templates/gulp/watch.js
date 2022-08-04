@@ -7,10 +7,11 @@ import * as symbols from './symbols.js';
 import * as images from './images.js';
 import * as scripts from './scripts.js';
 import * as views from './views.js';
+import * as guide from './guide.js';
 import {reload} from './browser.js';
 
 
-const {watch, series} = gulp;
+const {watch, series, parallel} = gulp;
 
 
 function build(done) {
@@ -19,7 +20,7 @@ function build(done) {
 	watch(config.src.symbols, series(symbols.build, reload));
 	watch(config.src.images, series(images.build, reload));
 	watch(config.src.scripts, series(scripts.build, reload));
-	watch(config.src.views[0], series(views.build, reload));
+	watch(config.src.views[0], series(parallel(views.build, guide.build), reload));
 
 	done();
 }

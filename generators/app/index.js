@@ -1,3 +1,6 @@
+import {fileURLToPath} from 'node:url';
+import {resolve} from 'node:path';
+import {readFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
 import {version as nodeVersion, exit, stdout} from 'node:process';
 import {execSync} from 'node:child_process';
@@ -8,6 +11,7 @@ import chalk from 'chalk';
 import yosay from 'yosay';
 import slugify from '@sindresorhus/slugify';
 import validatePackageName from 'validate-npm-package-name';
+import packageJson from 'package-json';
 
 import {getMemberChoices, validateDate, formatDate} from './utilities.js';
 
@@ -308,7 +312,7 @@ export default class Starter extends Generator {
 			this.renderTemplate(`./${directory}/**`, `./${directory}`, this.answers);
 		}
 
-		for (const file of ['editorconfig', 'gitignore', 'nvmrc']) {
+		for (const file of ['editorconfig', 'gitignore', 'npmrc', 'nvmrc']) {
 			this.renderTemplate(`./_${file}`, `./.${file}`, this.answers);
 		}
 
@@ -327,6 +331,7 @@ export default class Starter extends Generator {
 		const devDependencies = {
 			'@babel/core': '',
 			'@babel/preset-env': '',
+			'@wycreative/design-guide': '',
 			'basic-ftp': '',
 			'browser-sync': '',
 			chalk: '',
@@ -353,6 +358,42 @@ export default class Starter extends Generator {
 			semver: '',
 			xo: '',
 		};
+
+		// FIXME: Workaround for Yeoman not detecting .npmrc in the generator.
+		//        See: https://github.com/yeoman/generator/issues/1304
+		//        When fixed, the following code block shouldn't be needed.
+		const npmrcPath = resolve(fileURLToPath(new URL('.', import.meta.url)), '../../.npmrc');
+		const npmrcFile = readFileSync(npmrcPath).toString();
+		const registryLine = npmrcFile.split('\n').find(line => line.startsWith('@wycreative'));
+		const privateDependencies = Object.keys(devDependencies).filter(name => name.startsWith('@wycreative'));
+
+		for (const name of privateDependencies) {
+			let version;
+
+			try {
+				({version} = await packageJson(name, { // eslint-disable-line no-await-in-loop
+					registryUrl: registryLine.slice(registryLine.indexOf('http')).trim(),
+				}));
+			} catch (error) {
+				if (error.constructor.name === 'VersionNotFoundError') {
+					try {
+						({version} = await packageJson(name, { // eslint-disable-line no-await-in-loop
+							version: 'next',
+							registryUrl: registryLine.slice(registryLine.indexOf('http')).trim(),
+						}));
+					} catch (error) {
+						console.error(error.message);
+						exit(1);
+					}
+				} else {
+					console.error(error.message);
+					exit(1);
+				}
+			}
+
+			devDependencies[name] = `^${version}`;
+		}
+		// End of FIXME block.
 
 		await this.addDevDependencies(devDependencies)
 			.then(dependencies => {
