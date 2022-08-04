@@ -220,6 +220,9 @@ export default class Starter extends Generator {
 			{
 				name: 'stageEnd',
 				message: 'End of Stage:',
+				default: answers => formatDate(answers.backendEnd, undefined, {
+					useColor: false,
+				}),
 				validate: validateDate,
 				transformer: formatDate,
 			},
@@ -232,6 +235,9 @@ export default class Starter extends Generator {
 			{
 				name: 'preproductionEnd',
 				message: 'End of Pre-Production:',
+				default: answers => formatDate(answers.backendEnd, undefined, {
+					useColor: false,
+				}),
 				validate: validateDate,
 				transformer: formatDate,
 			},
@@ -244,6 +250,9 @@ export default class Starter extends Generator {
 			{
 				name: 'productionEnd',
 				message: 'End of Production:',
+				default: answers => formatDate(answers.backendEnd, undefined, {
+					useColor: false,
+				}),
 				validate: validateDate,
 				transformer: formatDate,
 			},

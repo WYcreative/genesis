@@ -49,7 +49,7 @@ function validateDate(answer) {
 }
 
 
-function formatDate(answer, _, {isFinal}) {
+function formatDate(answer, _, {isFinal, useColor}) {
 	const placeholder = ['YYYY', 'MM', 'DD'];
 	const placeholderLength = placeholder.join('').length;
 
@@ -68,17 +68,21 @@ function formatDate(answer, _, {isFinal}) {
 
 	answer = newAnswer;
 
+	if (typeof useColor !== 'boolean') {
+		useColor = true;
+	}
+
 	const formattedAnswer = placeholder.map((group, index, array) => {
 		const indexStart = array.slice(0, index).join('').length;
 		const indexEnd = indexStart + group.length;
 		const groupAnswer = answer.slice(indexStart, indexEnd);
 		const groupPlaceholder = group.slice(groupAnswer.length);
 
-		return (isFinal ? chalk.cyan(groupAnswer) : groupAnswer) + chalk.dim(groupPlaceholder);
+		return (isFinal && useColor ? chalk.cyan(groupAnswer) : groupAnswer) + (useColor ? chalk.dim(groupPlaceholder) : groupPlaceholder);
 	});
 
-	return formattedAnswer.join(chalk.dim('/'))
-		+ (answer.length > placeholderLength ? chalk.bgRed(answer.slice(placeholderLength)) : '');
+	return formattedAnswer.join(useColor ? chalk.dim('/') : '/')
+		+ (answer.length > placeholderLength ? (useColor ? chalk.bgRed(answer.slice(placeholderLength)) : answer.slice(placeholderLength)) : '');
 }
 
 
