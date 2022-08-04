@@ -1,5 +1,5 @@
 {
-	"name": "generator-starter",
+	"name": "@wycreative/generator-starter",
 	"version": "0.0.0",
 	"description": "The WYcreative Starter",
 	"keywords": [
@@ -26,6 +26,9 @@
 	"bugs": {
 		"url": "https://github.com/WYcreative/starter/issues"
 	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
+	},
 	"homepage": "https://github.com/WYcreative/starter#readme",
 	"dependencies": {
 		"@sindresorhus/slugify": "^2.1.0",
@@ -38,6 +41,7 @@
 		"yosay": "^2.0.2"
 	},
 	"devDependencies": {
+		"np": "^7.6.2",
 		"xo": "^0.50.0"
 	},
 	"xo": {
@@ -53,5 +57,8 @@
 			"generators/app/templates/config/guide.js",
 			"generators/app/templates/src/**"
 		]
+	},
+	"np": {
+		"message": "DIST - v%s"
 	}
 }
