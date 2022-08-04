@@ -53,6 +53,21 @@ function formatDate(answer, _, {isFinal}) {
 	const placeholder = ['YYYY', 'MM', 'DD'];
 	const placeholderLength = placeholder.join('').length;
 
+	let index = 0;
+	let newAnswer = '';
+
+	while (index < answer.length) {
+		const character = answer.charAt(index);
+
+		if (['/', '-'].includes(character) === false || newAnswer.length >= placeholderLength) {
+			newAnswer += character;
+		}
+
+		index++;
+	}
+
+	answer = newAnswer;
+
 	const formattedAnswer = placeholder.map((group, index, array) => {
 		const indexStart = array.slice(0, index).join('').length;
 		const indexEnd = indexStart + group.length;
