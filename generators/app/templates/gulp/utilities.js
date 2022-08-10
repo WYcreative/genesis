@@ -1,4 +1,4 @@
-import {parse, format} from 'node:path/posix';
+import {dirname, parse, format} from 'node:path/posix';
 
 import browserSync from 'browser-sync';
 
@@ -13,7 +13,11 @@ function getBrowserSync() {
 
 
 function getDirectory(path) {
-	return format(parse(path.slice(0, Math.max(0, path.indexOf('*')))));
+	const end = path.indexOf('*');
+
+	path = end > -1 ? path.slice(0, Math.max(0, end)) : dirname(path);
+
+	return format(parse(path));
 }
 
 
