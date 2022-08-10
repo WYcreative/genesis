@@ -225,6 +225,7 @@ export default class Starter extends Generator {
 				}),
 				validate: validateDate,
 				transformer: formatDate,
+				filter: answer => answer.trim().replace(/[/-]/g, ''),
 			},
 			{
 				name: 'preproductionStart',
@@ -240,6 +241,7 @@ export default class Starter extends Generator {
 				}),
 				validate: validateDate,
 				transformer: formatDate,
+				filter: answer => answer.trim().replace(/[/-]/g, ''),
 			},
 			{
 				name: 'productionStart',
@@ -255,6 +257,7 @@ export default class Starter extends Generator {
 				}),
 				validate: validateDate,
 				transformer: formatDate,
+				filter: answer => answer.trim().replace(/[/-]/g, ''),
 			},
 		]));
 
