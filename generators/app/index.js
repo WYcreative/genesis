@@ -351,6 +351,7 @@ export default class Starter extends Generator {
 
 
 	async writing() {
+		this.sourceRoot(resolve(fileURLToPath(new URL('.', import.meta.url)), '../../generators/app/templates/', frontendDirectory));
 		this.env.cwd = this.destinationRoot(frontendDirectory);
 
 		for (const directory of ['config', 'gulp', 'src']) {
