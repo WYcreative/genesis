@@ -1,0 +1,7 @@
+{
+	"recommendations": [
+		"EditorConfig.EditorConfig",
+		"samverschueren.linter-xo",
+		"syler.sass-indented"
+	]
+}

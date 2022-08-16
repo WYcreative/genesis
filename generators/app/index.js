@@ -351,6 +351,8 @@ export default class Starter extends Generator {
 
 
 	async writing() {
+		this.renderTemplate('_vscode/**', '.vscode', this.answers);
+
 		this.sourceRoot(resolve(fileURLToPath(new URL('.', import.meta.url)), '../../generators/app/templates/', frontendDirectory));
 		this.env.cwd = this.destinationRoot(frontendDirectory);
 

@@ -1,0 +1,4 @@
+{
+	"terminal.integrated.cwd": "./FrontEnd",
+	"xo.path": "./FrontEnd/node_modules/xo/index.js"
+  }
