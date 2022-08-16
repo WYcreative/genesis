@@ -37,7 +37,7 @@ const config = {
 			assets: join(build, 'assets/**/*.{css,woff?(2),@(o|t)tf,png,jp?(e)g,gif,svg,js}'),
 			views: [
 				join(build, '**/*.html'),
-				'!examples/**',
+				join(`!${build}`, 'examples/**'),
 			],
 		},
 	},
@@ -53,7 +53,7 @@ const config = {
 			assets: join(dist, 'assets/**/*.{css,woff?(2),@(o|t)tf,png,jp?(e)g,gif,svg,js}'),
 			views: [
 				join(dist, '**/*.html'),
-				'!examples/**',
+				join(`!${dist}`, 'examples/**'),
 			],
 		},
 	},
