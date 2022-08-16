@@ -1,7 +1,7 @@
 include ../_abstracts/index
 
 -
-	let title = 'Starter';
+	let title
 
 block variables
 
@@ -10,7 +10,7 @@ html
 	head
 		meta(charset="UTF-8")
 		meta(name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover")
-		title= title
+		title= (title ? `${title} | ` : '') + '<%= name %>'
 		block styles
 			link(href="/examples/assets/styles/main.css" rel="stylesheet")
 		block scripts-head
