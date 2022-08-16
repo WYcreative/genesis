@@ -8,6 +8,7 @@ const pkg = createRequire(import.meta.url)('../package.json');
 const src = './src';
 const build = './build';
 const dist = './dist';
+const backend = '../<%= backendName %>/<%= backendName %>';
 
 const examples = 'examples';
 
@@ -24,6 +25,7 @@ const config = {
 			'!**/_*/**',
 			'!**/_*',
 		],
+		backend: join(src, 'backend/**/*.pug'),
 	},
 	build: {
 		base: build,
@@ -56,6 +58,13 @@ const config = {
 				join(`!${dist}`, 'examples/**'),
 			],
 		},
+	},
+	revManifest: './rev-manifest.json',
+	backend: {
+		base: backend,
+		styles: join(backend, 'styles/**/*.css'),
+		scripts: join(backend, 'scripts/**/*.js'),
+		libs: join(backend, 'libs/**'),
 	},
 };
 

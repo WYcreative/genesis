@@ -1,0 +1,5 @@
+= '@inherits System.Web.Mvc.WebViewPage'
+
+each revved, original in files
+	if (original.endsWith('.css') && original.startsWith('rte') === false)
+		link(href=`/${revved}` rel="stylesheet")

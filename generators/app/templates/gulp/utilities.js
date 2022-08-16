@@ -1,4 +1,4 @@
-import {dirname, parse, format} from 'node:path/posix';
+import {dirname, parse, format, relative, sep} from 'node:path/posix';
 
 import browserSync from 'browser-sync';
 
@@ -12,12 +12,24 @@ function getBrowserSync() {
 }
 
 
-function getDirectory(path) {
+function getDirectory(path, parentLevel = 1) {
 	const end = path.indexOf('*');
 
 	path = end > -1 ? path.slice(0, Math.max(0, end)) : dirname(path);
+	path = format(parse(path));
 
-	return format(parse(path));
+	if (parentLevel > 1) {
+		path = getDirectory(path, parentLevel - 1);
+	}
+
+	return path;
+}
+
+
+function getRelativePath(path, reference) {
+	path = relative(dirname(reference), path);
+
+	return (/^\.?\.\//.test(path) ? '' : `.${path.startsWith(sep) ? '' : sep}`) + path;
 }
 
 
@@ -39,5 +51,6 @@ function formatBytes(bytes, decimals = 2) {
 export {
 	getBrowserSync,
 	getDirectory,
+	getRelativePath,
 	formatBytes,
 };

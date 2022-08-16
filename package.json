@@ -54,7 +54,7 @@
 			]
 		},
 		"ignores": [
-			"generators/app/templates/config/guide.js",
+			"generators/app/templates/config/@(index|guide).js",
 			"generators/app/templates/src/**"
 		]
 	},

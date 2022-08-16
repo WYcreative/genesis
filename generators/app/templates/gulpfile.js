@@ -1,12 +1,12 @@
 import gulp from 'gulp';
 
-import clean from './gulp/clean.js';
+import * as cleanTasks from './gulp/clean.js';
 import * as styles from './gulp/styles.js';
 import * as fonts from './gulp/fonts.js';
 import * as symbols from './gulp/symbols.js';
 import * as images from './gulp/images.js';
-import * as scripts from './gulp/scripts.js';
 import * as libs from './gulp/libs.js';
+import * as scripts from './gulp/scripts.js';
 import * as views from './gulp/views.js';
 import * as guide from './gulp/guide.js';
 import * as browser from './gulp/browser.js';
@@ -17,13 +17,19 @@ import * as deployTasks from './gulp/deploy.js';
 const {series, parallel} = gulp;
 
 
+export const clean = parallel(
+	cleanTasks.build,
+	cleanTasks.dist,
+);
+
+
 const build = parallel(
 	styles.build,
 	fonts.build,
 	symbols.build,
 	images.build,
-	scripts.build,
 	libs.build,
+	scripts.build,
 	views.build,
 	guide.build,
 );
@@ -43,14 +49,24 @@ export const serve = series(
 );
 
 
-export const dist = parallel(
+// Tasks revving assets need to run in series to avoid manifest garbling.
+// See: https://github.com/sindresorhus/gulp-rev/issues/115#issuecomment-135541782
+export const dist = series(
+	cleanTasks.dist,
 	styles.dist,
 	fonts.dist,
 	images.dist,
-	scripts.dist,
 	libs.dist,
+	scripts.dist,
 	views.dist,
 	guide.dist,
+	cleanTasks.backend,
+	parallel(
+		styles.backend,
+		libs.backend,
+		scripts.backend,
+		views.backend,
+	),
 );
 
 
@@ -61,6 +77,3 @@ export const deploy = series(
 	dist,
 	deployTasks.upload,
 );
-
-
-export {default as clean} from './gulp/clean.js';

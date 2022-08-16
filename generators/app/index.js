@@ -21,6 +21,7 @@ const pkg = createRequire(import.meta.url)('../../package.json');
 const npmVersion = execSync('npm -v', {
 	encoding: 'utf8',
 }).trim();
+const frontendDirectory = './FrontEnd';
 
 export default class Starter extends Generator {
 	constructor(args, options) {
@@ -115,6 +116,27 @@ export default class Starter extends Generator {
 					return true;
 				},
 				filter: answer => answer.trim(),
+			},
+			{
+				name: 'backendName',
+				message: 'Back-End Project Name:',
+				default(answers) {
+					const name = answers.packageName.replace(/((?:^|[\s_-]+)\S)([^\s_-]*)/g, (_, p1, p2) =>
+						p1.trim().replace(/[_-]+/g, '').toUpperCase() + p2.toLowerCase(),
+					);
+
+					return `${name}.Web`;
+				},
+				transformer(answer, _, {isFinal}) {
+					let result = isFinal ? chalk.cyan(answer) : answer;
+
+					if (answer.length > 0 && answer.includes('.') === false) {
+						result += chalk[isFinal ? 'cyan' : 'dim']('.Web');
+					}
+
+					return result;
+				},
+				filter: answer => answer.trim() + (answer.includes('.') ? '' : '.Web'),
 			},
 			{
 				name: 'description',
@@ -329,6 +351,8 @@ export default class Starter extends Generator {
 
 
 	async writing() {
+		this.env.cwd = this.destinationRoot(frontendDirectory);
+
 		for (const directory of ['config', 'gulp', 'src']) {
 			this.renderTemplate(`./${directory}/**`, `./${directory}`, this.answers);
 		}
@@ -368,6 +392,8 @@ export default class Starter extends Generator {
 			'gulp-postcss': '',
 			'gulp-pug': '',
 			'gulp-rename': '',
+			'gulp-rev': '',
+			'gulp-rev-rewrite': '',
 			'gulp-sass': '',
 			'gulp-svgstore': '',
 			'gulp-uglify-es': '',
@@ -441,7 +467,9 @@ export default class Starter extends Generator {
 
 
 	end() {
-		this.spawnCommandSync('git', ['init', '--quiet']);
+		this.spawnCommandSync('git', ['init', '--quiet'], {
+			cwd: '.',
+		});
 
 		this.log(yosay([
 			chalk.green('The project is ready!'),
