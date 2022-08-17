@@ -14,28 +14,28 @@ const guide = {
 	},
 	timeline: {
 		design: {
-			start: '<%- designStart %>',
-			end: '<%- designEnd %>',
+			start: '<%= designStart %>',
+			end: '<%= designEnd %>',
 		},
 		frontend: {
-			start: '<%- frontendStart %>',
-			end: '<%- frontendEnd %>',
+			start: '<%= frontendStart %>',
+			end: '<%= frontendEnd %>',
 		},
 		backend: {
-			start: '<%- backendStart %>',
-			end: '<%- backendEnd %>',
+			start: '<%= backendStart %>',
+			end: '<%= backendEnd %>',
 		},
 		stage: {
-			start: '<%- stageStart %>',
-			end: '<%- stageEnd %>',
+			start: '<%= stageStart %>',
+			end: '<%= stageEnd %>',
 		},
 		preproduction: {
-			start: '<%- preproductionStart %>',
-			end: '<%- preproductionEnd %>',
+			start: '<%= preproductionStart %>',
+			end: '<%= preproductionEnd %>',
 		},
 		production: {
-			start: '<%- productionStart %>',
-			end: '<%- productionEnd %>',
+			start: '<%= productionStart %>',
+			end: '<%= productionEnd %>',
 		},
 	},
 	tokens: {
