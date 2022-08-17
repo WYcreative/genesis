@@ -369,7 +369,7 @@ export default class Starter extends Generator {
 			const month = this.answers[date].slice(4, 6);
 			const day = this.answers[date].slice(6);
 
-			this.answers[date] = `new Date('${year}-${month}-${day}')`;
+			this.answers[date] = `${year}-${month}-${day}`;
 		}
 
 		this.answers.starterVersion = this.rootGeneratorVersion();
