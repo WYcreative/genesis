@@ -32,6 +32,27 @@ try {
 	gulpCliVersion = gulpCliVersion.trim().match(/^.+: (.+)/)?.[1];
 } catch {}
 
+const versions = {
+	gulpCli: {
+		name: 'Gulp CLI',
+		version: semver.coerce(gulpCliVersion),
+		minimum: pkg.engines['gulp-cli'],
+		hasMinimum: semver.satisfies(gulpCliVersion, pkg.engines['gulp-cli']),
+	},
+	node: {
+		name: 'Node',
+		version: semver.coerce(nodeVersion),
+		minimum: pkg.engines.node,
+		hasMinimum: semver.satisfies(nodeVersion, pkg.engines.node),
+	},
+	npm: {
+		name: 'npm',
+		version: semver.coerce(npmVersion),
+		minimum: pkg.engines.npm,
+		hasMinimum: semver.satisfies(npmVersion, pkg.engines.npm),
+	},
+};
+
 const frontendDirectory = './FrontEnd';
 
 export default class Starter extends Generator {
@@ -44,24 +65,6 @@ export default class Starter extends Generator {
 
 
 	initializing() {
-		const versions = {
-			Node: {
-				version: semver.coerce(nodeVersion),
-				minimum: pkg.engines.node,
-				hasMinimum: semver.satisfies(nodeVersion, pkg.engines.node),
-			},
-			NPM: {
-				version: semver.coerce(npmVersion),
-				minimum: pkg.engines.npm,
-				hasMinimum: semver.satisfies(npmVersion, pkg.engines.npm),
-			},
-			'Gulp CLI': {
-				version: semver.coerce(gulpCliVersion),
-				minimum: pkg.engines['gulp-cli'],
-				hasMinimum: semver.satisfies(gulpCliVersion, pkg.engines['gulp-cli']),
-			},
-		};
-
 		const intro = [
 			`Welcome to the ${chalk.bold('WYcreative Starter')}!`,
 			chalk.dim('(name pending)'),
@@ -71,8 +74,8 @@ export default class Starter extends Generator {
 		if (Object.values(versions).every(({hasMinimum}) => hasMinimum)) {
 			intro.push('We\'re going to start by filling some questions.');
 		} else {
-			const current = Object.entries(versions).map(([name, {version}]) => version ? `${name} ${version}` : `no ${name} installed`);
-			const minimum = Object.entries(versions).map(([name, {minimum}]) => `${name} ${minimum}`);
+			const current = Object.values(versions).map(({name, version}) => version ? `${name} ${version}` : `no ${name} installed`);
+			const minimum = Object.values(versions).map(({name, minimum}) => `${name} ${minimum}`);
 			const formatter = new Intl.ListFormat('en');
 
 			intro.push(
@@ -356,30 +359,14 @@ export default class Starter extends Generator {
 
 
 	configuring() {
-		const versions = {
-			gulpCli: {
-				version: gulpCliVersion,
-				minimum: '2.3',
-			},
-			node: {
-				version: nodeVersion,
-				minimum: '18',
-			},
-			npm: {
-				version: npmVersion,
-				minimum: '8.6',
-			},
-		};
-
 		for (const [engine, {version, minimum}] of Object.entries(versions)) {
-			const currentVersion = semver.coerce(version);
 			const minimumVersion = semver.coerce(minimum);
 
-			const projectVersion = semver.gt(currentVersion.version, minimumVersion.version)
-				? currentVersion.major + (currentVersion.minor > 0 ? `.${currentVersion.minor}` : '')
-				: minimum;
+			const projectVersion = semver.gt(version.version, minimumVersion.version)
+				? version
+				: minimumVersion;
 
-			this.answers[`${engine}Version`] = projectVersion;
+			this.answers[`${engine}Version`] = projectVersion.major + (projectVersion.minor > 0 ? `.${projectVersion.minor}` : '');
 		}
 
 		this.answers.team = JSON.stringify(this.answers.team, null, '\t\t')
