@@ -13,7 +13,7 @@ import slugify from '@sindresorhus/slugify';
 import validatePackageName from 'validate-npm-package-name';
 import packageJson from 'package-json';
 
-import {getMemberChoices, validateDate, formatDate} from './utilities.js';
+import {getMemberChoices, previewAnswer, validateDate, formatDate} from './utilities.js';
 
 
 // TODO [2022-10-25]: Use import assertions once they become stable, assuming they will be when Node 18 enters LTS mode.
@@ -177,10 +177,23 @@ export default class Starter extends Generator {
 				name: 'subdomain',
 				message: 'Subdomain for the development environments:',
 				default: answers => answers.packageName,
-				transformer: (answer, answers, {isFinal}) =>
-					['dev', 'stage']
-						.map(env => `\n  ${isFinal ? ' ' : chalk.yellow.bold('>')} ${chalk.dim('https://')}${isFinal ? chalk.cyan(answer) : answer || chalk.dim(answers.packageName)}${chalk.dim(`.${env}.byclients.com`)}`)
-						.join(''),
+				transformer: (answer, {packageName}, {isFinal}) =>
+					previewAnswer(
+						['dev', 'stage']
+							.map(env => [
+								{
+									text: 'https://',
+								},
+								{
+									text: answer,
+									default: packageName,
+								},
+								{
+									text: `.${env}.byclients.com`,
+								},
+							]),
+						isFinal,
+					),
 				filter: answer => answer.trim(),
 			},
 			{
@@ -193,8 +206,21 @@ export default class Starter extends Generator {
 				name: 'repository',
 				message: 'Repository Name:',
 				default: answers => answers.packageName,
-				transformer: (answer, answers, {isFinal}) =>
-					`\n  ${isFinal ? ' ' : chalk.yellow.bold('>')} ${chalk.dim('https://dev.azure.com/Bycom/_git/')}${isFinal ? chalk.cyan(answer) : answer || chalk.dim(answers.packageName)}`,
+				transformer: (answer, {packageName}, {isFinal}) =>
+					previewAnswer(
+						[
+							[
+								{
+									text: 'https://dev.azure.com/Bycom/_git/',
+								},
+								{
+									text: answer,
+									default: packageName,
+								},
+							],
+						],
+						isFinal,
+					),
 				filter: answer => answer.trim(),
 			},
 			{

@@ -42,6 +42,25 @@ function getMemberChoices() {
 }
 
 
+function previewAnswer(templates, isFinal) {
+	return templates.map(template => {
+		let result = `\n  ${isFinal ? ' ' : chalk.yellow.bold('>')} `;
+
+		result += template.map(part => {
+			if (part.default) {
+				return part.text ? part.text : chalk.dim(part.default);
+			}
+
+			return chalk.dim(part.text);
+		})
+			.join('');
+
+		return isFinal ? chalk.cyan(result) : result;
+	})
+		.join('');
+}
+
+
 function validateDate(answer) {
 	return /^2\d{3}[/-]?(0[1-9]|1[012])[/-]?(0[1-9]|[12]\d|3[01])$/.test(answer)
 		? true
@@ -78,16 +97,18 @@ function formatDate(answer, _, {isFinal, useColor}) {
 		const groupAnswer = answer.slice(indexStart, indexEnd);
 		const groupPlaceholder = group.slice(groupAnswer.length);
 
-		return (isFinal && useColor ? chalk.cyan(groupAnswer) : groupAnswer) + (useColor ? chalk.dim(groupPlaceholder) : groupPlaceholder);
-	});
-
-	return formattedAnswer.join(useColor ? chalk.dim('/') : '/')
+		return groupAnswer + (useColor ? chalk.dim(groupPlaceholder) : groupPlaceholder);
+	})
+		.join(useColor ? chalk.dim('/') : '/')
 		+ (answer.length > placeholderLength ? (useColor ? chalk.bgRed(answer.slice(placeholderLength)) : answer.slice(placeholderLength)) : '');
+
+	return isFinal && useColor ? chalk.cyan(formattedAnswer) : formattedAnswer;
 }
 
 
 export {
 	getMemberChoices,
+	previewAnswer,
 	validateDate,
 	formatDate,
 };
