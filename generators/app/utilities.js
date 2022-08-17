@@ -26,7 +26,7 @@ function getMemberChoices() {
 	for (const group of groupedMembers) {
 		choices.push({
 			type: 'separator',
-			line: `\n   ${group.name}\n`,
+			line: `\n   ${chalk.reset.yellow.bold(group.name)}`,
 		});
 
 		for (const member of group.list) {
