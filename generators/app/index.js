@@ -71,11 +71,13 @@ export default class Starter extends Generator {
 			'',
 		];
 
-		if (Object.values(versions).every(({hasMinimum}) => hasMinimum)) {
+		const outdatedEngines = Object.values(versions).filter(({hasMinimum}) => !hasMinimum);
+
+		if (outdatedEngines.length === 0) {
 			intro.push('We\'re going to start by filling some questions.');
 		} else {
-			const current = Object.values(versions).map(({name, version}) => version ? `${name} ${version}` : `no ${name} installed`);
-			const minimum = Object.values(versions).map(({name, minimum}) => `${name} ${minimum}`);
+			const current = outdatedEngines.map(({name, version}) => version ? `${name} ${version}` : `no ${name} installed`);
+			const minimum = outdatedEngines.map(({name, minimum}) => `${name} ${minimum}`);
 			const formatter = new Intl.ListFormat('en');
 
 			intro.push(
