@@ -8,6 +8,7 @@
 	"type": "module",
 	"exports": "./generators/app/index.js",
 	"engines": {
+		"gulp-cli": ">=2.3",
 		"node": ">=18",
 		"npm": ">=8.6"
 	},
