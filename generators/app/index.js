@@ -240,6 +240,14 @@ export default class Starter extends Generator {
 			{
 				name: 'frontendStart',
 				message: 'Start of Front-End Development:',
+				default() {
+					const date = new Date();
+					const offsetedTimestamp = date.getTime() - (date.getTimezoneOffset() * 60 * 1000);
+
+					return formatDate(new Date(offsetedTimestamp).toISOString().split('T')[0], undefined, {
+						useColor: false,
+					});
+				},
 				validate: validateDate,
 				transformer: formatDate,
 				filter: answer => answer.trim().replace(/[/-]/g, ''),
