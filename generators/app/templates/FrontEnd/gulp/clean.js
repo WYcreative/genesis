@@ -21,6 +21,7 @@ function dist() {
 function backend() {
 	return deleteAsync([
 		config.backend.styles,
+		config.backend.libs,
 		config.backend.scripts,
 	], {
 		force: true,

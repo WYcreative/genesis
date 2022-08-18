@@ -1,8 +1,9 @@
 import {join} from 'node:path/posix';
 import {existsSync, readFileSync} from 'node:fs';
 
-import gulp from 'gulp';
+import {deleteSync} from 'del';
 import {globbySync, isDynamicPattern} from 'globby';
+import gulp from 'gulp';
 import rename from 'gulp-rename';
 import rev from 'gulp-rev';
 import revRewrite from 'gulp-rev-rewrite';
@@ -86,6 +87,8 @@ async function build(done) {
 			}
 		}
 	}
+
+	deleteSync(config.build.libs);
 
 	for (const [destPath, srcPath] of Object.entries(normalizedLibs)) {
 		src(srcPath)
