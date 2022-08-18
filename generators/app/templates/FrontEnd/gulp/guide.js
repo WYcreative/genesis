@@ -1,18 +1,19 @@
-import {createRequire} from 'node:module';
+import {join} from 'node:path/posix';
+import {readFileSync} from 'node:fs';
 
 import generateGuide from '@wycreative/design-guide';
 import gulp from 'gulp';
 
 import config from '../config/index.js';
-import guide from '../config/guide.js';
 import {getDirectory} from './utilities.js';
 
-// TODO [2022-10-25]: Use import assertions once they become stable, assuming they will be when Node 18 enters LTS mode.
-const pkg = createRequire(import.meta.url)('../package.json');
 const {src, dest} = gulp;
 
 
-function build(done) {
+async function build(done) {
+	const pkg = JSON.parse(readFileSync('./package.json'));
+	const {default: guide} = await import(`${join('..', config.guide)}?t=${Date.now()}`);
+
 	generateGuide({
 		package: pkg,
 		guide,
