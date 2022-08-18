@@ -34,8 +34,8 @@ const config = {
 		styles: join(build, examples, 'assets/styles/**/*.css'),
 		fonts: join(build, examples, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
 		images: join(build, examples, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
-		scripts: join(build, examples, 'assets/scripts/**/*.js'),
 		libs: join(build, examples, 'assets/libs/**'),
+		scripts: join(build, examples, 'assets/scripts/**/*.js'),
 		views: join(build, examples, '**/*.html'),
 		guide: {
 			assets: join(build, 'assets/**/*.{css,woff?(2),@(o|t)tf,png,jp?(e)g,gif,svg,js}'),
@@ -50,8 +50,8 @@ const config = {
 		styles: join(dist, examples, 'assets/styles/**/*.css'),
 		fonts: join(dist, examples, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
 		images: join(dist, examples, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
-		scripts: join(dist, examples, 'assets/scripts/**/*.js'),
 		libs: join(dist, examples, 'assets/libs/**'),
+		scripts: join(dist, examples, 'assets/scripts/**/*.js'),
 		views: join(dist, examples, '**/*.html'),
 		guide: {
 			assets: join(dist, 'assets/**/*.{css,woff?(2),@(o|t)tf,png,jp?(e)g,gif,svg,js}'),
@@ -65,8 +65,8 @@ const config = {
 	backend: {
 		base: backend,
 		styles: join(backend, 'styles/**/*.css'),
-		scripts: join(backend, 'scripts/**/*.js'),
 		libs: join(backend, 'libs/**'),
+		scripts: join(backend, 'scripts/**/*.js'),
 	},
 };
 
