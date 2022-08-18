@@ -530,6 +530,8 @@ export default class Starter extends Generator {
 			chalk.green('The project is ready!'),
 			'',
 			'You can start by committing these newly added files.',
+			'',
+			`${chalk.bold('Note:')} Run ${chalk.cyan(`cd ${frontendDirectory}`)} before running any script (I can't do it myself).`,
 		].join('\n'), {
 			maxLength: 40,
 		}));
