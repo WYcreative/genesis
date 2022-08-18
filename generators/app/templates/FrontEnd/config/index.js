@@ -14,6 +14,7 @@ const examples = 'examples';
 
 const config = {
 	name: pkg.name,
+	libs: './config/libs.js',
 	src: {
 		styles: join(src, 'styles/**/*.s@(a|c)ss'),
 		fonts: join(src, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
