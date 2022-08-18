@@ -1,6 +1,7 @@
-import {dirname, parse, format, relative, sep} from 'node:path/posix';
+import {dirname, relative, sep} from 'node:path/posix';
 
 import browserSync from 'browser-sync';
+import globParent from 'glob-parent';
 
 import config from '../config/index.js';
 
@@ -13,13 +14,10 @@ function getBrowserSync() {
 
 
 function getDirectory(path, parentLevel = 1) {
-	const end = path.indexOf('*');
+	path = globParent(path);
 
-	path = end > -1 ? path.slice(0, Math.max(0, end)) : dirname(path);
-	path = format(parse(path));
-
-	if (parentLevel > 1) {
-		path = getDirectory(path, parentLevel - 1);
+	while (parentLevel-- > 1) {
+		path = dirname(path);
 	}
 
 	return path;

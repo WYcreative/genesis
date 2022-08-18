@@ -439,6 +439,7 @@ export default class Starter extends Generator {
 			cssnano: '',
 			del: '',
 			execa: '',
+			'glob-parent': '',
 			globby: '',
 			gulp: '',
 			'gulp-babel': '',
