@@ -23,7 +23,7 @@ function build(done) {
 	watch(config.libs, series(libs.build, reload));
 	watch(config.src.scripts, series(scripts.build, reload));
 	watch(config.src.views[0], series(parallel(views.build, guide.build), reload));
-	watch(config.guide, series(guide.build, reload));
+	watch([config.guide, './package.json'], series(guide.build, reload));
 
 	done();
 }
