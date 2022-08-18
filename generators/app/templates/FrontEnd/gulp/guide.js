@@ -1,7 +1,8 @@
-import {join} from 'node:path/posix';
+import {join, basename, extname} from 'node:path/posix';
 import {readFileSync} from 'node:fs';
 
 import generateGuide from '@wycreative/design-guide';
+import {globbySync} from 'globby';
 import gulp from 'gulp';
 
 import config from '../config/index.js';
@@ -11,8 +12,17 @@ const {src, dest} = gulp;
 
 
 async function build(done) {
+	const files = globbySync(config.guide);
+	const index = files.splice(files.findIndex(file => file.includes('index')), 1)[0];
 	const pkg = JSON.parse(readFileSync('./package.json'));
-	const {default: guide} = await import(`${join('..', config.guide)}?t=${Date.now()}`);
+	const {default: guide} = await import(`${join('..', index)}?t=${Date.now()}`);
+
+	for (const file of files) {
+		const key = basename(file, extname(file));
+		const {default: value} = await import(`${join('..', file)}?t=${Date.now()}`); // eslint-disable-line no-await-in-loop
+
+		guide[key] = value;
+	}
 
 	generateGuide({
 		package: pkg,

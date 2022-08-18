@@ -13,7 +13,7 @@ import Conf from 'conf';
 import ora from 'ora';
 
 import config from '../config/index.js';
-import guide from '../config/guide.js';
+import guide from '../config/guide/index.js';
 import {formatBytes} from './utilities.js';
 
 

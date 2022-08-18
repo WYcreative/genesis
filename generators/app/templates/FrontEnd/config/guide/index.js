@@ -38,18 +38,6 @@ const guide = {
 			end: '<%= productionEnd %>',
 		},
 	},
-	tokens: {
-
-	},
-	components: [
-
-	],
-	modules: [
-
-	],
-	templates: [
-
-	],
 };
 
 export default guide;
