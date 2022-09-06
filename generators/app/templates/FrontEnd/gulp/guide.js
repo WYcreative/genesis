@@ -24,12 +24,16 @@ async function build(done) {
 		guide[key] = value;
 	}
 
-	generateGuide({
-		package: pkg,
-		guide,
-		config,
-		destination: config.build.base,
-	});
+	try {
+		generateGuide({
+			package: pkg,
+			guide,
+			config,
+			destination: config.build.base,
+		});
+	} catch (error) {
+		console.error(' Skipping the generation of the Design Guide:\n', error);
+	}
 
 	done();
 }
