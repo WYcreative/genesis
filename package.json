@@ -17,7 +17,8 @@
 		"release": "np"
 	},
 	"files": [
-		"generators"
+		"generators",
+		".npmrc"
 	],
 	"repository": {
 		"type": "git",

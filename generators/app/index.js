@@ -465,6 +465,7 @@ export default class Starter extends Generator {
 		// FIXME: Workaround for Yeoman not detecting .npmrc in the generator.
 		//        See: https://github.com/yeoman/generator/issues/1304
 		//        When fixed, the following code block shouldn't be needed.
+		//        Also, remove `.npmrc` from package.json `files` property.
 		const npmrcPath = resolve(fileURLToPath(new URL('.', import.meta.url)), '../../.npmrc');
 		const npmrcFile = readFileSync(npmrcPath).toString();
 		const registryLine = npmrcFile.split('\n').find(line => line.startsWith('@wycreative'));
