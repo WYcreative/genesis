@@ -3,6 +3,5 @@
 		"**/node_modules": true,
 		"**/package-lock.json": true
 	},
-	"terminal.integrated.cwd": "./FrontEnd",
-	"xo.path": "./FrontEnd/node_modules/xo/index.js"
-  }
+	"terminal.integrated.cwd": "./FrontEnd"
+}
