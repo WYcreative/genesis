@@ -34,7 +34,11 @@ async function build(done) {
 			continue;
 		}
 
-		let {files} = JSON.parse(readFileSync(join('node_modules', dependency, 'package.json')));
+		let {files, exports} = JSON.parse(readFileSync(join('node_modules', dependency, 'package.json')));
+
+		files = typeof exports === 'object' && exports !== null && Array.isArray(exports) === false
+			? Object.values(exports)
+			: exports || files;
 
 		files = globbySync(files, {
 			cwd: join('node_modules', dependency),
