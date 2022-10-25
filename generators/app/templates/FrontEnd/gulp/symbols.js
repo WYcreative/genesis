@@ -2,7 +2,7 @@ import {dirname, basename, extname} from 'node:path/posix';
 import {globbySync} from 'globby';
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
-import imagemin from 'gulp-imagemin';
+import imagemin, {svgo} from 'gulp-imagemin';
 import svgstore from 'gulp-svgstore';
 import rename from 'gulp-rename';
 
@@ -33,7 +33,16 @@ function build(done) {
 	for (const directory of directories) {
 		src(`${directory}/*.${extensions}`)
 			.pipe(plumber())
-			.pipe(imagemin())
+			.pipe(imagemin([
+				svgo({
+					plugins: [
+						{
+							name: 'removeViewBox',
+							active: false,
+						},
+					],
+				}),
+			]))
 			.pipe(svgstore())
 			.pipe(rename(path => {
 				if (directory.startsWith(base) && directory.length > base.length) {
