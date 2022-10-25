@@ -208,7 +208,7 @@ function upload(done) {
 			}
 		}
 
-		const root = join('/', new URL(guide.url.development).hostname, 'design-guide');
+		const root = join('/', new URL(guide.url.development).hostname, 'httpdocs/design-guide');
 		const files = globbySync(join(config.dist.base, '**'), {
 			stats: true,
 		});
