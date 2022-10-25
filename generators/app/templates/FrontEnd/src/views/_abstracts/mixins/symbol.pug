@@ -21,7 +21,7 @@ mixin symbol(file, id, width, height)
 		- file = 'symbols'
 
 	if /^\.{0,2}\//.test(file) === false
-		- file = `/assets/images/${file}`
+		- file = `../assets/images/${file}`
 
 	if file.endsWith('.svg') === false
 		- file += '.svg'
