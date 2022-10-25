@@ -9,6 +9,13 @@ function build(done) {
 	browserSyncInstance.init({
 		server: config.build.base,
 		ghostMode: false,
+		middleware: [
+			(request, _, next) => {
+				request.url = request.url.replace('design-guide/', '');
+
+				next();
+			},
+		],
 	});
 
 	done();
