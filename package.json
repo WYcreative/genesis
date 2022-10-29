@@ -50,9 +50,19 @@
 	"xo": {
 		"rules": {
 			"no-multiple-empty-lines": [
-				1,
+				"warn",
 				{
-					"max": 3
+				"max": 3
+				}
+			],
+			"no-console": [
+				"error",
+				{
+					"allow": [
+						"info",
+						"warn",
+						"error"
+					]
 				}
 			]
 		},
