@@ -1,7 +1,5 @@
 # WYcreative Starter
 
-> ⚠️ This is a Work In Progress. Don't use this is production.
-
 ## Requirements
 
 - [Node.js](https://nodejs.org/en/) 18.12 or later
