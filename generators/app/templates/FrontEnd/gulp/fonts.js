@@ -19,10 +19,18 @@ function dist() {
 }
 
 
+function backend() {
+	return src(config.build.fonts)
+		.pipe(dest(getDirectory(config.backend.fonts)));
+}
+
+
 build.displayName = 'fonts:build';
 dist.displayName = 'fonts:dist';
+backend.displayName = 'fonts:backend';
 
 export {
 	build,
 	dist,
+	backend,
 };

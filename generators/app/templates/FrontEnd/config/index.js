@@ -49,7 +49,10 @@ const config = {
 		base: dist,
 		styles: join(dist, examples, 'assets/styles/**/*.css'),
 		fonts: join(dist, examples, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
-		images: join(dist, examples, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
+		images: [
+			join(dist, examples, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
+			'!**/dummy/**',
+		],
 		libs: join(dist, examples, 'assets/libs/**'),
 		scripts: join(dist, examples, 'assets/scripts/**/*.js'),
 		views: join(dist, examples, '**/*.html'),
@@ -65,6 +68,8 @@ const config = {
 	backend: {
 		base: backend,
 		styles: join(backend, 'styles/**/*.css'),
+		fonts: join(backend, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
+		images: join(backend, 'images/**/*.{png,jp?(e)g,gif,svg}'),
 		libs: join(backend, 'libs/**'),
 		scripts: join(backend, 'scripts/**/*.js'),
 	},

@@ -19,14 +19,22 @@ function build() {
 
 function dist() {
 	return src(config.build.images)
-		.pipe(dest(getDirectory(config.dist.images)));
+		.pipe(dest(getDirectory(config.dist.images[0])));
+}
+
+
+function backend() {
+	return src(config.dist.images)
+		.pipe(dest(getDirectory(config.backend.images)));
 }
 
 
 build.displayName = 'images:build';
 dist.displayName = 'images:dist';
+backend.displayName = 'images:backend';
 
 export {
 	build,
 	dist,
+	backend,
 };

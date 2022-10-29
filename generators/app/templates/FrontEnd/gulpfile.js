@@ -63,6 +63,8 @@ export const dist = series(
 	cleanTasks.backend,
 	parallel(
 		styles.backend,
+		fonts.backend,
+		images.backend,
 		libs.backend,
 		scripts.backend,
 		views.backend,
