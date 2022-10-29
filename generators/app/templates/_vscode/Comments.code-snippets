@@ -51,7 +51,7 @@
 	},
 	"Heading 1 Hash Comment": {
 		"prefix": "//1",
-		"scope": "gitignore,gitattributes,editorconfig,env,template",
+		"scope": "gitignore,gitattributes,dockerignore,editorconfig,env,template",
 		"body": [
 			"",
 			"",
@@ -65,7 +65,7 @@
 	},
 	"Heading 2 Hash Comment": {
 		"prefix": "//2",
-		"scope": "gitignore,gitattributes,editorconfig,env,template",
+		"scope": "gitignore,gitattributes,dockerignore,editorconfig,env,template",
 		"body": [
 			"",
 			"# $1",
