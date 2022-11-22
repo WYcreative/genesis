@@ -37,8 +37,8 @@ function dist() {
 		? readFileSync(config.revManifest)
 		: undefined;
 
-	return src(config.build.styles, {
-		base: getDirectory(config.build.styles, 2),
+	return src(config.build.styles[0], {
+		base: getDirectory(config.build.styles[0], 2),
 	})
 		.pipe(postcss([
 			cssnano(),
@@ -62,9 +62,22 @@ function dist() {
 }
 
 
-function backend() {
-	return src(config.dist.styles)
-		.pipe(dest(getDirectory(config.backend.styles)));
+function backend(done) {
+	src([
+		config.dist.styles[0],
+		`!${config.dist.styles[1]}`,
+	])
+		.pipe(dest(getDirectory(config.backend.styles[0])));
+
+	src(config.build.styles[1])
+		.pipe(rename(path => {
+			if (path.basename === 'rte') {
+				path.basename = 'RteStyle';
+			}
+		}))
+		.pipe(dest(getDirectory(config.backend.styles[1])));
+
+	done();
 }
 
 

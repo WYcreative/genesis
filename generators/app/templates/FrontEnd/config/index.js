@@ -31,7 +31,10 @@ const config = {
 	},
 	build: {
 		base: build,
-		styles: join(build, examples, 'assets/styles/**/*.css'),
+		styles: [
+			join(build, examples, 'assets/styles/**/*.css'),
+			join(build, examples, 'assets/styles/rte.css'),
+		],
 		fonts: join(build, examples, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
 		images: join(build, examples, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
 		libs: join(build, examples, 'assets/libs/**'),
@@ -47,7 +50,10 @@ const config = {
 	},
 	dist: {
 		base: dist,
-		styles: join(dist, examples, 'assets/styles/**/*.css'),
+		styles: [
+			join(dist, examples, 'assets/styles/**/*.css'),
+			join(dist, examples, 'assets/styles/rte.css'),
+		],
 		fonts: join(dist, examples, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
 		images: [
 			join(dist, examples, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
@@ -67,7 +73,10 @@ const config = {
 	revManifest: './rev-manifest.json',
 	backend: {
 		base: join(backend, 'assets'),
-		styles: join(backend, 'assets/styles/**/*.css'),
+		styles: [
+			join(backend, 'assets/styles/**/*.css'),
+			join(backend, 'css/RteStyle.css'),
+		],
 		fonts: join(backend, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
 		images: join(backend, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
 		libs: join(backend, 'assets/libs/**'),
