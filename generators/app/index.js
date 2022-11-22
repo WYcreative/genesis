@@ -412,6 +412,8 @@ export default class Starter extends Generator {
 			this.renderTemplate(`./${directory}/**`, `./${directory}`, this.answers);
 		}
 
+		this.renderTemplate('../_gitignore', '../.gitignore', this.answers);
+
 		for (const file of ['editorconfig', 'gitignore', 'npmrc', 'nvmrc']) {
 			this.renderTemplate(`./_${file}`, `./.${file}`, this.answers);
 		}
