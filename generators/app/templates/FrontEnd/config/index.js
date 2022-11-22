@@ -8,7 +8,7 @@ const pkg = createRequire(import.meta.url)('../package.json');
 const src = './src';
 const build = './build';
 const dist = './dist';
-const backend = '../<%= backendName %>/<%= backendName %>';
+const backend = '../<%= backendName %>/<%= backendName %>/wwwroot';
 
 const examples = 'examples';
 
@@ -66,12 +66,12 @@ const config = {
 	},
 	revManifest: './rev-manifest.json',
 	backend: {
-		base: backend,
-		styles: join(backend, 'styles/**/*.css'),
-		fonts: join(backend, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
-		images: join(backend, 'images/**/*.{png,jp?(e)g,gif,svg}'),
-		libs: join(backend, 'libs/**'),
-		scripts: join(backend, 'scripts/**/*.js'),
+		base: join(backend, 'assets'),
+		styles: join(backend, 'assets/styles/**/*.css'),
+		fonts: join(backend, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
+		images: join(backend, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
+		libs: join(backend, 'assets/libs/**'),
+		scripts: join(backend, 'assets/scripts/**/*.js'),
 	},
 };
 

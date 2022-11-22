@@ -208,7 +208,7 @@ function upload(done) {
 			}
 		}
 
-		const root = join('/', new URL(guide.url.development).hostname, 'httpdocs/design-guide');
+		const root = join('/', new URL(guide.url.development).hostname, 'httpdocs/wwwroot/design-guide');
 		const files = globbySync(join(config.dist.base, '**'), {
 			stats: true,
 		});
@@ -244,8 +244,8 @@ function upload(done) {
 			const totalProgress = 35;
 			const bar = [
 				'\n\n  ',
-				chalk.cyan('█'.repeat(Math.round(progress * totalProgress))),
-				'░'.repeat(totalProgress - Math.round(progress * totalProgress)),
+				chalk.cyan('█'.repeat(Math.max(0, Math.round(progress * totalProgress)))),
+				'░'.repeat(Math.max(0, totalProgress - Math.round(progress * totalProgress))),
 				' ',
 				chalk.dim(`${formatBytes(lastOperation.progress)} / ${formatBytes(totalSize)}`),
 			].join('');
@@ -261,6 +261,8 @@ function upload(done) {
 			lastOperation.type = info.type;
 			lastOperation.file = info.name;
 		});
+
+		const {stdout: repositoryRoot} = await execa('git', ['rev-parse', '--show-toplevel']);
 
 		try {
 			await client.access({
@@ -301,7 +303,7 @@ function upload(done) {
 			const {version} = JSON.parse(readFileSync('package.json'));
 
 			// Create a new commit, tag it, and push to remote with the tag included.
-			await execa('git', ['add', '.']);
+			await execa('git', ['add', repositoryRoot]);
 			await execa('git', ['commit', '--message', `DIST - v${version}`]);
 			await execa('git', ['tag', `v${version}`]);
 
@@ -325,8 +327,9 @@ function upload(done) {
 		} catch (error) {
 			fail('Error occured trying to upload files:', error);
 
-			// Revert any changes. Usually it's just to revert the version bump.
-			await execa('git', ['restore', '.']);
+			// Revert changes.
+			await execa('git', ['restore', repositoryRoot, '-SW']);
+			await execa('git', ['clean', repositoryRoot, '-fdq']);
 		}
 
 		spinner.start('Closing FTP connection...');
