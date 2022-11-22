@@ -18,11 +18,11 @@ html(lang="en" dir="ltr")
 		meta(name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover")
 		title= (title ? `${title} | ` : '') + '<%= name %>'
 		block styles
-			link(href="/examples/assets/styles/main.css" rel="stylesheet")
+			link(href="/design-guide/examples/assets/styles/main.css" rel="stylesheet")
 		block scripts-head
 
 	body
 		block body
 
-	block scripts
-		script(src="/examples/assets/scripts/main.js" type="module")
+		block scripts
+			script(src="/design-guide/examples/assets/scripts/main.js" type="module")

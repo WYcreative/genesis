@@ -1,7 +1,7 @@
 //- @pugdoc
 	Creates an SVG symbol.
 
-	@param {String} [file = '/assets/images/symbols.svg'] - The SVG file containing the symbol.
+	@param {String} [file = '/design-guide/examples/assets/images/symbols.svg'] - The SVG file containing the symbol.
 		If the value doesn't start with `/`, `./`, or `../`, it will have `/assets/images/` prepended to it.
 		The `.svg` extension is appended automatically, if not specified.
 	@param {String} id - The symbol ID.
@@ -21,7 +21,7 @@ mixin symbol(file, id, width, height)
 		- file = 'symbols'
 
 	if /^\.{0,2}\//.test(file) === false
-		- file = `../assets/images/${file}`
+		- file = `/design-guide/examples/assets/images/${file}`
 
 	if file.endsWith('.svg') === false
 		- file += '.svg'
