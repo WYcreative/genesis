@@ -17,10 +17,10 @@ const config = {
 	guide: './config/guide/**/*.js',
 	libs: './config/libs.js',
 	src: {
-		styles: join(src, 'styles/**/*.s@(a|c)ss'),
 		fonts: join(src, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
 		symbols: join(src, 'symbols/**/*.svg'),
 		images: join(src, 'images/**/*.{png,jp?(e)g,gif,svg}'),
+		styles: join(src, 'styles/**/*.s@(a|c)ss'),
 		scripts: join(src, 'scripts/**/*.js'),
 		views: [
 			join(src, 'views/**/*.pug'),
@@ -31,12 +31,12 @@ const config = {
 	},
 	build: {
 		base: build,
+		fonts: join(build, examples, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
+		images: join(build, examples, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
 		styles: [
 			join(build, examples, 'assets/styles/**/*.css'),
 			join(build, examples, 'assets/styles/rte.css'),
 		],
-		fonts: join(build, examples, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
-		images: join(build, examples, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
 		libs: join(build, examples, 'assets/libs/**'),
 		scripts: join(build, examples, 'assets/scripts/**/*.js'),
 		views: join(build, examples, '**/*.html'),
@@ -50,14 +50,14 @@ const config = {
 	},
 	dist: {
 		base: dist,
-		styles: [
-			join(dist, examples, 'assets/styles/**/*.css'),
-			join(dist, examples, 'assets/styles/rte.css'),
-		],
 		fonts: join(dist, examples, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
 		images: [
 			join(dist, examples, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
 			'!**/dummy/**',
+		],
+		styles: [
+			join(dist, examples, 'assets/styles/**/*.css'),
+			join(dist, examples, 'assets/styles/rte.css'),
 		],
 		libs: join(dist, examples, 'assets/libs/**'),
 		scripts: join(dist, examples, 'assets/scripts/**/*.js'),
@@ -73,12 +73,12 @@ const config = {
 	revManifest: './rev-manifest.json',
 	backend: {
 		base: join(backend, 'assets'),
+		fonts: join(backend, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
+		images: join(backend, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
 		styles: [
 			join(backend, 'assets/styles/**/*.css'),
 			join(backend, 'css/RteStyle.css'),
 		],
-		fonts: join(backend, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
-		images: join(backend, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
 		libs: join(backend, 'assets/libs/**'),
 		scripts: join(backend, 'assets/scripts/**/*.js'),
 	},

@@ -24,10 +24,10 @@ export const clean = parallel(
 
 
 const build = parallel(
-	styles.build,
 	fonts.build,
 	symbols.build,
 	images.build,
+	styles.build,
 	libs.build,
 	scripts.build,
 	views.build,
@@ -53,18 +53,18 @@ export const serve = series(
 // See: https://github.com/sindresorhus/gulp-rev/issues/115#issuecomment-135541782
 export const dist = series(
 	cleanTasks.dist,
-	styles.dist,
 	fonts.dist,
 	images.dist,
+	styles.dist,
 	libs.dist,
 	scripts.dist,
 	views.dist,
 	guide.dist,
 	cleanTasks.backend,
 	parallel(
-		styles.backend,
 		fonts.backend,
 		images.backend,
+		styles.backend,
 		libs.backend,
 		scripts.backend,
 		views.backend,
