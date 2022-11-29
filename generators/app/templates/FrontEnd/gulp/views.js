@@ -1,4 +1,5 @@
 import {existsSync, readFileSync} from 'node:fs';
+import {join} from 'node:path/posix';
 
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
@@ -49,8 +50,15 @@ function backend() {
 				files: JSON.parse(manifest),
 			},
 		}))
+		.pipe(revRewrite({
+			manifest,
+			modifyUnreved: path => join('/design-guide/examples/assets', path),
+			modifyReved: path => join('/assets', path),
+		}))
 		.pipe(rename(path => {
-			path.extname = '.cshtml';
+			if (path.basename.startsWith('assets-')) {
+				path.extname = '.cshtml';
+			}
 		}))
 		.pipe(dest(config.backend.base));
 }
