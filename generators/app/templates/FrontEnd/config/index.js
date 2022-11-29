@@ -72,7 +72,7 @@ const config = {
 	},
 	revManifest: './rev-manifest.json',
 	backend: {
-		base: join(backend, 'assets'),
+		base: backend,
 		fonts: join(backend, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
 		images: join(backend, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
 		styles: [
