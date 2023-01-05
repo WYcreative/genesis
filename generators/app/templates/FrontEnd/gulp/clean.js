@@ -31,9 +31,9 @@ function backend() {
 }
 
 
-build.displayName = 'clean:build';
-dist.displayName = 'clean:dist';
-backend.displayName = 'clean:backend';
+build.displayName = 'build:clean';
+dist.displayName = 'dist:clean';
+backend.displayName = 'backend:clean';
 
 export {
 	build,

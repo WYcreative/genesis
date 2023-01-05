@@ -55,9 +55,9 @@ function backend() {
 }
 
 
-build.displayName = 'images:build';
-dist.displayName = 'images:dist';
-backend.displayName = 'images:backend';
+build.displayName = 'build:images';
+dist.displayName = 'dist:images';
+backend.displayName = 'backend:images';
 
 export {
 	build,

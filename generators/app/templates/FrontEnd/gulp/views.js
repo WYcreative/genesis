@@ -64,9 +64,9 @@ function backend() {
 }
 
 
-build.displayName = 'views:build';
-dist.displayName = 'views:dist';
-backend.displayName = 'views:backend';
+build.displayName = 'build:views';
+dist.displayName = 'dist:views';
+backend.displayName = 'backend:views';
 
 export {
 	build,

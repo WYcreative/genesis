@@ -81,9 +81,9 @@ function backend(done) {
 }
 
 
-build.displayName = 'styles:build';
-dist.displayName = 'styles:dist';
-backend.displayName = 'styles:backend';
+build.displayName = 'build:styles';
+dist.displayName = 'dist:styles';
+backend.displayName = 'backend:styles';
 
 export {
 	build,

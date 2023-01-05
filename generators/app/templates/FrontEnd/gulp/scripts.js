@@ -53,9 +53,9 @@ function backend() {
 }
 
 
-build.displayName = 'scripts:build';
-dist.displayName = 'scripts:dist';
-backend.displayName = 'scripts:backend';
+build.displayName = 'build:scripts';
+dist.displayName = 'dist:scripts';
+backend.displayName = 'backend:scripts';
 
 export {
 	build,

@@ -29,7 +29,7 @@ function reload(done) {
 }
 
 
-build.displayName = 'browser:build';
+build.displayName = 'build:browser';
 
 export {
 	build,

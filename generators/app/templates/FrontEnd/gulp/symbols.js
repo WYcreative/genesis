@@ -57,7 +57,7 @@ function build(done) {
 }
 
 
-build.displayName = 'symbols:build';
+build.displayName = 'build:symbols';
 
 export {
 	build,

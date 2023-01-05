@@ -50,8 +50,8 @@ function dist(done) {
 }
 
 
-build.displayName = 'guide:build';
-dist.displayName = 'guide:dist';
+build.displayName = 'build:guide';
+dist.displayName = 'dist:guide';
 
 export {
 	build,

@@ -45,9 +45,9 @@ function backend() {
 }
 
 
-build.displayName = 'fonts:build';
-dist.displayName = 'fonts:dist';
-backend.displayName = 'fonts:backend';
+build.displayName = 'build:fonts';
+dist.displayName = 'dist:fonts';
+backend.displayName = 'backend:fonts';
 
 export {
 	build,

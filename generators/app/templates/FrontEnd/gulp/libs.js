@@ -132,9 +132,9 @@ function backend() {
 }
 
 
-build.displayName = 'libs:build';
-dist.displayName = 'libs:dist';
-backend.displayName = 'libs:backend';
+build.displayName = 'build:libs';
+dist.displayName = 'dist:libs';
+backend.displayName = 'backend:libs';
 
 export {
 	build,
