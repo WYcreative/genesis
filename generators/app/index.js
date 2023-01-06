@@ -16,7 +16,7 @@ import packageJson from 'package-json';
 import {getMemberChoices, previewAnswer} from './utilities.js';
 
 
-// TODO [2022-10-25]: Use import assertions once they become stable, assuming they will be when Node 18 enters LTS mode.
+// TODO: Use import assertions once they become stable.
 const pkg = createRequire(import.meta.url)('../../package.json');
 const npmVersion = execSync('npm -v', {
 	encoding: 'utf8',
