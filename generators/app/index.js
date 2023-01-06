@@ -184,7 +184,12 @@ export default class Starter extends Generator {
 			},
 			{
 				name: 'design',
-				message: 'Design File URL:',
+				message: 'Design URL:',
+				filter: answer => answer.trim(),
+			},
+			{
+				name: 'designLibrary',
+				message: 'Design Library URL:',
 				filter: answer => answer.trim(),
 			},
 			{

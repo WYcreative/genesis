@@ -3,6 +3,7 @@ const guide = {
 	team: <%- team %>,
 	url: {
 		design: '<%= design %>',
+		designLibrary: '<%= designLibrary %>',
 		prototypeDesktop: '<%= prototypeDesktop %>',
 		prototypeMobile: '<%= prototypeMobile %>',
 		repository: 'https://dev.azure.com/Bycom/_git/<%= repository %>',
