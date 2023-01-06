@@ -13,7 +13,7 @@ import slugify from '@sindresorhus/slugify';
 import validatePackageName from 'validate-npm-package-name';
 import packageJson from 'package-json';
 
-import {getMemberChoices, previewAnswer, validateDate, formatDate} from './utilities.js';
+import {getMemberChoices, previewAnswer} from './utilities.js';
 
 
 // TODO [2022-10-25]: Use import assertions once they become stable, assuming they will be when Node 18 enters LTS mode.
@@ -247,107 +247,6 @@ export default class Starter extends Generator {
 					),
 				filter: answer => answer.trim(),
 			},
-			{
-				name: 'designStart',
-				message: 'Start of Design:',
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
-			{
-				name: 'designEnd',
-				message: 'End of Design:',
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
-			{
-				name: 'frontendStart',
-				message: 'Start of Front-End Development:',
-				default() {
-					const date = new Date();
-					const offsetedTimestamp = date.getTime() - (date.getTimezoneOffset() * 60 * 1000);
-
-					return formatDate(new Date(offsetedTimestamp).toISOString().split('T')[0], undefined, {
-						useColor: false,
-					});
-				},
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
-			{
-				name: 'frontendEnd',
-				message: 'End of Front-End Development:',
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
-			{
-				name: 'backendStart',
-				message: 'Start of Back-End Development:',
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
-			{
-				name: 'backendEnd',
-				message: 'End of Back-End Development:',
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
-			{
-				name: 'stageStart',
-				message: 'Start of Stage:',
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
-			{
-				name: 'stageEnd',
-				message: 'End of Stage:',
-				default: answers => formatDate(answers.backendEnd, undefined, {
-					useColor: false,
-				}),
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
-			{
-				name: 'preproductionStart',
-				message: 'Start of Pre-Production:',
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
-			{
-				name: 'preproductionEnd',
-				message: 'End of Pre-Production:',
-				default: answers => formatDate(answers.backendEnd, undefined, {
-					useColor: false,
-				}),
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
-			{
-				name: 'productionStart',
-				message: 'Start of Production:',
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
-			{
-				name: 'productionEnd',
-				message: 'End of Production:',
-				default: answers => formatDate(answers.backendEnd, undefined, {
-					useColor: false,
-				}),
-				validate: validateDate,
-				transformer: formatDate,
-				filter: answer => answer.trim().replace(/[/-]/g, ''),
-			},
 		]));
 
 		this.log(yosay([
@@ -374,29 +273,6 @@ export default class Starter extends Generator {
 		this.answers.team = JSON.stringify(this.answers.team, null, '\t\t')
 			.replaceAll('"', '\'')
 			.replace('\n]', ',\n\t]');
-
-		const dates = [
-			'designStart',
-			'designEnd',
-			'frontendStart',
-			'frontendEnd',
-			'backendStart',
-			'backendEnd',
-			'stageStart',
-			'stageEnd',
-			'preproductionStart',
-			'preproductionEnd',
-			'productionStart',
-			'productionEnd',
-		];
-
-		for (const date of dates) {
-			const year = this.answers[date].slice(0, 4);
-			const month = this.answers[date].slice(4, 6);
-			const day = this.answers[date].slice(6);
-
-			this.answers[date] = `${year}-${month}-${day}`;
-		}
 
 		this.answers.starterVersion = this.rootGeneratorVersion();
 	}
