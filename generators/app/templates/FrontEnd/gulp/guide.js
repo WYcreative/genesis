@@ -1,4 +1,4 @@
-import {join, basename, extname} from 'node:path/posix';
+import {join, relative, dirname, sep} from 'node:path/posix';
 import {readFileSync} from 'node:fs';
 
 import generateGuide from '@wycreative/design-guide';
@@ -12,16 +12,21 @@ const {src, dest} = gulp;
 
 
 async function build(done) {
+	const root = getDirectory(config.guide);
 	const files = globbySync(config.guide);
-	const index = files.splice(files.findIndex(file => file.includes('index')), 1)[0];
+	const index = files.splice(files.indexOf(`${root}/index.js`), 1)[0];
 	const pkg = JSON.parse(readFileSync('./package.json'));
 	const {default: guide} = await import(`${join('..', index)}?t=${Date.now()}`);
 
 	for (const file of files) {
-		const key = basename(file, extname(file));
+		const type = dirname(relative(root, file)).split(sep)[0];
 		const {default: value} = await import(`${join('..', file)}?t=${Date.now()}`); // eslint-disable-line no-await-in-loop
 
-		guide[key] = value;
+		if (typeof guide[type] === 'undefined') {
+			guide[type] = [];
+		}
+
+		guide[type].push(value);
 	}
 
 	try {
