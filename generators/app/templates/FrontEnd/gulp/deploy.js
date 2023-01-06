@@ -17,7 +17,7 @@ import guide from '../config/guide/index.js';
 import {formatBytes} from './utilities.js';
 
 
-// TODO [2022-10-25]: Use import assertions once they become stable, assuming they will be when Node 18 enters LTS mode.
+// TODO: Use import assertions once they become stable.
 const pkg = createRequire(import.meta.url)('../package.json');
 
 const spinner = ora();
@@ -32,7 +32,7 @@ function fail(text, error, done) {
 	spinner.fail(chalk.red(text));
 
 	// Enforce empty line between terminal messages.
-	console.log('');
+	console.info('');
 
 	if (error) {
 		console.error(error);
@@ -67,7 +67,7 @@ async function release(done) {
 	const preReleaseName = 'beta';
 
 	// Enforce empty line between terminal messages.
-	console.log('');
+	console.info('');
 
 	try {
 		spinner.start('Fetching changes...');
@@ -163,7 +163,7 @@ async function release(done) {
 		},
 	]).then(async answers => {
 		// Enforce empty line between terminal messages.
-		console.log('');
+		console.info('');
 
 		await execa('npm', ['version', answers.release, '--preid', preReleaseName, '--no-git-tag-version']);
 
@@ -178,7 +178,7 @@ function upload(done) {
 	});
 
 	// Enforce empty line between terminal messages.
-	console.log('');
+	console.info('');
 
 	inquirer.prompt([
 		{
@@ -200,7 +200,7 @@ function upload(done) {
 		},
 	]).then(async answers => {
 		// Enforce empty line between terminal messages.
-		console.log('');
+		console.info('');
 
 		for (const answer of ['host', 'username', 'password']) {
 			if (answers[answer]) {
@@ -295,7 +295,7 @@ function upload(done) {
 			}
 
 			// Enforce empty line between terminal messages.
-			console.log('');
+			console.info('');
 
 			spinner.start('Updating repository...');
 
@@ -320,7 +320,7 @@ function upload(done) {
 				);
 
 				// Enforce empty line between terminal messages.
-				console.log('');
+				console.info('');
 			}
 
 			spinner.info('Upload complete!\n');
