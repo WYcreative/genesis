@@ -1,6 +1,6 @@
 {
 	"name": "@wycreative/generator-starter",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "The WYcreative Starter",
 	"keywords": [
 		"yeoman-generator"
@@ -52,7 +52,7 @@
 			"no-multiple-empty-lines": [
 				"warn",
 				{
-				"max": 3
+					"max": 3
 				}
 			],
 			"no-console": [
