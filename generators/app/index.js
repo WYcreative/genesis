@@ -342,6 +342,7 @@ export default class Starter extends Generator {
 			'postcss-preset-env': '',
 			sass: '',
 			semver: '',
+			'style-dictionary': '',
 			xo: '',
 		};
 

@@ -1,5 +1,5 @@
 import {join, relative, dirname, sep} from 'node:path/posix';
-import {readFileSync} from 'node:fs';
+import {existsSync, readFileSync} from 'node:fs';
 
 import generateGuide from '@wycreative/design-guide';
 import {globbySync} from 'globby';
@@ -13,10 +13,19 @@ const {src, dest} = gulp;
 
 async function build(done) {
 	const root = getDirectory(config.guide);
-	const files = globbySync(config.guide);
-	const index = files.splice(files.indexOf(`${root}/index.js`), 1)[0];
+	const files = globbySync([config.guide, '!**/*.json']);
+	const index = files.splice(files.indexOf(join(root, 'index.js')), 1)[0];
 	const pkg = JSON.parse(readFileSync('./package.json'));
+	const tokensFile = join(root, 'tokens/tokens.json');
+	const tokens = existsSync(tokensFile) ? JSON.parse(readFileSync(tokensFile)) : {};
 	const {default: guide} = await import(`${join('..', index)}?t=${Date.now()}`);
+
+	if (tokens.color) {
+		tokens.colors = tokens.color;
+		delete tokens.color;
+	}
+
+	guide.tokens = tokens;
 
 	for (const file of files) {
 		const type = dirname(relative(root, file)).split(sep)[0];

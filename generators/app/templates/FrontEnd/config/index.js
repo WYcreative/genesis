@@ -5,6 +5,7 @@ import {join} from 'node:path/posix';
 // TODO [2022-10-25]: Use import assertions once they become stable, assuming they will be when Node 18 enters LTS mode.
 const pkg = createRequire(import.meta.url)('../package.json');
 
+const data = './data';
 const src = './src';
 const build = './build';
 const dist = './dist';
@@ -14,8 +15,11 @@ const examples = 'examples';
 
 const config = {
 	name: pkg.name,
-	guide: './config/guide/**/*.js',
+	guide: './config/guide/**/*.js?(on)',
 	libs: './config/libs.js',
+	data: {
+		tokens: join(data, 'tokens.json'),
+	},
 	src: {
 		fonts: join(src, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
 		symbols: join(src, 'symbols/**/*.svg'),

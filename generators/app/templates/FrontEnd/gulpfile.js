@@ -1,6 +1,7 @@
 import gulp from 'gulp';
 
 import * as cleanTasks from './gulp/clean.js';
+import * as tokens from './gulp/tokens.js';
 import * as styles from './gulp/styles.js';
 import * as fonts from './gulp/fonts.js';
 import * as symbols from './gulp/symbols.js';
@@ -24,6 +25,7 @@ export const clean = parallel(
 
 
 const build = parallel(
+	tokens.build,
 	fonts.build,
 	symbols.build,
 	images.build,

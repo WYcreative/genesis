@@ -2,4 +2,6 @@ node_modules
 build
 dist
 rev-manifest.json
+config/guide/tokens/tokens.json
+src/styles/abstracts/_tokens.scss
 .DS_Store
