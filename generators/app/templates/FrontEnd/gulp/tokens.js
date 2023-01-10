@@ -1,4 +1,4 @@
-import {readFileSync} from 'node:fs';
+import {existsSync, readFileSync} from 'node:fs';
 import {join} from 'node:path/posix';
 
 import StyleDictionary from 'style-dictionary';
@@ -55,7 +55,7 @@ StyleDictionary.registerTransform({
 	transformer: token => `${token.value}px`,
 });
 
-const originalDictionary = JSON.parse(readFileSync(config.data.tokens).toString());
+const originalDictionary = existsSync(config.data.tokens) ? JSON.parse(readFileSync(config.data.tokens).toString()) : {};
 
 StyleDictionary.registerTransform({
 	name: 'wycreative/size/line-height',
