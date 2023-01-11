@@ -14,7 +14,7 @@ const {src, dest} = gulp;
 async function build(done) {
 	const root = getDirectory(config.guide);
 	const files = globbySync([config.guide, '!**/*.json']);
-	const index = files.splice(files.indexOf(join(root, 'index.js')), 1)[0];
+	const index = files.splice(files.indexOf(`./${join(root, 'index.js')}`), 1)[0];
 	const pkg = JSON.parse(readFileSync('./package.json'));
 	const tokensFile = join(root, 'tokens/tokens.json');
 	const tokens = existsSync(tokensFile) ? JSON.parse(readFileSync(tokensFile)) : {};
