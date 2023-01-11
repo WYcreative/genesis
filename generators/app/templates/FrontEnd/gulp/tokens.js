@@ -15,7 +15,9 @@ function convertToSassValue(object, depth = 0) {
 	} else if (typeof object === 'string') {
 		output += `"${object}"`;
 	} else if (Object.prototype.hasOwnProperty.call(object, 'value')) {
-		output += object.value;
+		output += typeof object.value === 'string' && object.value.includes(',')
+			? `(${object.value})`
+			: object.value;
 	} else {
 		output += '(\n';
 		output += Object.keys(object).map(newKey => {
@@ -76,6 +78,29 @@ StyleDictionary.registerTransform({
 	},
 });
 
+StyleDictionary.registerTransform({
+	name: 'wycreative/typography/font-family',
+	type: 'value',
+	matcher: token =>
+		token.type === 'string'
+		&& token.path.at(-1) === 'fontFamily',
+	transformer(token) {
+		let fontFamily = token.value;
+
+		if (config?.data?.fontFallbacks) {
+			if (config.data.fontFallbacks[token.value]) {
+				fontFamily += `, ${config.data.fontFallbacks[token.value]}`;
+			}
+
+			if (config.data.fontFallbacks['*']) {
+				fontFamily += `, ${config.data.fontFallbacks['*']}`;
+			}
+		}
+
+		return fontFamily;
+	},
+});
+
 StyleDictionary.registerFormat({
 	name: 'wycreative/scss',
 	formatter: ({dictionary, file}) =>
@@ -98,6 +123,7 @@ const dictionary = StyleDictionary.extend({
 				...StyleDictionary.transformGroup.scss,
 				'wycreative/size/px',
 				'wycreative/size/line-height',
+				'wycreative/typography/font-family',
 			],
 			files: [
 				{

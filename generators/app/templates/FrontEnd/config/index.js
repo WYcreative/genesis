@@ -19,6 +19,9 @@ const config = {
 	libs: './config/libs.js',
 	data: {
 		tokens: join(data, 'tokens.json'),
+		fontFallbacks: {
+			'*': 'system-ui, -apple-system, sans-serif',
+		},
 	},
 	src: {
 		fonts: join(src, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
