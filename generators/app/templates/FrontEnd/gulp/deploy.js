@@ -174,7 +174,7 @@ async function release(done) {
 
 function upload(done) {
 	const store = new Conf({
-		projectName: 'starter',
+		projectName: 'genesis',
 	});
 
 	// Enforce empty line between terminal messages.

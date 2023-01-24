@@ -67,7 +67,7 @@
 			]
 		}
 	},
-	"starter": {
-		"version": "<%= starterVersion %>"
+	"genesis": {
+		"version": "<%= genesisVersion %>"
 	}
 }

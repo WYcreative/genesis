@@ -1,4 +1,4 @@
-# WYcreative Starter
+# WYcreative's Genesis
 
 ## Requirements
 
@@ -12,7 +12,7 @@ Due to this package being private, npm has to retrieve it from GitHub Packages r
 For that to be possible, a [personal access token](https://github.com/settings/tokens) with `read:packages` scope is required. Read [GitHub's documentation](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token) for additional information.
 
 ``` shell
-npm install --global @wycreative/generator-starter
+npm install --global @wycreative/generator-genesis
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ npm install --global @wycreative/generator-starter
 Open a terminal pointed to the directory you want to start a new project and run:
 
 ``` shell
-yo @wycreative/starter
+yo @wycreative/genesis
 ```
 
 Then answer the prompts that will appear in the terminal. After that, the project files will be generated.

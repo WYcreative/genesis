@@ -55,7 +55,7 @@ const versions = {
 
 const frontendDirectory = './FrontEnd';
 
-export default class Starter extends Generator {
+export default class Genesis extends Generator {
 	constructor(args, options) {
 		super(args, options);
 
@@ -66,8 +66,7 @@ export default class Starter extends Generator {
 
 	initializing() {
 		const intro = [
-			`Welcome to the ${chalk.bold('WYcreative Starter')}!`,
-			chalk.dim('(name pending)'),
+			`Welcome to ${chalk.bold('Genesis')}!`,
 			'',
 		];
 
@@ -279,7 +278,7 @@ export default class Starter extends Generator {
 			.replaceAll('"', '\'')
 			.replace('\n]', ',\n\t]');
 
-		this.answers.starterVersion = this.rootGeneratorVersion();
+		this.answers.genesisVersion = this.rootGeneratorVersion();
 	}
 
 

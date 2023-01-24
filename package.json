@@ -1,7 +1,7 @@
 {
-	"name": "@wycreative/generator-starter",
+	"name": "@wycreative/generator-genesis",
 	"version": "1.2.0",
-	"description": "The WYcreative Starter",
+	"description": "Genesis, the WYcreative Engineering Team Front-End project generator.",
 	"keywords": [
 		"yeoman-generator"
 	],
@@ -22,17 +22,17 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/WYcreative/starter.git"
+		"url": "git+https://github.com/WYcreative/genesis.git"
 	},
 	"author": "WYcreative Engineering Team",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/WYcreative/starter/issues"
+		"url": "https://github.com/WYcreative/genesis/issues"
 	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"
 	},
-	"homepage": "https://github.com/WYcreative/starter#readme",
+	"homepage": "https://github.com/WYcreative/genesis#readme",
 	"dependencies": {
 		"@sindresorhus/slugify": "^2.1.1",
 		"@wycreative/team": "^1.5.0",

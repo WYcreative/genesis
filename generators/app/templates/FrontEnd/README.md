@@ -27,6 +27,6 @@ Command | Description
 `npm run clean` | Deletes the compiled code in `build` and `dist` directories.
 `npm run deploy` | Runs the whole build and distribution process, prepares a release, and deploys the project.
 
-## Starter
+## Genesis
 
-This project was generated with Starter <%= starterVersion %>.
+This project was generated with Genesis <%= genesisVersion %>.
