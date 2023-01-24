@@ -2,6 +2,7 @@
 	"recommendations": [
 		"EditorConfig.EditorConfig",
 		"samverschueren.linter-xo",
-		"syler.sass-indented"
+		"syler.sass-indented",
+		"wayou.vscode-todo-highlight"
 	]
 }
