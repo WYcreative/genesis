@@ -1,7 +1,11 @@
-import {dirname, basename, extname} from 'node:path/posix';
+import {dirname, relative, join, basename, extname} from 'node:path/posix';
+import {Buffer} from 'node:buffer';
+
 import {globbySync} from 'globby';
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
+import tap from 'gulp-tap';
+import {JSDOM} from 'jsdom';
 import imagemin, {svgo} from 'gulp-imagemin';
 import svgstore from 'gulp-svgstore';
 import rename from 'gulp-rename';
@@ -33,6 +37,56 @@ function build(done) {
 	for (const directory of directories) {
 		src(`${directory}/*.${extensions}`)
 			.pipe(plumber())
+			.pipe(tap(file => {
+				const {window: {document: {body: svg}}} = new JSDOM(file.contents.toString());
+				const elements = svg.querySelectorAll('[fill], [stroke]');
+
+				// FIXME: Workaround for JSDOM's Element.closest() not working.
+				const closest = (element, targets) => {
+					do {
+						for (const target of targets) {
+							if (target === element.tagName) {
+								return element;
+							}
+						}
+
+						element = element.parentElement || element.parentNode;
+					} while (element !== null && element.nodeType === 1);
+
+					return null;
+				};
+
+				for (const element of elements) {
+					const colorsToRemove = new Set(config.data.symbols.colorsToRemove);
+
+					const fill = element.getAttribute('fill')?.toLowerCase();
+					const stroke = element.getAttribute('stroke')?.toLowerCase();
+
+					if (fill) {
+						if (
+							colorsToRemove.has(fill)
+							|| (
+								fill === 'none'
+								&& element.tagName.toLowerCase() === 'svg'
+							)
+						) {
+							element.removeAttribute('fill');
+						} else if (closest(element, ['mask', 'clipPath']) === null) {
+							console.error(`Found unexpected fill color '${fill}' in '${relative(base, join(directory, file.relative))}'.`);
+						}
+					}
+
+					if (stroke) {
+						if (colorsToRemove.has(stroke)) {
+							element.setAttribute('stroke', 'currentColor');
+						} else {
+							console.error(`Found unexpected stroke color '${stroke}' in '${relative(base, join(directory, file.relative))}'.`);
+						}
+					}
+				}
+
+				file.contents = Buffer.from(svg.innerHTML);
+			}))
 			.pipe(imagemin([
 				svgo({
 					plugins: [

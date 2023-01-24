@@ -22,6 +22,13 @@ const config = {
 		fontFallbacks: {
 			'*': 'system-ui, -apple-system, sans-serif',
 		},
+		symbols: {
+			colorsToRemove: [
+				'black',
+				'#000',
+				'#000000',
+			],
+		},
 	},
 	src: {
 		fonts: join(src, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
