@@ -39,4 +39,4 @@ mixin symbol(file, id, width, height)
 	- const hasAria = Object.keys(attributes).some(attribute => attribute.startsWith('aria-'))
 
 	svg(aria-hidden=(hasAria ? null : "true"))&attributes(attributes)
-		use(xlink:href=`${file}#${id}`)
+		use(href=`${file}#${id}`)
