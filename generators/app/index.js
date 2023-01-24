@@ -313,7 +313,7 @@ export default class Genesis extends Generator {
 		const devDependencies = {
 			'@babel/core': '',
 			'@babel/preset-env': '',
-			'@wycreative/design-guide': '',
+			'@wycreative/atlas': '',
 			'basic-ftp': '',
 			'browser-sync': '',
 			chalk: '',

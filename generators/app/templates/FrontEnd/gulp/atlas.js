@@ -1,7 +1,7 @@
 import {join, relative, dirname, sep} from 'node:path/posix';
 import {existsSync, readFileSync} from 'node:fs';
 
-import generateGuide from '@wycreative/design-guide';
+import generateAtlas from '@wycreative/atlas';
 import {globbySync} from 'globby';
 import gulp from 'gulp';
 
@@ -12,41 +12,41 @@ const {src, dest} = gulp;
 
 
 async function build(done) {
-	const root = getDirectory(config.guide);
-	const files = globbySync([config.guide, '!**/*.json']);
+	const root = getDirectory(config.atlas);
+	const files = globbySync([config.atlas, '!**/*.json']);
 	const index = files.splice(files.indexOf(`./${join(root, 'index.js')}`), 1)[0];
 	const pkg = JSON.parse(readFileSync('./package.json'));
 	const tokensFile = join(root, 'tokens/tokens.json');
 	const tokens = existsSync(tokensFile) ? JSON.parse(readFileSync(tokensFile)) : {};
-	const {default: guide} = await import(`${join('..', index)}?t=${Date.now()}`);
+	const {default: atlas} = await import(`${join('..', index)}?t=${Date.now()}`);
 
 	if (tokens.color) {
 		tokens.colors = tokens.color;
 		delete tokens.color;
 	}
 
-	guide.tokens = tokens;
+	atlas.tokens = tokens;
 
 	for (const file of files) {
 		const type = dirname(relative(root, file)).split(sep)[0];
 		const {default: value} = await import(`${join('..', file)}?t=${Date.now()}`); // eslint-disable-line no-await-in-loop
 
-		if (typeof guide[type] === 'undefined') {
-			guide[type] = [];
+		if (typeof atlas[type] === 'undefined') {
+			atlas[type] = [];
 		}
 
-		guide[type].push(value);
+		atlas[type].push(value);
 	}
 
 	try {
-		generateGuide({
+		generateAtlas({
 			package: pkg,
-			guide,
+			atlas,
 			config,
 			destination: config.build.base,
 		});
 	} catch (error) {
-		console.error(' Skipping the generation of the Design Guide:\n', error);
+		console.error(' Skipping the generation of Atlas:\n', error);
 	}
 
 	done();
@@ -54,18 +54,18 @@ async function build(done) {
 
 
 function dist(done) {
-	src(config.build.guide.views)
-		.pipe(dest(getDirectory(config.dist.guide.views[0])));
+	src(config.build.atlas.views)
+		.pipe(dest(getDirectory(config.dist.atlas.views[0])));
 
-	src(config.build.guide.assets)
-		.pipe(dest(getDirectory(config.dist.guide.assets)));
+	src(config.build.atlas.assets)
+		.pipe(dest(getDirectory(config.dist.atlas.assets)));
 
 	done();
 }
 
 
-build.displayName = 'build:guide';
-dist.displayName = 'dist:guide';
+build.displayName = 'build:atlas';
+dist.displayName = 'dist:atlas';
 
 export {
 	build,

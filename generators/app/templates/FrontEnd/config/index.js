@@ -15,7 +15,7 @@ const examples = 'examples';
 
 const config = {
 	name: pkg.name,
-	guide: './config/guide/**/*.js?(on)',
+	atlas: './config/atlas/**/*.js?(on)',
 	libs: './config/libs.js',
 	data: {
 		tokens: join(data, 'tokens.json'),
@@ -54,7 +54,7 @@ const config = {
 		libs: join(build, examples, 'assets/libs/**'),
 		scripts: join(build, examples, 'assets/scripts/**/*.js'),
 		views: join(build, examples, '**/*.html'),
-		guide: {
+		atlas: {
 			assets: join(build, 'assets/**/*.{css,woff?(2),@(o|t)tf,png,jp?(e)g,gif,svg,js}'),
 			views: [
 				join(build, '**/*.html'),
@@ -76,7 +76,7 @@ const config = {
 		libs: join(dist, examples, 'assets/libs/**'),
 		scripts: join(dist, examples, 'assets/scripts/**/*.js'),
 		views: join(dist, examples, '**/*.html'),
-		guide: {
+		atlas: {
 			assets: join(dist, 'assets/**/*.{css,woff?(2),@(o|t)tf,png,jp?(e)g,gif,svg,js}'),
 			views: [
 				join(dist, '**/*.html'),

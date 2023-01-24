@@ -135,7 +135,7 @@ const dictionary = StyleDictionary.extend({
 					},
 				},
 				{
-					destination: join(getDirectory(config.guide), 'tokens/tokens.json'),
+					destination: join(getDirectory(config.atlas), 'tokens/tokens.json'),
 					format: 'json/nested',
 					filter: 'wycreative/filter',
 					options: {

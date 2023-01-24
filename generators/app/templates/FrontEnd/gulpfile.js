@@ -9,7 +9,7 @@ import * as images from './gulp/images.js';
 import * as libs from './gulp/libs.js';
 import * as scripts from './gulp/scripts.js';
 import * as views from './gulp/views.js';
-import * as guide from './gulp/guide.js';
+import * as atlas from './gulp/atlas.js';
 import * as browser from './gulp/browser.js';
 import * as watch from './gulp/watch.js';
 import * as deployTasks from './gulp/deploy.js';
@@ -33,7 +33,7 @@ const build = parallel(
 	libs.build,
 	scripts.build,
 	views.build,
-	guide.build,
+	atlas.build,
 );
 
 
@@ -61,7 +61,7 @@ export const dist = series(
 	libs.dist,
 	scripts.dist,
 	views.dist,
-	guide.dist,
+	atlas.dist,
 	cleanTasks.backend,
 	parallel(
 		fonts.backend,

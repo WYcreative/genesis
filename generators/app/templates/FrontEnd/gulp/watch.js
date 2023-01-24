@@ -8,7 +8,7 @@ import * as images from './images.js';
 import * as libs from './libs.js';
 import * as scripts from './scripts.js';
 import * as views from './views.js';
-import * as guide from './guide.js';
+import * as atlas from './atlas.js';
 import {reload} from './browser.js';
 
 
@@ -22,8 +22,8 @@ function build(done) {
 	watch(config.src.images, series(images.build, reload));
 	watch(config.libs, series(libs.build, reload));
 	watch(config.src.scripts, series(scripts.build, reload));
-	watch(config.src.views[0], series(parallel(views.build, guide.build), reload));
-	watch([config.guide, './package.json'], series(guide.build, reload));
+	watch(config.src.views[0], series(parallel(views.build, atlas.build), reload));
+	watch([config.atlas, './package.json'], series(atlas.build, reload));
 
 	done();
 }

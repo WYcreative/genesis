@@ -52,7 +52,7 @@ function backend() {
 		}))
 		.pipe(revRewrite({
 			manifest,
-			modifyUnreved: path => join('/design-guide/examples/assets', path),
+			modifyUnreved: path => join('/atlas/examples/assets', path),
 			modifyReved: path => join('/assets', path),
 		}))
 		.pipe(rename(path => {

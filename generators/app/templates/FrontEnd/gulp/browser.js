@@ -11,7 +11,7 @@ function build(done) {
 		ghostMode: false,
 		middleware: [
 			(request, _, next) => {
-				request.url = request.url.replace('design-guide/', '');
+				request.url = request.url.replace('atlas/', '');
 
 				next();
 			},

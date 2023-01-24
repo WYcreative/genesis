@@ -1,4 +1,4 @@
-const guide = {
+const atlas = {
 	name: '<%= name %>',
 	team: <%- team %>,
 	url: {
@@ -13,4 +13,4 @@ const guide = {
 	},
 };
 
-export default guide;
+export default atlas;

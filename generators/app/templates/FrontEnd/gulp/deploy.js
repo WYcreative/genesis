@@ -13,7 +13,7 @@ import Conf from 'conf';
 import ora from 'ora';
 
 import config from '../config/index.js';
-import guide from '../config/guide/index.js';
+import atlas from '../config/atlas/index.js';
 import {formatBytes} from './utilities.js';
 
 
@@ -208,7 +208,7 @@ function upload(done) {
 			}
 		}
 
-		const root = join('/', new URL(guide.url.development).hostname, 'httpdocs/wwwroot/design-guide');
+		const root = join('/', new URL(atlas.url.development).hostname, 'httpdocs/wwwroot/atlas');
 		const files = globbySync(join(config.dist.base, '**'), {
 			stats: true,
 		});
