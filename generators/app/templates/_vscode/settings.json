@@ -1,8 +1,11 @@
 {
+	"files.eol": "\n",
 	"files.exclude": {
 		"**/node_modules": true,
 		"**/package-lock.json": true
 	},
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
 	"terminal.integrated.cwd": "./FrontEnd",
 	"todohighlight.include": [
 		"**/*.html",
