@@ -1,3 +1,11 @@
 each revved, original in files
+	-
+		const additionalScripts = [
+			// 'libs/path-name.js',
+		]
+
 	if (original === 'scripts/main.js')
 		script(src=`/assets/${revved}` type="module")
+
+	else if (additionalScripts.includes(original))
+		script(src=`/assets/${revved}`)
