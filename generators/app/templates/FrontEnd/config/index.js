@@ -49,7 +49,7 @@ const config = {
 		images: join(build, examples, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
 		styles: [
 			join(build, examples, 'assets/styles/**/*.css'),
-			join(build, examples, 'assets/styles/rte.css'),
+			join(build, examples, 'assets/styles/rte*.css'),
 		],
 		libs: join(build, examples, 'assets/libs/**'),
 		scripts: join(build, examples, 'assets/scripts/**/*.js'),
@@ -71,7 +71,7 @@ const config = {
 		],
 		styles: [
 			join(dist, examples, 'assets/styles/**/*.css'),
-			join(dist, examples, 'assets/styles/rte.css'),
+			join(dist, examples, 'assets/styles/rte*.css'),
 		],
 		libs: join(dist, examples, 'assets/libs/**'),
 		scripts: join(dist, examples, 'assets/scripts/**/*.js'),
@@ -91,7 +91,7 @@ const config = {
 		images: join(backend, 'assets/images/**/*.{png,jp?(e)g,gif,svg}'),
 		styles: [
 			join(backend, 'assets/styles/**/*.css'),
-			join(backend, 'css/RteStyle.css'),
+			join(backend, 'css/RteStyle*.css'),
 		],
 		libs: join(backend, 'assets/libs/**'),
 		scripts: join(backend, 'assets/scripts/**/*.js'),

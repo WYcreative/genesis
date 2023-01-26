@@ -71,8 +71,17 @@ function backend(done) {
 
 	src(config.build.styles[1])
 		.pipe(rename(path => {
-			if (path.basename === 'rte') {
-				path.basename = 'RteStyle';
+			if (path.basename.startsWith('rte')) {
+				let suffix = '';
+
+				if (path.basename.startsWith('rte-')) {
+					suffix = path.basename
+						.split('-')
+						.slice(1)
+						.map(word => word.slice(0, 1).toUpperCase() + word.slice(1));
+				}
+
+				path.basename = `RteStyle${suffix}`;
 			}
 		}))
 		.pipe(dest(getDirectory(config.backend.styles[1])));
