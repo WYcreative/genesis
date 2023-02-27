@@ -2,7 +2,7 @@ import {fileURLToPath} from 'node:url';
 import {resolve} from 'node:path';
 import {readFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
-import {version as nodeVersion, exit, stdout} from 'node:process';
+import {version as nodeVersion, exit} from 'node:process';
 import {execSync} from 'node:child_process';
 
 import Generator from 'yeoman-generator';
@@ -13,7 +13,7 @@ import slugify from '@sindresorhus/slugify';
 import validatePackageName from 'validate-npm-package-name';
 import packageJson from 'package-json';
 
-import {getMemberChoices, previewAnswer} from './utilities.js';
+import {previewAnswer} from './utilities.js';
 
 
 // TODO: Use import assertions once they become stable.
@@ -167,15 +167,6 @@ export default class Genesis extends Generator {
 				filter: answer => answer.trim(),
 			},
 			{
-				type: 'checkbox',
-				name: 'team',
-				message: 'Team:',
-				validate: answer => answer.length > 0 ? true : 'At least one team member is required!',
-				choices: getMemberChoices,
-				pageSize: stdout.rows - 3,
-				loop: false,
-			},
-			{
 				type: 'confirm',
 				name: 'themes',
 				message: 'Will the project have multiple themes?',
@@ -273,10 +264,6 @@ export default class Genesis extends Generator {
 
 			this.answers[`${engine}Version`] = projectVersion.major + (projectVersion.minor > 0 ? `.${projectVersion.minor}` : '');
 		}
-
-		this.answers.team = JSON.stringify(this.answers.team, null, '\t\t')
-			.replaceAll('"', '\'')
-			.replace('\n]', ',\n\t]');
 
 		this.answers.genesisVersion = this.rootGeneratorVersion();
 	}

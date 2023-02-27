@@ -1,6 +1,5 @@
 const atlas = {
 	name: '<%= name %>',
-	team: <%- team %>,
 	url: {
 		design: '<%= design %>',
 		designLibrary: '<%= designLibrary %>',
