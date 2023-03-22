@@ -15,7 +15,7 @@ import {getDirectory, getRelativePath} from './utilities.js';
 const {src, dest} = gulp;
 
 
-async function build(done) {
+async function build(done) { // eslint-disable-line complexity
 	const {dependencies} = JSON.parse(readFileSync('./package.json'));
 	const {default: libs} = await import(`${join('..', config.libs)}?t=${Date.now()}`);
 
