@@ -235,7 +235,9 @@ function upload(done) {
 			if (info.type === 'list') {
 				text = 'Preparing directories...';
 			} else if (info.type === 'upload') {
-				lastOperation.progress += info.bytes;
+				if (Number.isFinite(info.bytes)) {
+					lastOperation.progress += info.bytes;
+				}
 
 				text = relative(root, info.name);
 			}
