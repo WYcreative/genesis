@@ -8,7 +8,7 @@ function previewAnswer(templates, isFinal) {
 
 		result += template.map(part => {
 			if (part.default) {
-				return part.text ? part.text : chalk.dim(part.default);
+				return part.text ?? chalk.dim(part.default);
 			}
 
 			return chalk.dim(part.text);
