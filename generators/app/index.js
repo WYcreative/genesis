@@ -55,6 +55,45 @@ const versions = {
 
 const frontendDirectory = './FrontEnd';
 
+const projectTypes = [
+	{
+		name: 'Website',
+		value: 'website',
+	},
+	{
+		name: 'NPM Package',
+		value: 'npm-package',
+	},
+];
+
+const conditionalTasks = [
+	{
+		name: 'Symbols',
+		value: 'symbols',
+	},
+	{
+		name: 'Images',
+		value: 'images',
+	},
+	{
+		name: 'Styles',
+		value: 'styles',
+		requiredIfNoOther: true,
+	},
+	{
+		name: 'Scripts',
+		value: 'scripts',
+		requiredIfNoOther: true,
+	},
+	{
+		name: 'Views',
+		value: 'views',
+		requiredIfNoOther: true,
+	},
+];
+
+
+
 export default class Genesis extends Generator {
 	constructor(args, options) {
 		super(args, options);
@@ -102,6 +141,12 @@ export default class Genesis extends Generator {
 
 		Object.assign(this.answers, await this.prompt([
 			{
+				type: 'list',
+				name: 'type',
+				message: 'Project Type:',
+				choices: projectTypes,
+			},
+			{
 				name: 'name',
 				message: 'Project Name:',
 				default: this.appname.replace(/(?:^|\s)\S/g, match => match.toUpperCase()),
@@ -111,7 +156,7 @@ export default class Genesis extends Generator {
 			{
 				name: 'packageName',
 				message: 'Package Name:',
-				default: slugify(this.appname),
+				default: ({type}) => (type === 'npm-package' ? '@wycreative/' : '') + slugify(this.appname),
 				validate(answer) {
 					const validity = validatePackageName(answer);
 
@@ -143,8 +188,8 @@ export default class Genesis extends Generator {
 			{
 				name: 'backendName',
 				message: 'Back-End Project Name:',
-				default(answers) {
-					const name = answers.packageName.replace(/((?:^|[\s_-]+)\S)([^\s_-]*)/g, (_, p1, p2) =>
+				default({packageName}) {
+					const name = packageName.replace(/((?:^|[\s_-]+)\S)([^\s_-]*)/g, (_, p1, p2) =>
 						p1.trim().replace(/[_-]+/g, '').toUpperCase() + p2.toLowerCase(),
 					);
 
@@ -160,6 +205,7 @@ export default class Genesis extends Generator {
 					return result;
 				},
 				filter: answer => answer.trim() + (answer.includes('.') ? '' : '.Web'),
+				when: ({type}) => type === 'website',
 			},
 			{
 				name: 'description',
@@ -171,31 +217,36 @@ export default class Genesis extends Generator {
 				name: 'themes',
 				message: 'Will the project have multiple themes?',
 				default: false,
+				when: ({type}) => type === 'website',
 			},
 			{
 				name: 'design',
 				message: 'Design URL:',
 				filter: answer => answer.trim(),
+				when: ({type}) => type === 'website',
 			},
 			{
 				name: 'designLibrary',
 				message: 'Design Library URL:',
 				filter: answer => answer.trim(),
+				when: ({type}) => type === 'website',
 			},
 			{
 				name: 'prototypeDesktop',
 				message: 'Desktop Prototype URL:',
 				filter: answer => answer.trim(),
+				when: ({type}) => type === 'website',
 			},
 			{
 				name: 'prototypeMobile',
 				message: 'Mobile Prototype URL:',
 				filter: answer => answer.trim(),
+				when: ({type}) => type === 'website',
 			},
 			{
 				name: 'subdomain',
 				message: 'Subdomain for the development environments:',
-				default: answers => answers.packageName,
+				default: ({packageName}) => packageName,
 				transformer: (answer, {packageName}, {isFinal}) =>
 					previewAnswer(
 						['dev', 'stage']
@@ -214,35 +265,69 @@ export default class Genesis extends Generator {
 						isFinal,
 					),
 				filter: answer => answer.trim(),
+				when: ({type}) => type === 'website',
 			},
 			{
 				name: 'homepage',
 				message: 'Production website:',
-				default: answers => `${answers.packageName}.com`,
+				default: ({packageName}) => `${packageName}.com`,
 				filter: answer => answer.trim(),
+				when: ({type}) => type === 'website',
 			},
 			{
 				name: 'repository',
 				message: 'Repository Name:',
-				default: answers => answers.packageName,
-				transformer: (answer, {packageName}, {isFinal}) =>
+				default: ({type, packageName}) => type === 'npm-package' ? packageName.split('/').at(-1) : packageName,
+				transformer: (answer, {type, packageName}, {isFinal}) =>
 					previewAnswer(
 						[
 							[
 								{
-									text: 'https://dev.azure.com/Bycom/_git/',
+									text: `https://${type === 'npm-package' ? 'github.com/wycreative' : 'dev.azure.com/Bycom/_git'}/`,
 								},
 								{
 									text: answer,
-									default: packageName,
+									default: type === 'npm-package' ? packageName.split('/').at(-1) : packageName,
 								},
 							],
 						],
 						isFinal,
 					),
-				filter: answer => answer.trim(),
+				filter: (answer, {type}) => `https://${type === 'npm-package' ? 'github.com/wycreative' : 'dev.azure.com/Bycom/_git'}/${answer.trim()}`,
 			},
-		]));
+			{
+				type: 'checkbox',
+				name: 'tasks',
+				message: 'Tasks:',
+				choices: conditionalTasks,
+				when: ({type}) => type === 'npm-package',
+				validate(answer) {
+					const requiredIfNoOtherTasks = conditionalTasks.filter(({requiredIfNoOther}) => requiredIfNoOther);
+
+					if (answer.length === 0) {
+						return 'At least one task is required!';
+					}
+
+					if (requiredIfNoOtherTasks.some(({value}) => answer.includes(value)) === false) {
+						return `At least one of the following tasks should be present: ${requiredIfNoOtherTasks.map(({name}) => name).join(', ')}.`;
+					}
+
+					return true;
+				},
+			},
+		])
+			.then(answers => {
+				if (answers.type === 'npm-package') {
+					answers.homepage = `https://wycreative.github.io/${answers.packageName.split('/').at(-1)}`;
+				}
+
+				if (typeof answers.tasks === 'undefined') {
+					answers.tasks = [];
+				}
+
+				return answers;
+			}),
+		);
 
 		this.log(yosay([
 			chalk.green('All questions asked!'),
@@ -269,17 +354,73 @@ export default class Genesis extends Generator {
 	}
 
 
-	async writing() {
+	async writing() { // eslint-disable-line complexity
 		this.renderTemplate('_vscode/**', '.vscode', this.answers);
 
-		this.sourceRoot(resolve(fileURLToPath(new URL('.', import.meta.url)), '../../generators/app/templates/', frontendDirectory));
-		this.env.cwd = this.destinationRoot(frontendDirectory);
-
-		for (const directory of ['config', 'gulp', 'src']) {
-			this.renderTemplate(`./${directory}/**`, `./${directory}`, this.answers);
+		if (this.answers.type === 'website') {
+			this.renderTemplate('_gitignore', '.gitignore', this.answers);
 		}
 
-		this.renderTemplate('../_gitignore', '../.gitignore', this.answers);
+		this.sourceRoot(resolve(fileURLToPath(new URL('.', import.meta.url)), '../../generators/app/templates/', frontendDirectory));
+
+		if (this.answers.type === 'website') {
+			this.env.cwd = this.destinationRoot(frontendDirectory);
+		}
+
+		const ignoredTasks = [];
+
+		if (this.answers.type !== 'website') {
+			ignoredTasks.push(
+				'atlas',
+				'deploy',
+				'fonts',
+				'tokens',
+				...conditionalTasks
+					.filter(({value}) => this.answers.tasks.includes(value) === false)
+					.map(({value}) => value),
+			);
+		}
+
+		for (const directory of ['config', 'gulp', 'src']) {
+			const ignore = [];
+
+			switch (directory) {
+				case 'gulp': {
+					if (this.answers.type !== 'website') {
+						ignore.push(`**/gulp/@(${ignoredTasks.join('|')}).js`);
+					}
+
+					break;
+				}
+
+				case 'src': {
+					if (this.answers.type !== 'website') {
+						ignore.push(`**/src/@(${['backend', ...ignoredTasks].join('|')})/**`);
+					}
+
+					break;
+				}
+
+				// No default
+			}
+
+			this.renderTemplate(`./${directory}/**`, `./${directory}`, this.answers, {}, {
+				ignoreNoMatch: true,
+				globOptions: {
+					ignore: [
+						...ignore,
+						...projectTypes.map(({value}) => `**/${value}/**`),
+					],
+				},
+			});
+
+			this.renderTemplate(`./${directory}/${this.answers.type}/**`, `./${directory}`, this.answers, {}, {
+				ignoreNoMatch: true,
+				globOptions: {
+					ignore,
+				},
+			});
+		}
 
 		for (const file of ['editorconfig', 'gitignore', 'npmrc', 'nvmrc']) {
 			this.renderTemplate(`./_${file}`, `./.${file}`, this.answers);
@@ -289,50 +430,113 @@ export default class Genesis extends Generator {
 		this.renderTemplate('gulpfile.js', 'gulpfile.js', this.answers);
 		this.renderTemplate('README.md', 'README.md', this.answers);
 
+		const ignore = [];
+
+		if (this.answers.type !== 'website') {
+			ignore.push('**/config/atlas/**', `**/src/@(${ignoredTasks.join('|')})/**`);
+		}
+
+		if (!this.answers.themes) {
+			ignore.push('**/themes/website/.gitkeep');
+		}
+
 		this.copyTemplate('**/.gitkeep', './', {
+			ignoreNoMatch: true,
 			globOptions: {
 				ignore: [
-					this.answers.themes ? '' : '**/themes/.gitkeep',
+					...ignore,
+					...projectTypes.map(({value}) => `**/${value}/**`),
 				],
+
 			},
 		});
 
+		for (const directory of ['config', 'gulp', 'src']) {
+			this.copyTemplate(`./${directory}/${this.answers.type}/**/.gitkeep`, `./${directory}`, {
+				ignoreNoMatch: true,
+				globOptions: {
+					ignore,
+				},
+			});
+		}
+
 		const devDependencies = {
-			'@babel/core': '',
-			'@babel/preset-env': '',
-			'@wycreative/atlas': '',
-			'basic-ftp': '',
 			'browser-sync': '',
-			chalk: '',
-			conf: '',
-			cssnano: '',
 			del: '',
-			execa: '',
 			'glob-parent': '',
 			globby: '',
 			gulp: '',
-			'gulp-babel': '',
-			'gulp-imagemin': '',
-			'gulp-plumber': '',
-			'gulp-postcss': '',
-			'gulp-pug': '',
 			'gulp-rename': '',
-			'gulp-rev': '',
-			'gulp-rev-rewrite': '',
-			'gulp-sass': '',
-			'gulp-svgstore': '',
-			'gulp-tap': '',
-			'gulp-uglify-es': '',
-			inquirer: '',
-			jsdom: '',
-			ora: '',
-			postcss: '',
-			'postcss-preset-env': '',
-			sass: '',
-			semver: '',
-			'style-dictionary': '',
 			xo: '',
 		};
+
+		if (this.answers.type === 'website') {
+			Object.assign(devDependencies, {
+				'@wycreative/atlas': '',
+				'basic-ftp': '',
+				chalk: '',
+				conf: '',
+				execa: '',
+				'gulp-rev': '',
+				'gulp-rev-rewrite': '',
+				inquirer: '',
+				ora: '',
+				semver: '',
+				'style-dictionary': '',
+			});
+		}
+
+		if (this.answers.type === 'npm-package') {
+			Object.assign(devDependencies, {
+				np: '',
+			});
+		}
+
+		if (this.answers.type === 'website' || this.answers.tasks.some(task => ['symbols', 'images', 'scripts', 'views'].includes(task))) {
+			Object.assign(devDependencies, {
+				'gulp-plumber': '',
+			});
+		}
+
+		if (this.answers.type === 'website' || this.answers.tasks.some(task => ['symbols', 'images'].includes(task))) {
+			Object.assign(devDependencies, {
+				'gulp-imagemin': '',
+			});
+		}
+
+		if (this.answers.type === 'website' || this.answers.tasks.includes('symbols')) {
+			Object.assign(devDependencies, {
+				'gulp-svgstore': '',
+				'gulp-tap': '',
+				jsdom: '',
+			});
+		}
+
+		if (this.answers.type === 'website' || this.answers.tasks.includes('styles')) {
+			Object.assign(devDependencies, {
+				cssnano: '',
+				'gulp-postcss': '',
+				'gulp-sass': '',
+				postcss: '',
+				'postcss-preset-env': '',
+				sass: '',
+			});
+		}
+
+		if (this.answers.type === 'website' || this.answers.tasks.includes('scripts')) {
+			Object.assign(devDependencies, {
+				'@babel/core': '',
+				'@babel/preset-env': '',
+				'gulp-babel': '',
+				'gulp-uglify-es': '',
+			});
+		}
+
+		if (this.answers.type === 'website' || this.answers.tasks.includes('views')) {
+			Object.assign(devDependencies, {
+				'gulp-pug': '',
+			});
+		}
 
 		// FIXME: Workaround for Yeoman not detecting .npmrc in the generator.
 		//        See: https://github.com/yeoman/generator/issues/1304
@@ -380,7 +584,13 @@ export default class Genesis extends Generator {
 				}
 			});
 
-		this.packageJson.set('devDependencies', devDependencies);
+		const sortedDevDependencies = {};
+
+		for (const name of Object.keys(devDependencies).sort()) {
+			sortedDevDependencies[name] = devDependencies[name];
+		}
+
+		this.packageJson.set('devDependencies', sortedDevDependencies);
 	}
 
 
@@ -400,13 +610,20 @@ export default class Genesis extends Generator {
 			cwd: '.',
 		});
 
-		this.log(yosay([
+		const message = [
 			chalk.green('The project is ready!'),
 			'',
 			'You can start by committing these newly added files.',
-			'',
-			`${chalk.bold('Note:')} Run ${chalk.cyan(`cd ${frontendDirectory}`)} before running any script (I can't do it myself).`,
-		].join('\n'), {
+		];
+
+		if (this.answers.type === 'website') {
+			message.push(
+				'',
+				`${chalk.bold('Note:')} Run ${chalk.cyan(`cd ${frontendDirectory}`)} before running any script (I can't do it myself).`,
+			);
+		}
+
+		this.log(yosay(message.join('\n'), {
 			maxLength: 40,
 		}));
 	}

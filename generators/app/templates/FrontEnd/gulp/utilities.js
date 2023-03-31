@@ -1,4 +1,4 @@
-import {dirname, relative, sep} from 'node:path/posix';
+import {dirname<% if (type === 'website' || (tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task)))) { %>, relative, sep<% } %>} from 'node:path/posix';
 
 import browserSync from 'browser-sync';
 import globParent from 'glob-parent';
@@ -22,6 +22,7 @@ function getDirectory(path, parentLevel = 1) {
 
 	return path;
 }
+<% if (type === 'website' || (tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task)))) { -%>
 
 
 function getRelativePath(path, reference) {
@@ -29,6 +30,8 @@ function getRelativePath(path, reference) {
 
 	return (/^\.?\.\//.test(path) ? '' : `.${path.startsWith(sep) ? '' : sep}`) + path;
 }
+<% } -%>
+<% if (type === 'website') { -%>
 
 
 function formatBytes(bytes, decimals = 2) {
@@ -44,11 +47,16 @@ function formatBytes(bytes, decimals = 2) {
 
 	return Number.parseFloat((bytes / (multiplier ** unitIndex)).toFixed(decimals)) + ' ' + units[unitIndex];
 }
+<% } -%>
 
 
 export {
 	getBrowserSync,
 	getDirectory,
+	<%_ if (type === 'website' || (tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task)))) { -%>
 	getRelativePath,
+	<%_ } -%>
+	<%_ if (type === 'website') { -%>
 	formatBytes,
+	<%_ } -%>
 };

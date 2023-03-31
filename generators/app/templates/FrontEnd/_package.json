@@ -3,8 +3,10 @@
 	"version": "0.0.0",
 	"description": "<%= description %>",
 	"author": "WYcreative Engineering Team",
-	"license": "UNLICENSED",
+	"license": "<% if(type === 'website') { %>UNLICENSED<% } else { %>ISC<% } %>",
+	<%_ if (type === 'website') { -%>
 	"private": true,
+	<%_ } -%>
 	"type": "module",
 	"engines": {
 		"gulp-cli": ">=<%= gulpCliVersion %>",
@@ -16,12 +18,15 @@
 		"serve": "gulp serve",
 		"test": "xo",
 		"dist": "gulp dist",
-		"clean": "gulp clean",
+		"clean": "gulp clean"<% if (type === 'website') { %>,
 		"deploy": "gulp deploy"
+		<%_ } %><% if (type === 'npm-package') { %>,
+		"release": "np"
+		<%_ } -%>
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://dev.azure.com/Bycom/_git/<%= repository %>"
+		"url": "git+<%= repository %>"
 	},
 	"homepage": "<%= homepage %>",
 	"dependencies": {},
@@ -67,6 +72,11 @@
 			]
 		}
 	},
+	<%_ if (type === "npm-package") { -%>
+	"np": {
+		"message": "DIST - v%s"
+	},
+	<%_ } -%>
 	"genesis": {
 		"version": "<%= genesisVersion %>"
 	}

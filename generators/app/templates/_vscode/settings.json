@@ -6,7 +6,9 @@
 	},
 	"files.insertFinalNewline": true,
 	"files.trimFinalNewlines": true,
+	<%_ if (type === 'website') { -%>
 	"terminal.integrated.cwd": "./FrontEnd",
+	<%_ } -%>
 	"todohighlight.include": [
 		"**/*.html",
 		"**/*.pug",

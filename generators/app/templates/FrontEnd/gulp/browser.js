@@ -9,6 +9,7 @@ function build(done) {
 	browserSyncInstance.init({
 		server: config.build.base,
 		ghostMode: false,
+		<%_ if (type === 'website') { -%>
 		middleware: [
 			(request, _, next) => {
 				request.url = request.url.replace('atlas/', '');
@@ -16,6 +17,7 @@ function build(done) {
 				next();
 			},
 		],
+		<%_ } -%>
 	});
 
 	done();

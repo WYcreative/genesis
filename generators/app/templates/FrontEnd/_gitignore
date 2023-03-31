@@ -1,7 +1,9 @@
 node_modules
 build
 dist
+<% if (type === 'website') { -%>
 rev-manifest.json
 config/atlas/tokens/tokens.json
 src/styles/abstracts/_tokens.scss
+<% } -%>
 .DS_Store

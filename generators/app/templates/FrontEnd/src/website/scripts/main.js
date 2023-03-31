@@ -1,3 +1,4 @@
+<% if (type === 'website') { -%>
 /**
  * Instantiates a module.
  *
@@ -48,3 +49,4 @@ const modules = {
 for (const [className, path] of Object.entries(modules)) {
 	instantiateModule(document.querySelectorAll(`.${className}`), path);
 }
+<% } -%>

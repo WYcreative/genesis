@@ -1,15 +1,17 @@
 import {join} from 'node:path/posix';
-import {existsSync, readFileSync} from 'node:fs';
+import {<% if (type === 'website') { %>existsSync, <% } %>readFileSync} from 'node:fs';
 
 import {deleteSync} from 'del';
 import {globbySync, isDynamicPattern} from 'globby';
 import gulp from 'gulp';
 import rename from 'gulp-rename';
+<% if (type === 'website') { -%>
 import rev from 'gulp-rev';
 import revRewrite from 'gulp-rev-rewrite';
+<% } -%>
 
 import config from '../config/index.js';
-import {getDirectory, getRelativePath} from './utilities.js';
+import {getDirectory<% if (type === 'website') { %>, getRelativePath<% } %>} from './utilities.js';
 
 
 const {src, dest} = gulp;
@@ -105,39 +107,49 @@ async function build(done) { // eslint-disable-line complexity
 
 
 function dist() {
+	<%_ if (type === 'website') { -%>
 	const manifest = existsSync(config.revManifest)
 		? readFileSync(config.revManifest)
 		: undefined;
 
+	<%_ } -%>
 	return src(config.build.libs, {
 		base: getDirectory(config.build.libs, 2),
 	})
+		<%_ if (type === 'website') { -%>
 		.pipe(rev())
 		.pipe(revRewrite({
 			manifest,
 			modifyUnreved: (path, {relative}) => getRelativePath(path, relative),
 			modifyReved: (path, {relative}) => getRelativePath(path, relative),
 		}))
-		.pipe(dest(getDirectory(config.dist.libs, 2)))
+		<%_ } -%>
+		.pipe(dest(getDirectory(config.dist.libs, 2)))<% if (type === 'website') { %>
 		.pipe(rev.manifest({
 			merge: true,
 		}))
-		.pipe(dest(getDirectory(config.revManifest)));
+		.pipe(dest(getDirectory(config.revManifest)))<% } %>;
 }
+<% if (type === 'website') { -%>
 
 
 function backend() {
 	return src(config.dist.libs)
 		.pipe(dest(getDirectory(config.backend.libs)));
 }
+<% } -%>
 
 
 build.displayName = 'build:libs';
 dist.displayName = 'dist:libs';
+<% if (type === 'website') { -%>
 backend.displayName = 'backend:libs';
+<% } -%>
 
 export {
 	build,
 	dist,
+	<%_ if (type === 'website') { -%>
 	backend,
+	<%_ } -%>
 };

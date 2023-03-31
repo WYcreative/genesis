@@ -25,7 +25,12 @@ Command | Description
 `npm test` | Checks for code-style issues.
 `npm run dist` | Prepares de built code for distribution.
 `npm run clean` | Deletes the compiled code in `build` and `dist` directories.
+<% if (type === 'website') { -%>
 `npm run deploy` | Runs the whole build and distribution process, prepares a release, and deploys the project.
+<% } -%>
+<% if (type === 'npm-package') { -%>
+`npm run release` | Runs the release process and publishes to the registry.
+<% } -%>
 
 ## Genesis
 
