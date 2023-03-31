@@ -66,9 +66,7 @@
 			]
 		},
 		"ignores": [
-			"generators/app/templates/FrontEnd/config/index.js",
-			"generators/app/templates/FrontEnd/config/atlas/index.js",
-			"generators/app/templates/FrontEnd/src/**"
+			"generators/app/templates/**"
 		]
 	},
 	"np": {
