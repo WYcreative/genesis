@@ -37,14 +37,14 @@
 		"@sindresorhus/slugify": "^2.2.0",
 		"chalk": "^5.2.0",
 		"package-json": "^8.1.0",
-		"semver": "^7.3.8",
+		"semver": "^7.5.0",
 		"validate-npm-package-name": "^5.0.0",
 		"yeoman-generator": "^5.8.0",
 		"yosay": "^2.0.2"
 	},
 	"devDependencies": {
 		"np": "^7.7.0",
-		"xo": "^0.53.1"
+		"xo": "^0.54.1"
 	},
 	"xo": {
 		"rules": {
