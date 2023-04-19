@@ -70,6 +70,9 @@ const conditionalTasks = [
 	{
 		name: 'Symbols',
 		value: 'symbols',
+		dependencies: [
+			'images',
+		],
 	},
 	{
 		name: 'Images',
@@ -376,7 +379,9 @@ export default class Genesis extends Generator {
 				'fonts',
 				'tokens',
 				...conditionalTasks
-					.filter(({value}) => this.answers.tasks.includes(value) === false)
+					.filter(({value}) =>
+						this.answers.tasks.includes(value) === false,
+					)
 					.map(({value}) => value),
 			);
 		}
@@ -386,8 +391,15 @@ export default class Genesis extends Generator {
 
 			switch (directory) {
 				case 'gulp': {
+					const ignoredTasksWithoutDependencies = [...ignoredTasks]
+						.filter(task =>
+							conditionalTasks.some(({dependencies}) =>
+								dependencies?.includes(task) === false,
+							),
+						);
+
 					if (this.answers.type !== 'website') {
-						ignore.push(`**/gulp/@(${ignoredTasks.join('|')}).js`);
+						ignore.push(`**/gulp/@(${ignoredTasksWithoutDependencies.join('|')}).js`);
 					}
 
 					break;

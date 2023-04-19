@@ -4,8 +4,10 @@ import {basename, extname} from 'node:path/posix';
 
 <% } -%>
 import gulp from 'gulp';
+<% if (type === 'website' || tasks.includes('images')) { -%>
 import plumber from 'gulp-plumber';
 import imagemin from 'gulp-imagemin';
+<% } -%>
 <% if (type === 'website') { -%>
 import rev from 'gulp-rev';
 import rename from 'gulp-rename';
@@ -18,6 +20,7 @@ import {getDirectory<% if (type === 'website') { %>, getRelativePath<% } %>} fro
 
 
 const {src, dest} = gulp;
+<% if (type === 'website' || tasks.includes('images')) { -%>
 
 
 function build() {
@@ -26,6 +29,7 @@ function build() {
 		.pipe(imagemin())
 		.pipe(dest(getDirectory(config.build.images)));
 }
+<%_ } -%>
 
 
 function dist() {
@@ -66,14 +70,18 @@ function backend() {
 <% } -%>
 
 
+<% if (type === 'website' || tasks.includes('images')) { -%>
 build.displayName = 'build:images';
+<% } -%>
 dist.displayName = 'dist:images';
 <% if (type === 'website') { -%>
 backend.displayName = 'backend:images';
 <% } -%>
 
 export {
+	<%_ if (type === 'website' || tasks.includes('images')) { -%>
 	build,
+	<%_ } -%>
 	dist,
 	<%_ if (type === 'website') { -%>
 	backend,
