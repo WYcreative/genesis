@@ -4,6 +4,7 @@ import {join} from 'node:path/posix';
 import StyleDictionary from 'style-dictionary';
 
 import config from '../config/index.js';
+
 import {getDirectory} from './utilities.js';
 
 
@@ -50,7 +51,7 @@ StyleDictionary.registerTransform({
 	name: 'wycreative/size/px',
 	type: 'value',
 	matcher: token =>
-		typeof token.unit === 'undefined'
+		token.unit === undefined
 		&& token.type === 'dimension'
 		&& token.value !== 0
 		&& token.path.at(-1) !== 'lineHeight',
@@ -63,7 +64,7 @@ StyleDictionary.registerTransform({
 	name: 'wycreative/size/line-height',
 	type: 'value',
 	matcher: token =>
-		typeof token.unit === 'undefined'
+		token.unit === undefined
 		&& token.type === 'dimension'
 		&& token.value !== 0
 		&& token.path.at(-1) === 'lineHeight',

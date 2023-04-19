@@ -6,6 +6,7 @@ import {globbySync} from 'globby';
 import gulp from 'gulp';
 
 import config from '../config/index.js';
+
 import {getDirectory} from './utilities.js';
 
 const {src, dest} = gulp;
@@ -31,7 +32,7 @@ async function build(done) {
 		const type = dirname(relative(root, file)).split(sep)[0];
 		const {default: value} = await import(`${join('..', file)}?t=${Date.now()}`); // eslint-disable-line no-await-in-loop
 
-		if (typeof atlas[type] === 'undefined') {
+		if (atlas[type] === undefined) {
 			atlas[type] = [];
 		}
 

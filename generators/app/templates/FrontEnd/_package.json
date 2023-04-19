@@ -60,6 +60,12 @@
 				"max": 3
 				}
 			],
+			"import/order": [
+				"error",
+				{
+					"newlines-between": "always"
+				}
+			],
 			"no-console": [
 				"error",
 				{

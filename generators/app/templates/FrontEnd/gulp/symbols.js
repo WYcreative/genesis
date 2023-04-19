@@ -11,6 +11,7 @@ import svgstore from 'gulp-svgstore';
 import rename from 'gulp-rename';
 
 import config from '../config/index.js';
+
 import {getDirectory} from './utilities.js';
 
 

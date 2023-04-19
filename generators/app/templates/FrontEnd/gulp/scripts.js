@@ -12,6 +12,7 @@ import revRewrite from 'gulp-rev-rewrite';
 <% } -%>
 
 import config from '../config/index.js';
+
 import {getDirectory<% if (type === 'website') { %>, getRelativePath<% } -%>} from './utilities.js';
 
 

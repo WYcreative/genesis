@@ -1,6 +1,7 @@
 import gulp from 'gulp';
 
 import config from '../config/index.js';
+
 <% if (type === 'website') { -%>
 import * as fonts from './fonts.js';
 <% } -%>

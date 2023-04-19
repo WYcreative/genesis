@@ -5,6 +5,7 @@ import rev from 'gulp-rev';
 import revRewrite from 'gulp-rev-rewrite';
 
 import config from '../config/index.js';
+
 import {getDirectory, getRelativePath} from './utilities.js';
 
 

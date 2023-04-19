@@ -321,7 +321,7 @@ export default class Genesis extends Generator {
 					answers.homepage = `https://wycreative.github.io/${answers.packageName.split('/').at(-1)}`;
 				}
 
-				if (typeof answers.tasks === 'undefined') {
+				if (answers.tasks === undefined) {
 					answers.tasks = [];
 				}
 

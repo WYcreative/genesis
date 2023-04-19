@@ -15,6 +15,7 @@ import revRewrite from 'gulp-rev-rewrite';
 <% } -%>
 
 import config from '../config/index.js';
+
 import {getBrowserSync, getDirectory<% if (type === 'website') { %>, getRelativePath<% } %>} from './utilities.js';
 
 

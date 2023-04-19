@@ -17,7 +17,7 @@ mixin symbol(file, id, width, height)
 	if ['undefined', 'number'].includes(typeof id) || /^\.?\d/.test(id)
 		- [file, id, width, height] = [undefined, file, id, width]
 
-	if typeof file === 'undefined'
+	if file === undefined
 		- file = 'symbols'
 
 	if /^\.{0,2}\//.test(file) === false
@@ -26,7 +26,7 @@ mixin symbol(file, id, width, height)
 	if file.endsWith('.svg') === false
 		- file += '.svg'
 
-	if typeof width !== 'undefined' && typeof height === 'undefined'
+	if width !== undefined && height === undefined
 		- height = width
 
 	each value, name in {width, height}
