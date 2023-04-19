@@ -387,19 +387,30 @@ export default class Genesis extends Generator {
 		}
 
 		for (const directory of ['config', 'gulp', 'src']) {
-			const ignore = [];
+			const globalIgnore = projectTypes.map(({value}) => `**/${value}/**`);
+			const typeIgnore = [];
 
 			switch (directory) {
-				case 'gulp': {
-					const ignoredTasksWithoutDependencies = [...ignoredTasks]
-						.filter(task =>
-							conditionalTasks.some(({dependencies}) =>
-								dependencies?.includes(task) === false,
-							),
-						);
-
+				case 'config': {
 					if (this.answers.type !== 'website') {
-						ignore.push(`**/gulp/@(${ignoredTasksWithoutDependencies.join('|')}).js`);
+						typeIgnore.push(`**/${directory}/${this.answers.type}/@(${ignoredTasks.join('|')})/**`);
+					}
+
+					break;
+				}
+
+				case 'gulp': {
+					if (this.answers.type !== 'website') {
+						const ignoredTasksWithoutDependencies = [...ignoredTasks]
+							.filter(task =>
+								conditionalTasks.some(({dependencies}) =>
+									dependencies?.includes(task) === false,
+								),
+							);
+
+						globalIgnore.push(`**/gulp/@(${ignoredTasksWithoutDependencies.join('|')}).js`);
+
+						typeIgnore.push(`**/${directory}/${this.answers.type}/@(${ignoredTasksWithoutDependencies.join('|')}).js`);
 					}
 
 					break;
@@ -407,7 +418,9 @@ export default class Genesis extends Generator {
 
 				case 'src': {
 					if (this.answers.type !== 'website') {
-						ignore.push(`**/src/@(${['backend', ...ignoredTasks].join('|')})/**`);
+						globalIgnore.push(`**/src/@(${['backend', ...ignoredTasks].join('|')})/**`);
+
+						typeIgnore.push(`**/${directory}/${this.answers.type}/@(${ignoredTasks.join('|')})/**`);
 					}
 
 					break;
@@ -419,17 +432,14 @@ export default class Genesis extends Generator {
 			this.renderTemplate(`./${directory}/**`, `./${directory}`, this.answers, {}, {
 				ignoreNoMatch: true,
 				globOptions: {
-					ignore: [
-						...ignore,
-						...projectTypes.map(({value}) => `**/${value}/**`),
-					],
+					ignore: globalIgnore,
 				},
 			});
 
 			this.renderTemplate(`./${directory}/${this.answers.type}/**`, `./${directory}`, this.answers, {}, {
 				ignoreNoMatch: true,
 				globOptions: {
-					ignore,
+					ignore: typeIgnore,
 				},
 			});
 		}
