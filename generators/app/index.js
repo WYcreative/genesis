@@ -296,7 +296,7 @@ export default class Genesis extends Generator {
 						],
 						isFinal,
 					),
-				filter: (answer, {type}) => `https://${type === 'npm-package' ? 'github.com/wycreative' : 'dev.azure.com/Bycom/_git'}/${answer.trim()}`,
+				filter: answer => answer.trim(),
 			},
 			{
 				type: 'checkbox',

@@ -26,7 +26,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+<%= repository %>"
+		"url": "git+<%= `https://${type === 'npm-package' ? 'github.com/wycreative' : 'dev.azure.com/Bycom/_git'}/${repository}` %>"
 	},
 	"homepage": "<%= homepage %>",
 	"dependencies": {},
