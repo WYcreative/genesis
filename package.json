@@ -1,6 +1,6 @@
 {
 	"name": "@wycreative/generator-genesis",
-	"version": "1.4.1",
+	"version": "1.4.2",
 	"description": "Genesis, the WYcreative Engineering Team Front-End project generator.",
 	"keywords": [
 		"yeoman-generator"
