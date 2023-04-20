@@ -433,6 +433,7 @@ export default class Genesis extends Generator {
 				ignoreNoMatch: true,
 				globOptions: {
 					ignore: globalIgnore,
+					dot: true, // HACK: Workaround for ignored files work as expected when inside nvm.
 				},
 			});
 
@@ -440,6 +441,7 @@ export default class Genesis extends Generator {
 				ignoreNoMatch: true,
 				globOptions: {
 					ignore: typeIgnore,
+					dot: true, // HACK: Workaround for ignored files work as expected when inside nvm.
 				},
 			});
 		}
@@ -469,7 +471,7 @@ export default class Genesis extends Generator {
 					...ignore,
 					...projectTypes.map(({value}) => `**/${value}/**`),
 				],
-
+				dot: true, // HACK: Workaround for ignored files work as expected when inside nvm.
 			},
 		});
 
@@ -478,6 +480,7 @@ export default class Genesis extends Generator {
 				ignoreNoMatch: true,
 				globOptions: {
 					ignore,
+					dot: true, // HACK: Workaround for ignored files work as expected when inside nvm.
 				},
 			});
 		}
