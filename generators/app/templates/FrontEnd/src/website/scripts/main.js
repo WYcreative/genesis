@@ -30,23 +30,23 @@ function instantiateModule(elements, path) {
 // =============================================================================
 
 // List of modules.
-// These identify both the module class and the file name.
+// These identify both the module selector and the file name.
 // -----------------------------------------------------------------------------
 const modules = {
 	// High Priority
-	// 'class': './filename.js',
+	// 'selector': './filename.js',
 
 	// Medium Priority
-	// 'class': './filename.js',
+	// 'selector': './filename.js',
 
 	// Low Priority
-	// 'class': './filename.js',
+	// 'selector': './filename.js',
 };
 
 
 // Initiate instantiation.
 // -----------------------------------------------------------------------------
-for (const [className, path] of Object.entries(modules)) {
-	instantiateModule(document.querySelectorAll(`.${className}`), path);
+for (const [selector, path] of Object.entries(modules)) {
+	instantiateModule(document.querySelectorAll(selector), path);
 }
 <% } -%>
