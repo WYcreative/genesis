@@ -21,6 +21,20 @@ function previewAnswer(templates, isFinal) {
 }
 
 
+
+function parseList(list) {
+	list = list
+		.split(/[,\r\n\f]+/)
+		.map(item => item.replace(/\s+/g, ' ').trim())
+		.filter(item => item.length > 0)
+		.sort();
+
+	return [...new Set(list)];
+}
+
+
+
 export {
 	previewAnswer,
+	parseList,
 };

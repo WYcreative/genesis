@@ -13,7 +13,7 @@ import slugify from '@sindresorhus/slugify';
 import validatePackageName from 'validate-npm-package-name';
 import packageJson from 'package-json';
 
-import {previewAnswer} from './utilities.js';
+import {previewAnswer, parseList} from './utilities.js';
 
 
 // TODO: Use import assertions once they become stable.
@@ -216,6 +216,22 @@ export default class Genesis extends Generator {
 				filter: answer => answer.trim(),
 			},
 			{
+				name: 'keywords',
+				message: 'Keywords:',
+				transformer(answer, _, {isFinal}) {
+					if (isFinal) {
+						answer = parseList(answer)
+							.map(keyword => chalk.cyan(keyword))
+							.join(', ');
+					} else {
+						answer = `${answer.length === 0 ? chalk.reset.dim('(Use comma as separator) ') : ''}${answer}`;
+					}
+
+					return answer;
+				},
+				when: ({type}) => type === 'npm-package',
+			},
+			{
 				type: 'confirm',
 				name: 'themes',
 				message: 'Will the project have multiple themes?',
@@ -343,6 +359,10 @@ export default class Genesis extends Generator {
 
 
 	configuring() {
+		if (this.answers.keywords) {
+			this.answers.keywords = JSON.stringify(parseList(this.answers.keywords));
+		}
+
 		for (const [engine, {version, minimum}] of Object.entries(versions)) {
 			const minimumVersion = semver.coerce(minimum);
 
