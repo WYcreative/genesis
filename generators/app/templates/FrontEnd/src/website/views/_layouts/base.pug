@@ -22,7 +22,12 @@ html(lang="en" dir="ltr")
 		block scripts-head
 
 	body
-		block body
+		block header
+
+		main.main#main
+			block main
+
+		block footer
 
 		block scripts
 			script(src="/atlas/examples/assets/scripts/main.js" type="module")
