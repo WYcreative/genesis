@@ -1,0 +1,25 @@
+@use "../abstracts"
+
+
+
+// =============================================================================
+// Skip Link
+// =============================================================================
+
+.skip-link
+	position: absolute
+	top: 0
+
+	&:not(:focus)
+		border: 0
+		width: 1px
+		height: 1px
+		margin: -1px
+		padding: 0
+		position: absolute
+		white-space: nowrap
+		overflow: hidden
+		clip: rect(1px, 1px, 1px, 1px)
+		clip-path: inset(100%)
+		pointer-events: none
+		user-select: none
