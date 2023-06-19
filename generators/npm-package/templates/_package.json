@@ -1,0 +1,82 @@
+{
+	"name": "<%= packageName %>",
+	"version": "0.0.0",
+	"description": "<%= description %>",
+	"keywords": <%- keywords %>,
+	"author": "WYcreative Engineering Team",
+	"license": "ISC",
+	"type": "module",
+	"engines": {
+		"gulp-cli": ">=<%= gulpCliVersion %>",
+		"node": ">=<%= nodeVersion %>",
+		"npm": ">=<%= npmVersion %>"
+	},
+	"scripts": {
+		"start": "gulp",
+		"serve": "gulp serve",
+		"test": "xo",
+		"dist": "gulp dist",
+		"clean": "gulp clean",
+		"release": "np"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+<%= `https://github.com/wycreative/${repository}` %>"
+	},
+	"homepage": "https://wycreative.github.io/<%= repository %>",
+	"dependencies": {},
+	"devDependencies": {},
+	"browserslist": [
+		"defaults and last 2 years",
+		"not op_mob >= 0"
+	],
+	"babel": {
+		"presets": [
+			[
+				"@babel/env",
+				{
+					"modules": false
+				}
+			]
+		],
+		"only": [
+			"./@(config|data|src)/**"
+		]
+	},
+	"xo": {
+		"envs": [
+			"browser",
+			"node"
+		],
+		"rules": {
+			"no-multiple-empty-lines": [
+				"warn",
+				{
+				"max": 3
+				}
+			],
+			"import/order": [
+				"error",
+				{
+					"newlines-between": "always"
+				}
+			],
+			"no-console": [
+				"error",
+				{
+					"allow": [
+						"info",
+						"warn",
+						"error"
+					]
+				}
+			]
+		}
+	},
+	"np": {
+		"message": "DIST - v%s"
+	},
+	"genesis": {
+		"version": "<%= genesisVersion %>"
+	}
+}

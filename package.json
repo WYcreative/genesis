@@ -6,17 +6,18 @@
 		"yeoman-generator"
 	],
 	"type": "module",
-	"exports": "./generators/app/index.js",
+	"exports": "./index.js",
 	"engines": {
 		"gulp-cli": ">=2.3",
-		"node": ">=18.12",
-		"npm": ">=8.6"
+		"node": ">=18.16",
+		"npm": ">=9.5"
 	},
 	"scripts": {
 		"test": "xo",
 		"release": "np"
 	},
 	"files": [
+		"index.js",
 		"generators",
 		".npmrc"
 	],
@@ -72,7 +73,7 @@
 			]
 		},
 		"ignores": [
-			"generators/app/templates/**"
+			"generators/*/templates/**"
 		]
 	},
 	"np": {

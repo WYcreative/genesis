@@ -1,0 +1,106 @@
+{
+	// =============================================================================
+	// VS Code Settings
+	// =============================================================================
+
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
+	"files.eol": "\n",
+	"files.exclude": {
+		"node_modules": true,
+		"package-lock.json": true,
+	},
+	"files.insertFinalNewline": true,
+	"files.readonlyInclude": {
+		"node_modules/**": true,
+		"package-lock.json": true,
+		"build/**": true,
+		"dist/**": true,
+	},
+	"files.trimFinalNewlines": true,
+	"files.trimTrailingWhitespace": true,
+
+
+	// Markdown overrides
+	// -----------------------------------------------------------------------------
+	"[markdown]": {
+		"files.trimTrailingWhitespace": false,
+	},
+
+
+
+	// =============================================================================
+	// Extensions' Settings
+	// =============================================================================
+
+	"todohighlight.include": [
+		"**/*.html",
+		"**/*.pug",
+		"**/*.css",
+		"**/*.sass",
+		"**/*.scss",
+		"**/*.js",
+	],
+	"todohighlight.keywords": [
+		{
+			"text": "TODO",
+			"color": "#fff",
+			"backgroundColor": "#ffbd2a",
+			"overviewRulerColor": "#ffbd2acc",
+		},
+		{
+			"text": "@todo",
+			"color": "#fff",
+			"backgroundColor": "#ffbd2a",
+			"overviewRulerColor": "#ffbd2acc",
+		},
+		{
+			"text": "FIXME",
+			"color": "#fff",
+			"backgroundColor": "#f06292",
+			"overviewRulerColor": "#f06292cc",
+		},
+		{
+			"text": "@fixme",
+			"color": "#fff",
+			"backgroundColor": "#f06292",
+			"overviewRulerColor": "#f06292cc",
+		},
+		{
+			"text": "DEPRECATED",
+			"color": "#fff",
+			"backgroundColor": "#d54e53",
+			"overviewRulerColor": "#d54e53cc",
+		},
+		{
+			"text": "@deprecated",
+			"color": "#fff",
+			"backgroundColor": "#d54e53",
+			"overviewRulerColor": "#d54e53cc",
+		},
+		{
+			"text": "REVIEW",
+			"color": "#fff",
+			"backgroundColor": "#e78c45",
+			"overviewRulerColor": "#e78c45cc",
+		},
+		{
+			"text": "@review",
+			"color": "#fff",
+			"backgroundColor": "#e78c45",
+			"overviewRulerColor": "#e78c45cc",
+		},
+		{
+			"text": "HACK",
+			"color": "#fff",
+			"backgroundColor": "#c397d8",
+			"overviewRulerColor": "#c397d8cc",
+		},
+		{
+			"text": "@hack",
+			"color": "#fff",
+			"backgroundColor": "#c397d8",
+			"overviewRulerColor": "#c397d8cc",
+		},
+	],
+}

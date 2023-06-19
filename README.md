@@ -2,8 +2,8 @@
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/en/) 18.12 or later
-- [npm](https://www.npmjs.com/) 8.6 or later
+- [Node.js](https://nodejs.org/en/) 18.16 or later
+- [npm](https://www.npmjs.com/) 9.5 or later
 - [Yeoman](https://yeoman.io/) 4.3 or later
 
 ## Installation

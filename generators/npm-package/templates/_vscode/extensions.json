@@ -1,0 +1,10 @@
+{
+	"recommendations": [
+		"EditorConfig.EditorConfig",
+		"samverschueren.linter-xo",
+		<%_ if (tasks.includes('styles')) { -%>
+		"syler.sass-indented",
+		<%_ } -%>
+		"wayou.vscode-todo-highlight"
+	]
+}

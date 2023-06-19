@@ -1,0 +1,77 @@
+{
+	"Heading 1 Comment": {
+		"prefix": "//1",
+		"scope": "sass,scss,js,javascript",
+		"body": [
+			"",
+			"",
+			"// =============================================================================",
+			"// $1",
+			"// =============================================================================",
+			"",
+			"$0"
+		],
+		"description": "Heading 1 Comment"
+	},
+	"Heading 2 Comment": {
+		"prefix": "//2",
+		"scope": "sass,scss,js,javascript",
+		"body": [
+			"",
+			"// $1",
+			"// -----------------------------------------------------------------------------",
+			"$0"
+		],
+		"description": "Heading 2 Comment"
+	},
+	"Heading 1 Pug Comment": {
+		"prefix": "//1",
+		"scope": "jade,pug",
+		"body": [
+			"",
+			"",
+			"//- ============================================================================",
+			"//- $1",
+			"//- ============================================================================",
+			"",
+			"$0"
+		],
+		"description": "Heading 1 Comment"
+	},
+	"Heading 2 Pug Comment": {
+		"prefix": "//2",
+		"scope": "jade,pug",
+		"body": [
+			"",
+			"//- $1",
+			"//- ----------------------------------------------------------------------------",
+			"$0"
+		],
+		"description": "Heading 2 Comment"
+	},
+	"Heading 1 Hash Comment": {
+		"prefix": "//1",
+		"scope": "gitignore,gitattributes,dockerignore,editorconfig,env,template",
+		"body": [
+			"",
+			"",
+			"# ==============================================================================",
+			"# $1",
+			"# ==============================================================================",
+			"",
+			"$0"
+		],
+		"description": "Heading 1 Comment"
+	},
+	"Heading 2 Hash Comment": {
+		"prefix": "//2",
+		"scope": "gitignore,gitattributes,dockerignore,editorconfig,env,template",
+		"body": [
+			"",
+			"# $1",
+			"# ------------------------------------------------------------------------------",
+			"$0"
+		],
+		"description": "Heading 2 Comment"
+	}
+}
