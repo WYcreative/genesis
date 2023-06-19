@@ -30,9 +30,6 @@
 	"bugs": {
 		"url": "https://github.com/WYcreative/genesis/issues"
 	},
-	"publishConfig": {
-		"registry": "https://npm.pkg.github.com"
-	},
 	"homepage": "https://github.com/WYcreative/genesis#readme",
 	"dependencies": {
 		"@sindresorhus/slugify": "^2.2.0",

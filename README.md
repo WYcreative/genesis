@@ -8,9 +8,6 @@
 
 ## Installation
 
-Due to this package being private, npm has to retrieve it from GitHub Packages registry instead of npm's.
-For that to be possible, a [personal access token](https://github.com/settings/tokens) with `read:packages` scope is required. Read [GitHub's documentation](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token) for additional information.
-
 ``` shell
 npm install --global @wycreative/generator-genesis
 ```
