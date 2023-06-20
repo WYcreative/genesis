@@ -1,8 +1,9 @@
 import {createRequire} from 'node:module';
 
+import chalk from 'chalk';
 import Generator from 'yeoman-generator';
 
-import {intro} from '../_common/utilities.js';
+import {intro, say} from '../_common/utilities.js';
 
 
 
@@ -34,5 +35,16 @@ export default class Genesis extends Generator {
 					createRequire(import.meta.url).resolve(`../${type}/index.js`),
 				);
 			});
+	}
+
+	install() {
+		say(
+			[
+				chalk.green('Installing dependencies!'),
+				'',
+				'Please wait...',
+			],
+			this,
+		);
 	}
 }

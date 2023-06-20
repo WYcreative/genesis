@@ -160,16 +160,19 @@ export default class websiteGenesis extends Generator {
 
 	/**
 	 * Install the dependencies and inform the user about it.
+	 * Skip message if this generator is called from a parent.
 	 */
 	install() {
-		say(
-			[
-				chalk.green('Installing dependencies!'),
-				'',
-				'Please wait...',
-			],
-			this,
-		);
+		if (this.options.initialGenerator) {
+			say(
+				[
+					chalk.green('Installing dependencies!'),
+					'',
+					'Please wait...',
+				],
+				this,
+			);
+		}
 	}
 
 
