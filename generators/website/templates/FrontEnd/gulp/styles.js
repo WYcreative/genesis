@@ -12,7 +12,7 @@ import revRewrite from 'gulp-rev-rewrite';
 
 import config from '../config/index.js';
 
-import {getBrowserSync, getDirectory, getRelativePath} from './utilities.js';
+import {getBrowserSync, getDirectory, getRelativePath, resolveTildePath} from './utilities.js';
 
 
 
@@ -24,7 +24,13 @@ const {reload} = getBrowserSync();
 
 function build() {
 	return src(config.src.styles)
-		.pipe(sass().on('error', sass.logError))
+		.pipe(sass({
+			importer: [
+				(url, filename) => url.startsWith('~')
+					? {file: resolveTildePath(url, filename, 'sass')}
+					: null,
+			],
+		}).on('error', sass.logError))
 		.pipe(postcss([
 			presetEnv(),
 		]))

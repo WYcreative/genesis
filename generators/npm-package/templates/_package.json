@@ -6,6 +6,30 @@
 	"author": "WYcreative Engineering Team",
 	"license": "ISC",
 	"type": "module",
+	"exports": {
+		".": {
+			<%_ if (tasks.includes('styles')) { -%>
+			"sass": "./src/styles/index.sass"<% if (tasks.includes('views') || tasks.includes('scripts')) { %>,<% } -%>
+			<%_ } -%>
+			<%_ if (tasks.includes('views')) { -%>
+			"pug": "./src/views/index.pug"<% if (tasks.includes('scripts')) { %>,<% } -%>
+			<%_ } -%>
+			<%_ if (tasks.includes('scripts')) { -%>
+			"default": "./src/scripts/index.js"
+			<%_ } -%>
+		},
+		"./*": {
+			<%_ if (tasks.includes('styles')) { -%>
+			"sass": "./src/styles/*"<% if (tasks.includes('views') || tasks.includes('scripts')) { %>,<% } -%>
+			<%_ } -%>
+			<%_ if (tasks.includes('views')) { -%>
+			"pug": "./src/views/*"<% if (tasks.includes('scripts')) { %>,<% } -%>
+			<%_ } -%>
+			<%_ if (tasks.includes('scripts')) { -%>
+			"default": "./src/scripts/*.js"
+			<%_ } -%>
+		}
+	},
 	"engines": {
 		"gulp-cli": ">=<%= gulpCliVersion %>",
 		"node": ">=<%= nodeVersion %>",

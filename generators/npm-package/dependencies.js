@@ -43,6 +43,13 @@ async function getDevDependencies(tasks, generator) {
 		});
 	}
 
+	if (tasks.some(task => ['styles', 'views'].includes(task))) {
+		Object.assign(devDependencies, {
+			'read-pkg-up': '',
+			'resolve.exports': '',
+		});
+	}
+
 	if (tasks.includes('styles')) {
 		Object.assign(devDependencies, {
 			cssnano: '',
@@ -60,6 +67,12 @@ async function getDevDependencies(tasks, generator) {
 			'@babel/preset-env': '',
 			'gulp-babel': '',
 			'gulp-uglify-es': '',
+		});
+	}
+
+	if (tasks.includes('views')) {
+		Object.assign(devDependencies, {
+			'pug-walk': '',
 		});
 	}
 

@@ -38,7 +38,20 @@ async function build(done) { // eslint-disable-line complexity
 		let {files, exports, main, browser} = JSON.parse(readFileSync(join('node_modules', dependency, 'package.json')));
 
 		files = typeof exports === 'object' && exports !== null && Array.isArray(exports) === false
-			? Object.values(exports)
+			? (
+				Object.values(exports).some(item => typeof item !== 'string')
+					? Object.entries(exports).filter(([key, _]) =>
+						[
+							'import',
+							'require',
+							'module',
+							'style',
+							'browser',
+							'default',
+						].includes(key),
+					).map(([_, value]) => value)
+					: Object.values(exports)
+			)
 			: exports || files || main || browser || 'index.js';
 
 		files = globbySync(files, {

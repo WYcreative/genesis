@@ -1,7 +1,10 @@
-import {dirname, relative, sep} from 'node:path/posix';
+import {dirname, join, relative, sep} from 'node:path/posix';
+import {cwd} from 'node:process';
 
 import browserSync from 'browser-sync';
 import globParent from 'glob-parent';
+import {readPackageUpSync} from 'read-pkg-up';
+import {resolve} from 'resolve.exports';
 
 import config from '../config/index.js';
 
@@ -51,9 +54,37 @@ function formatBytes(bytes, decimals = 2) {
 
 
 
+function resolveTildePath(url, filename, language) {
+	const {groups: {packagePath}} = url.match(/^~(?<packagePath>(?!@).+?(?=\/|$)|@(?:.+?(?=\/|$)){2})/);
+
+	url = url.slice(url.startsWith('~/') ? 2 : 1);
+
+	const {packageJson} = readPackageUpSync({
+		cwd: join(cwd(), 'node_modules', url),
+	});
+
+	let newPath = resolve(packageJson, url, {
+		conditions: [language],
+	});
+
+	if (Array.isArray(newPath)) {
+		newPath = newPath[0];
+	}
+
+	newPath = relative(
+		dirname(filename),
+		join(cwd(), 'node_modules', packagePath, newPath),
+	);
+
+	return newPath;
+}
+
+
+
 export {
 	getBrowserSync,
 	getDirectory,
 	getRelativePath,
 	formatBytes,
+	resolveTildePath,
 };

@@ -1,7 +1,14 @@
-import {dirname<% if (tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task))) { %>, relative, sep<% } %>} from 'node:path/posix';
+import {dirname<% if (tasks.some(task => ['styles', 'views'].includes(task))) { %>, join<% } %>, relative<% if (tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task))) { %>, sep<% } %>} from 'node:path/posix';
+<% if (tasks.some(task => ['styles', 'views'].includes(task))) { -%>
+import {cwd} from 'node:process';
+<% } -%>
 
 import browserSync from 'browser-sync';
 import globParent from 'glob-parent';
+<% if (tasks.some(task => ['styles', 'views'].includes(task))) { -%>
+import {readPackageUpSync} from 'read-pkg-up';
+import {resolve} from 'resolve.exports';
+<% } -%>
 
 import config from '../config/index.js';
 
@@ -34,6 +41,35 @@ function getRelativePath(path, reference) {
 	return (/^\.?\.\//.test(path) ? '' : `.${path.startsWith(sep) ? '' : sep}`) + path;
 }
 <% } -%>
+<% if (tasks.some(task => ['styles', 'views'].includes(task))) { -%>
+
+
+
+function resolveTildePath(url, filename, language) {
+	const {groups: {packagePath}} = url.match(/^~(?<packagePath>(?!@).+?(?=\/|$)|@(?:.+?(?=\/|$)){2})/);
+
+	url = url.slice(url.startsWith('~/') ? 2 : 1);
+
+	const {packageJson} = readPackageUpSync({
+		cwd: join(cwd(), 'node_modules', url),
+	});
+
+	let newPath = resolve(packageJson, url, {
+		conditions: [language],
+	});
+
+	if (Array.isArray(newPath)) {
+		newPath = newPath[0];
+	}
+
+	newPath = relative(
+		dirname(filename),
+		join(cwd(), 'node_modules', packagePath, newPath),
+	);
+
+	return newPath;
+}
+<% } -%>
 
 
 
@@ -42,5 +78,8 @@ export {
 	getDirectory,
 	<%_ if (tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task))) { -%>
 	getRelativePath,
+	<%_ } -%>
+	<%_ if (tasks.some(task => ['styles', 'views'].includes(task))) { -%>
+	resolveTildePath,
 	<%_ } -%>
 };
