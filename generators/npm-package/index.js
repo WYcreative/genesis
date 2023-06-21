@@ -188,9 +188,16 @@ export default class npmPackageGenesis extends Generator {
 	end() {
 		// Initiate repository.
 		// -----------------------------------------------------------------------------
-		this.spawnCommandSync('git', ['init', '--quiet'], {
-			cwd: '.',
-		});
+		this.spawnCommandSync('git',
+			[
+				'init',
+				'--quiet',
+				'--initial-branch=development',
+			],
+			{
+				cwd: '.',
+			},
+		);
 
 
 		// Inform end of generator to the user.

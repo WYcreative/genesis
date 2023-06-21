@@ -183,9 +183,15 @@ export default class websiteGenesis extends Generator {
 	end() {
 		// Initiate repository.
 		// -----------------------------------------------------------------------------
-		this.spawnCommandSync('git', ['init', '--quiet'], {
-			cwd: '.',
-		});
+		this.spawnCommandSync('git',
+			[
+				'init',
+				'--quiet',
+			],
+			{
+				cwd: '.',
+			},
+		);
 
 
 		// Inform end of generator to the user.
