@@ -24,7 +24,7 @@ function getDirectory(path, parentLevel = 1) {
 
 	return path;
 }
-<% if ((tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task)))) { -%>
+<% if (tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task))) { -%>
 
 
 

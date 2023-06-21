@@ -18,7 +18,7 @@ const examplesPath = 'examples';
 const config = {
 	name: pkg.name,
 	libs: './config/libs.js',
-	<%_ if ((tasks.includes('symbols'))) { -%>
+	<%_ if (tasks.includes('symbols')) { -%>
 	data: {
 		symbols: {
 			colorsToRemove: [
