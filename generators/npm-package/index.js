@@ -188,15 +188,34 @@ export default class npmPackageGenesis extends Generator {
 	end() {
 		// Initiate repository.
 		// -----------------------------------------------------------------------------
-		this.spawnCommandSync('git',
+		this.spawnCommandSync(
+			'git',
 			[
 				'init',
 				'--quiet',
 				'--initial-branch=development',
 			],
-			{
-				cwd: '.',
-			},
+		);
+
+
+		// Commit generated project.
+		// -----------------------------------------------------------------------------
+		this.spawnCommandSync(
+			'git',
+			[
+				'add',
+				'-A',
+				'.',
+			],
+		);
+		this.spawnCommandSync(
+			'git',
+			[
+				'commit',
+				'-m',
+				'ADD - Initial project architecture',
+				'--quiet',
+			],
 		);
 
 
@@ -206,7 +225,7 @@ export default class npmPackageGenesis extends Generator {
 			[
 				chalk.green('The project is ready!'),
 				'',
-				'You can start by committing these newly added files.',
+				'A new commit was made with the newly generated files.',
 			],
 			this,
 		);

@@ -183,9 +183,38 @@ export default class websiteGenesis extends Generator {
 	end() {
 		// Initiate repository.
 		// -----------------------------------------------------------------------------
-		this.spawnCommandSync('git',
+		this.spawnCommandSync(
+			'git',
 			[
 				'init',
+				'--quiet',
+			],
+			{
+				cwd: '.',
+			},
+		);
+
+
+		// Commit generated project.
+		// -----------------------------------------------------------------------------
+		this.spawnCommandSync(
+			'git',
+			[
+				'add',
+				'-A',
+				'.',
+			],
+			{
+				cwd: '.',
+			},
+		);
+
+		this.spawnCommandSync(
+			'git',
+			[
+				'commit',
+				'-m',
+				'ADD - Initial Front-End project architecture',
 				'--quiet',
 			],
 			{
@@ -200,9 +229,9 @@ export default class websiteGenesis extends Generator {
 			[
 				chalk.green('The project is ready!'),
 				'',
-				'You can start by committing these newly added files.',
+				'A new commit was made with the newly generated files.',
 				'',
-				`${chalk.bold('Note:')} Run ${chalk.cyan(`cd ${frontendDirectory}`)} before running any script (I can't do it myself).`,
+				`${chalk.bold.red('Note:')} Run ${chalk.cyan(`cd ${frontendDirectory}`)} before running any script (I can't do it myself).`,
 			],
 			this,
 		);
