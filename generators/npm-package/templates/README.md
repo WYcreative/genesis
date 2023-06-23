@@ -30,4 +30,4 @@ Command | Description
 
 ## Genesis
 
-This project was generated with Genesis <%= genesisVersion %>.
+This project was generated with [Genesis](https://github.com/WYcreative/genesis) <%= genesisVersion %>.
