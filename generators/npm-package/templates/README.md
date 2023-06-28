@@ -9,7 +9,7 @@
 
 - [Node.js](https://nodejs.org/en/) <%= nodeVersion %> or later
 - [npm](https://www.npmjs.com/) <%= npmVersion %> or later
-- [Gulp CLI](https://gulpjs.com) 2.2 or later
+- [Gulp CLI](https://gulpjs.com) <%= gulpCliVersion %> or later
 
 ## Installation
 
