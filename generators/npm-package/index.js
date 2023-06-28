@@ -193,7 +193,16 @@ export default class npmPackageGenesis extends Generator {
 			[
 				'init',
 				'--quiet',
-				'--initial-branch=development',
+			],
+		);
+
+		this.spawnCommandSync(
+			'git',
+			[
+				'remote',
+				'add',
+				'origin',
+				`https://github.com/wycreative/${this.answers.repository}.git`,
 			],
 		);
 
@@ -208,12 +217,26 @@ export default class npmPackageGenesis extends Generator {
 				'.',
 			],
 		);
+
 		this.spawnCommandSync(
 			'git',
 			[
 				'commit',
 				'-m',
 				'ADD - Initial project architecture',
+				'--quiet',
+			],
+		);
+
+
+		// Create a `development` branch and switch to it.
+		// -----------------------------------------------------------------------------
+		this.spawnCommandSync(
+			'git',
+			[
+				'checkout',
+				'-b',
+				'development',
 				'--quiet',
 			],
 		);
