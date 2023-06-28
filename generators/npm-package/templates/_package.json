@@ -6,6 +6,9 @@
 	"author": "WYcreative Engineering Team",
 	"license": "ISC",
 	"type": "module",
+	"files": [
+		"./src/**"
+	],
 	"exports": {
 		".": {
 			<%_ if (tasks.includes('styles')) { -%>
