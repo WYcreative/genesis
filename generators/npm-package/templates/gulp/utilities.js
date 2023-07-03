@@ -41,7 +41,6 @@ function getRelativePath(path, reference) {
 	return (/^\.?\.\//.test(path) ? '' : `.${path.startsWith(sep) ? '' : sep}`) + path;
 }
 <% } -%>
-<% if (tasks.some(task => ['styles', 'views'].includes(task))) { -%>
 
 
 
@@ -69,7 +68,6 @@ function resolveTildePath(url, filename, language) {
 
 	return newPath;
 }
-<% } -%>
 
 
 
@@ -79,7 +77,5 @@ export {
 	<%_ if (tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task))) { -%>
 	getRelativePath,
 	<%_ } -%>
-	<%_ if (tasks.some(task => ['styles', 'views'].includes(task))) { -%>
 	resolveTildePath,
-	<%_ } -%>
 };
