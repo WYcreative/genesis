@@ -1,3 +1,5 @@
+import {join, relative} from 'node:path/posix';
+
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
 import babel from 'gulp-babel';
@@ -18,7 +20,7 @@ function build() {
 	return src(config.src.scripts)
 		.pipe(plumber())
 		.pipe(babel())
-		.pipe(dest(`${getDirectory(config.build.libs)}/${config.name}`));
+		.pipe(dest(join(getDirectory(config.build.libs), config.name, relative(config.src.base, getDirectory(config.src.scripts)))));
 }
 
 

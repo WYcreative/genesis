@@ -31,6 +31,7 @@ const config = {
 	<%_ } -%>
 	<%_ if (tasks.some(task => ['symbols', 'images', 'styles', 'scripts', 'views'].includes(task))) { -%>
 	src: {
+		base: src,
 		<%_ if (tasks.includes('symbols')) { -%>
 		symbols: join(src, 'symbols/**/*.svg'),
 		<%_ } -%>
