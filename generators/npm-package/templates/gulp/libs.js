@@ -1,5 +1,4 @@
 import {join} from 'node:path/posix';
-import {readFileSync} from 'node:fs';
 
 import {deleteSync} from 'del';
 import {globbySync, isDynamicPattern} from 'globby';
@@ -16,52 +15,10 @@ const {src, dest} = gulp;
 
 
 
-async function build(done) { // eslint-disable-line complexity
-	const {dependencies} = JSON.parse(readFileSync('./package.json'));
+async function build(done) {
 	const {default: libs} = await import(`${join('..', config.libs)}?t=${Date.now()}`);
 
 	const normalizedLibs = {};
-
-	for (const dependency of Object.keys(dependencies)) {
-		const definedInLibs = Object.values(libs).some(value => {
-			if (typeof value === 'string') {
-				value = [value];
-			}
-
-			return value.some(item => item.includes(dependency));
-		});
-
-		if (definedInLibs) {
-			continue;
-		}
-
-		let {files, exports, main, browser} = JSON.parse(readFileSync(join('node_modules', dependency, 'package.json')));
-
-		files = typeof exports === 'object' && exports !== null && Array.isArray(exports) === false
-			? (
-				Object.values(exports).some(item => typeof item !== 'string')
-					? Object.entries(exports).filter(([key, _]) =>
-						[
-							'import',
-							'require',
-							'module',
-							'style',
-							'browser',
-							'default',
-						].includes(key),
-					).map(([_, value]) => value)
-					: Object.values(exports)
-			)
-			: exports || files || main || browser || 'index.js';
-
-		files = globbySync(files, {
-			cwd: join('node_modules', dependency),
-		});
-
-		for (const file of files) {
-			normalizedLibs[join(dependency, file)] = join('node_modules', dependency, file);
-		}
-	}
 
 	for (let [destPath, srcPaths] of Object.entries(libs)) {
 		if (typeof srcPaths === 'string') {

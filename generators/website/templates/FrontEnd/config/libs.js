@@ -1,16 +1,13 @@
 /**
  * The list of library files to be included in the project.
- * Any installed npm dependencies not listed here will be added as a whole.
  *
  * @type {{String: (String | Array)}} The key/value pair for the file to be included.
- * 	It considers the key as the destination path to be used in the project,
- * 	and the value as the path of the source file.
+ * 	The key is the destination path to be used in the project.
+ * 	The value is the path(s) of the source file(s).
  *
- * 	It also accepts defining the key as a directory.
- * 	In this case, the source filename will be kept.
+ * 	If the key is a directory, the source filename(s) are kept.
  *
- * 	It also accepts defining the value as a glob or an array of paths/globs.
- * 	In this case, the key will be treated as a directory.
+ * 	If the value is a glob or an array of paths/globs, the key is treated as a directory.
  */
 
 const libs = {};
