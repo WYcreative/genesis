@@ -35,6 +35,7 @@ const config = {
 		},
 	},
 	src: {
+		base: src,
 		fonts: join(src, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
 		symbols: join(src, 'symbols/**/*.svg'),
 		images: join(src, 'images/**/*.{webp,png,jp?(e)g,gif,svg}'),

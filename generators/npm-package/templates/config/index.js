@@ -50,6 +50,7 @@ const config = {
 	},
 	<%_ } -%>
 	examples: {
+		base: examples,
 		<%_ if (tasks.includes('symbols')) { -%>
 		symbols: join(examples, 'symbols/**/*.svg'),
 		<%_ } -%>
