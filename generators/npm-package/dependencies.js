@@ -19,8 +19,10 @@ async function getDevDependencies(tasks, generator) {
 		'gulp-plumber': '',
 		'gulp-pug': '',
 		'gulp-rename': '',
-		xo: '',
 		np: '',
+		'read-pkg-up': '',
+		'resolve.exports': '',
+		xo: '',
 	};
 
 	if (tasks.some(task => ['symbols', 'images'].includes(task))) {
@@ -40,13 +42,6 @@ async function getDevDependencies(tasks, generator) {
 	if (tasks.includes('images')) {
 		Object.assign(devDependencies, {
 			'imagemin-webp': '',
-		});
-	}
-
-	if (tasks.some(task => ['styles', 'views'].includes(task))) {
-		Object.assign(devDependencies, {
-			'read-pkg-up': '',
-			'resolve.exports': '',
 		});
 	}
 

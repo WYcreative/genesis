@@ -1,14 +1,10 @@
-import {dirname<% if (tasks.some(task => ['styles', 'views'].includes(task))) { %>, join<% } %>, relative<% if (tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task))) { %>, sep<% } %>} from 'node:path/posix';
-<% if (tasks.some(task => ['styles', 'views'].includes(task))) { -%>
+import {dirname, join, relative} from 'node:path/posix';
 import {cwd} from 'node:process';
-<% } -%>
 
 import browserSync from 'browser-sync';
 import globParent from 'glob-parent';
-<% if (tasks.some(task => ['styles', 'views'].includes(task))) { -%>
 import {readPackageUpSync} from 'read-pkg-up';
 import {resolve} from 'resolve.exports';
-<% } -%>
 
 import config from '../config/index.js';
 
