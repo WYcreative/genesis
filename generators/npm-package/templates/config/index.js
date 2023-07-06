@@ -7,13 +7,13 @@ import {join} from 'node:path/posix';
 const pkg = createRequire(import.meta.url)('../package.json');
 
 <% if (tasks.some(task => ['symbols', 'images', 'styles', 'scripts', 'views'].includes(task))) { -%>
-const src = './src';
+const src = './src/';
 <% } -%>
-const examples = './examples';
-const build = './build';
-const dist = './dist';
+const examples = './examples/';
+const build = './build/';
+const dist = './dist/';
 
-const examplesPath = 'examples';
+const examplesPath = 'examples/';
 
 const config = {
 	name: pkg.name,

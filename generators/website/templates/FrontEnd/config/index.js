@@ -5,13 +5,13 @@ import {join} from 'node:path/posix';
 // TODO: Use import assertions once they become stable.
 const pkg = createRequire(import.meta.url)('../package.json');
 
-const data = './data';
-const src = './src';
-const build = './build';
-const dist = './dist';
+const data = './data/';
+const src = './src/';
+const build = './build/';
+const dist = './dist/';
 const backend = '../<%= backendName %>/<%= backendName %>/wwwroot';
 
-const examplesPath = 'examples';
+const examplesPath = 'examples/';
 
 const config = {
 	name: pkg.name,
