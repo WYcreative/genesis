@@ -34,7 +34,7 @@ const namePrompt = (generator, overrides = {}) =>
  *
  * @returns {{String: String}} The list of answers, containing the `packageName` property with the package name.
  */
-const packageNamePrompt = (generator, overrides) =>
+const packageNamePrompt = (generator, overrides = {}) =>
 	generator.prompt({
 		name: 'packageName',
 		message: 'Package Name:',
@@ -79,7 +79,7 @@ const packageNamePrompt = (generator, overrides) =>
  *
  * @returns {{String: String}} The list of answers, containing the `description` property with the project's description'.
  */
-const descriptionPrompt = (generator, overrides) =>
+const descriptionPrompt = (generator, overrides = {}) =>
 	generator.prompt({
 		name: 'description',
 		message: 'Description:',
@@ -97,7 +97,7 @@ const descriptionPrompt = (generator, overrides) =>
  *
  * @returns {{String: String[]}} The list of answers, containing the `keywords` property with an array of keywords.
  */
-const keywordsPrompt = (generator, overrides) =>
+const keywordsPrompt = (generator, overrides = {}) =>
 	generator.prompt({
 		name: 'keywords',
 		message: 'Keywords:',
@@ -132,7 +132,7 @@ const keywordsPrompt = (generator, overrides) =>
  *
  * @returns {{String: String}} The list of answers, containing the `repository` property with the repository name.
  */
-const repositoryPrompt = (generator, overrides, defaultAnswer, urlPrefix) =>
+const repositoryPrompt = (generator, overrides = {}, defaultAnswer, urlPrefix) =>
 	generator.prompt({
 		name: 'repository',
 		message: 'Repository Name:',
