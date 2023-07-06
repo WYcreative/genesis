@@ -1,3 +1,5 @@
+import {existsSync} from 'node:fs';
+
 import {conditionalTasks} from './utilities.js';
 
 
@@ -13,7 +15,11 @@ const tasksPrompt = generator =>
 		type: 'checkbox',
 		name: 'tasks',
 		message: 'Tasks:',
-		choices: conditionalTasks,
+		choices: conditionalTasks.map(({name, value}) => ({
+			name,
+			value,
+			checked: existsSync(generator.destinationPath(`./src/${value}/`)),
+		})),
 		validate(answer) {
 			const requiredIfNoOtherTasks = conditionalTasks.filter(({requiredIfNoOther}) => requiredIfNoOther);
 

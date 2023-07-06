@@ -48,12 +48,20 @@ export default class npmPackageGenesis extends Generator {
 
 		// Present prompts.
 		// -----------------------------------------------------------------------------
-		Object.assign(this.answers, await namePrompt(this));
-		Object.assign(this.answers, await packageNamePrompt(this, {
-			default: `@wycreative/${slugify(this.appname)}`,
+		const packageName = this.packageJson.get('name')?.split('/').at(-1) || this.appname;
+
+		Object.assign(this.answers, await namePrompt(this, {
+			default: packageName.replace(/(?:^|\s)\S/g, match => match.toUpperCase()),
 		}));
-		Object.assign(this.answers, await descriptionPrompt(this));
-		Object.assign(this.answers, await keywordsPrompt(this));
+		Object.assign(this.answers, await packageNamePrompt(this, {
+			default: `@wycreative/${slugify(packageName)}`,
+		}));
+		Object.assign(this.answers, await descriptionPrompt(this, {
+			default: this.packageJson.get('description'),
+		}));
+		Object.assign(this.answers, await keywordsPrompt(this, {
+			default: this.packageJson.get('keywords')?.join(', '),
+		}));
 		Object.assign(this.answers, await repositoryPrompt(this,
 			{},
 			this.answers.packageName.split('/').at(-1),
