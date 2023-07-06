@@ -88,6 +88,23 @@ export default class npmPackageGenesis extends Generator {
 		// Append Genesis version to answers.
 		// -----------------------------------------------------------------------------
 		this.answers.genesisVersion = this.rootGeneratorVersion();
+
+
+		// Append import name to answers.
+		// -----------------------------------------------------------------------------
+		this.answers.importName = this.answers.packageName
+			.split('/')
+			.at(-1)
+			.replace(
+				/((?:^|[\s_-]+)\S)([^\s_-]*)/g,
+				(_, firstCharacter, remainingCharacters) =>
+					firstCharacter
+						.trim()
+						.replace(/[_-]+/g, '')
+						.toUpperCase()
+					+ remainingCharacters
+						.toLowerCase(),
+			);
 	}
 
 
