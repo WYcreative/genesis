@@ -63,7 +63,9 @@ StyleDictionary.registerTransform({
 
 
 
-const originalDictionary = existsSync(config.data.tokens) ? JSON.parse(readFileSync(config.data.tokens).toString()) : {};
+const originalDictionary = config.data?.tokens?.base && existsSync(config.data.tokens.base)
+	? JSON.parse(readFileSync(config.data.tokens.base).toString())
+	: {};
 
 StyleDictionary.registerTransform({
 	name: 'wycreative/size/line-height',
@@ -95,13 +97,13 @@ StyleDictionary.registerTransform({
 	transformer(token) {
 		let fontFamily = token.value;
 
-		if (config?.data?.fontFallbacks) {
-			if (config.data.fontFallbacks[token.value]) {
-				fontFamily += `, ${config.data.fontFallbacks[token.value]}`;
+		if (config?.data?.fonts?.fallbacks) {
+			if (config.data.fonts.fallbacks[token.value]) {
+				fontFamily += `, ${config.data.fonts.fallbacks[token.value]}`;
 			}
 
-			if (config.data.fontFallbacks['*']) {
-				fontFamily += `, ${config.data.fontFallbacks['*']}`;
+			if (config.data.fonts.fallbacks['*']) {
+				fontFamily += `, ${config.data.fonts.fallbacks['*']}`;
 			}
 		}
 
@@ -126,7 +128,7 @@ StyleDictionary.registerFormat({
 
 const dictionary = StyleDictionary.extend({
 	source: [
-		config.data.tokens,
+		config.data.tokens.base,
 	],
 	platforms: {
 		tokens: {

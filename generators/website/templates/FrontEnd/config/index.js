@@ -18,9 +18,13 @@ const config = {
 	atlas: './config/atlas/**/*.js?(on)',
 	libs: './config/libs.js',
 	data: {
-		tokens: join(data, 'tokens.json'),
-		fontFallbacks: {
-			'*': 'system-ui, -apple-system, sans-serif',
+		tokens: {
+			base: join(data, 'tokens.json'),
+		},
+		fonts: {
+			fallbacks: {
+				'*': 'system-ui, -apple-system, sans-serif',
+			},
 		},
 		symbols: {
 			colorsToRemove: [
