@@ -60,8 +60,11 @@ async function getDevDependencies(tasks, generator) {
 		Object.assign(devDependencies, {
 			'@babel/core': '',
 			'@babel/preset-env': '',
-			'gulp-babel': '',
+			'@rollup/plugin-babel': '',
+			'@rollup/plugin-commonjs': '',
+			'@rollup/plugin-node-resolve': '',
 			'gulp-uglify-es': '',
+			rollup: '',
 		});
 	}
 

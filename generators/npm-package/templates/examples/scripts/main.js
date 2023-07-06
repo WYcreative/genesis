@@ -1,1 +1,1 @@
-import <%= importName %> from '../libs/<%= packageName %>/scripts/index.js';
+import <%= importName %> from '../../src/scripts/index.js';

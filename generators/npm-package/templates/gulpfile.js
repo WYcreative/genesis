@@ -43,7 +43,6 @@ const build = parallel(
 	<%_ } -%>
 	libs.build,
 	<%_ if (tasks.includes('scripts')) { -%>
-	scripts.build,
 	scripts.examples,
 	<%_ } -%>
 	views.examples,

@@ -26,9 +26,6 @@ const {watch, series} = gulp;
 
 function build(done) {
 	watch(config.libs, series(libs.build, reload));
-	<%_ if (tasks.includes('scripts')) { -%>
-	watch(config.src.scripts, series(scripts.build, reload));
-	<%_ } -%>
 
 	done();
 }
