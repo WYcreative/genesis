@@ -31,16 +31,6 @@ function getDirectory(path, parentLevel = 1) {
 
 	return path;
 }
-<% if (tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task))) { -%>
-
-
-
-function getRelativePath(path, reference) {
-	path = relative(dirname(reference), path);
-
-	return (/^\.?\.\//.test(path) ? '' : `.${path.startsWith(sep) ? '' : sep}`) + path;
-}
-<% } -%>
 
 
 
@@ -74,8 +64,5 @@ function resolveTildePath(url, filename, language) {
 export {
 	getBrowserSync,
 	getDirectory,
-	<%_ if (tasks.some(task => ['symbols', 'images', 'styles', 'scripts'].includes(task))) { -%>
-	getRelativePath,
-	<%_ } -%>
 	resolveTildePath,
 };
