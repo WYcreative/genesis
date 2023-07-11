@@ -218,14 +218,15 @@ function upload(done) {
 		const files = globbySync(join(config.dist.base, '**'), {
 			stats: true,
 		});
-		const totalSize = files
-			.map(({stats}) => stats.size)
-			.reduce((previous, current) => previous + current, 0);
 		const lastOperation = {
 			type: '',
 			file: '',
 			progress: 0,
 		};
+
+		let totalSize = files
+			.map(({stats}) => stats.size)
+			.reduce((previous, current) => previous + current, 0);
 
 		spinner.start('Starting FTP connection...');
 
@@ -247,6 +248,8 @@ function upload(done) {
 
 				text = relative(root, info.name);
 			}
+
+			totalSize = Math.max(lastOperation.progress, totalSize);
 
 			const progress = lastOperation.progress / totalSize;
 			const totalProgress = 35;
