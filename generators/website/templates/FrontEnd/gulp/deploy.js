@@ -336,7 +336,7 @@ function upload(done) {
 
 			spinner.info('Upload complete!\n');
 		} catch (error) {
-			fail('Error occured trying to upload files:', error);
+			fail('Error occurred trying to upload files:', error);
 
 			// Revert changes.
 			await execa('git', ['restore', repositoryRoot, '-SW']);
