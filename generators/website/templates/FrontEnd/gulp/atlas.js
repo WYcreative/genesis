@@ -46,8 +46,14 @@ async function build(done) {
 		generateAtlas({
 			package: pkg,
 			atlas,
-			config,
-			destination: config.build.base,
+			paths: {
+				destination: getDirectory(config.build.atlas),
+				buildBase: config.build.base,
+				symbols: config.src.symbols,
+				symbolsBuild: getDirectory(config.build.images),
+				examples: config.examples.base,
+				views: config.examples.views,
+			},
 		});
 	} catch (error) {
 		console.error(' Skipping the generation of Atlas:\n', error);
