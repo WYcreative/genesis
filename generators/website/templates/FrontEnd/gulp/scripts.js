@@ -1,5 +1,5 @@
 import {createRequire} from 'node:module';
-import {join, relative} from 'node:path/posix';
+import {join, relative, resolve} from 'node:path/posix';
 import {existsSync, readFileSync} from 'node:fs';
 
 import {globbySync} from 'globby';
@@ -48,10 +48,15 @@ function build() {
 			dir: buildBasePath,
 			preserveModulesRoot: './node_modules',
 			entryFileNames(assetInfo) {
-				if (assetInfo.name.startsWith(srcScriptsPath)) {
+				if (assetInfo.facadeModuleId.startsWith(resolve(srcScriptsPath))) {
 					return join(
 						relative(buildBasePath, buildScriptsPath),
-						relative(srcScriptsPath, `${assetInfo.name}.js`),
+						relative(
+							assetInfo.name.startsWith(srcScriptsPath)
+								? srcScriptsPath
+								: '',
+							`${assetInfo.name}.js`,
+						),
 					);
 				}
 

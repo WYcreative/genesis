@@ -1,5 +1,5 @@
 import {createRequire} from 'node:module';
-import {join, relative} from 'node:path/posix';
+import {join, relative, resolve} from 'node:path/posix';
 
 import {globbySync} from 'globby';
 import {rollup} from 'rollup';
@@ -45,18 +45,23 @@ function examples() {
 			dir: buildBasePath,
 			preserveModulesRoot: './node_modules',
 			entryFileNames(assetInfo) {
-				if (assetInfo.name.startsWith(examplesScriptsPath)) {
+				if (assetInfo.facadeModuleId.startsWith(resolve(examplesScriptsPath))) {
 					return join(
 						relative(buildBasePath, buildScriptsPath),
-						relative(examplesScriptsPath, `${assetInfo.name}.js`),
+						relative(
+							assetInfo.name.startsWith(examplesScriptsPath)
+								? examplesScriptsPath
+								: '',
+							`${assetInfo.name}.js`,
+						),
 					);
 				}
 
-				if (assetInfo.name.startsWith(srcScriptsPath)) {
+				if (assetInfo.facadeModuleId.startsWith(resolve(srcScriptsPath))) {
 					return join(
 						relativeLibsPath,
 						pkg.name,
-						`${assetInfo.name.slice(srcScriptsPath.length)}.js`,
+						relative(srcScriptsPath, `${assetInfo.name}.js`),
 					);
 				}
 
