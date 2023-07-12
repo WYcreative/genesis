@@ -8,7 +8,7 @@ import {intro, say} from '../_common/utilities.js';
 import {getEngineVersions} from '../_common/versions.js';
 
 import getDevDependencies from './dependencies.js';
-import {backendNamePrompt, themesPrompt, designPrompt, designLibraryPrompt, prototypeDesktopPrompt, prototypeMobilePrompt, subdomainPrompt, homepagePrompt} from './prompts.js';
+import {backendNamePrompt, designPrompt, designLibraryPrompt, prototypeDesktopPrompt, prototypeMobilePrompt, hasThemesPrompt, subdomainPrompt, homepagePrompt} from './prompts.js';
 
 
 
@@ -56,11 +56,11 @@ export default class websiteGenesis extends Generator {
 		Object.assign(this.answers, await packageNamePrompt(this));
 		Object.assign(this.answers, await backendNamePrompt(this));
 		Object.assign(this.answers, await descriptionPrompt(this));
-		Object.assign(this.answers, await themesPrompt(this));
 		Object.assign(this.answers, await designPrompt(this));
 		Object.assign(this.answers, await designLibraryPrompt(this));
 		Object.assign(this.answers, await prototypeDesktopPrompt(this));
 		Object.assign(this.answers, await prototypeMobilePrompt(this));
+		Object.assign(this.answers, await hasThemesPrompt(this));
 		Object.assign(this.answers, await subdomainPrompt(this));
 		Object.assign(this.answers, await homepagePrompt(this));
 		Object.assign(this.answers, await repositoryPrompt(this,
@@ -138,7 +138,7 @@ export default class websiteGenesis extends Generator {
 		// -----------------------------------------------------------------------------
 		const ignoreGlobs = [];
 
-		if (this.answers.themes === false) {
+		if (this.answers.hasThemes === false) {
 			ignoreGlobs.push('**/themes/.gitkeep');
 		}
 

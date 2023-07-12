@@ -41,12 +41,12 @@ const backendNamePrompt = generator =>
  *
  * @param {Generator} generator - The Yeoman Generator instance.
  *
- * @returns {{String: Boolean}} The list of answers, containing the `themes` property with its boolean value.
+ * @returns {{String: Boolean}} The list of answers, containing the `hasThemes` property with its boolean value.
  */
-const themesPrompt = generator =>
+const hasThemesPrompt = generator =>
 	generator.prompt({
 		type: 'confirm',
-		name: 'themes',
+		name: 'hasThemes',
 		message: 'Will the project have multiple themes?',
 		default: false,
 	});
@@ -170,7 +170,7 @@ const homepagePrompt = generator =>
 
 export {
 	backendNamePrompt,
-	themesPrompt,
+	hasThemesPrompt,
 	designPrompt,
 	designLibraryPrompt,
 	prototypeDesktopPrompt,
