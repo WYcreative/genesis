@@ -64,14 +64,9 @@ async function build(done) {
 
 
 
-function dist(done) {
-	src(config.build.atlas.views)
-		.pipe(dest(getDirectory(config.dist.atlas.views[0])));
-
-	src(config.build.atlas.assets)
-		.pipe(dest(getDirectory(config.dist.atlas.assets)));
-
-	done();
+function dist() {
+	return src(config.build.atlas)
+		.pipe(dest(getDirectory(config.dist.atlas)));
 }
 
 

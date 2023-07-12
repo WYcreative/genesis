@@ -23,9 +23,11 @@ function build(done) {
 	watch(config.src.styles, styles.build);
 	watch(config.src.symbols, series(symbols.build, reload));
 	watch(config.src.images, series(images.build, reload));
+	watch(config.examples.images, series(images.examples, reload));
 	watch(config.libs, series(libs.build, reload));
 	watch(config.src.scripts, series(scripts.build, reload));
-	watch(config.src.views[0], series(parallel(views.build, atlas.build), reload));
+	watch(config.src.views[0], series(parallel(views.build), reload));
+	watch(config.examples.views[0], series(parallel(views.examples, atlas.build), reload));
 	watch([config.atlas, './package.json'], series(atlas.build, reload));
 
 	done();

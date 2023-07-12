@@ -15,7 +15,7 @@ import ora from 'ora';
 import config from '../config/index.js';
 import atlas from '../config/atlas/index.js';
 
-import {formatBytes} from './utilities.js';
+import {getDirectory, formatBytes} from './utilities.js';
 
 
 
@@ -214,8 +214,8 @@ function upload(done) {
 			}
 		}
 
-		const root = join('/', new URL(atlas.url.development).hostname, 'httpdocs/wwwroot/atlas');
-		const files = globbySync(join(config.dist.base, '**'), {
+		const root = join('/', new URL(atlas.url.development).hostname, 'httpdocs', config.hasBackend ? 'wwwroot/atlas' : '');
+		const files = globbySync(config.hasBackend ? config.dist.atlas : join(config.dist.base, '**'), {
 			stats: true,
 		});
 		const lastOperation = {
@@ -288,7 +288,7 @@ function upload(done) {
 			let previousDirectory = '';
 
 			for (const file of files) {
-				const remoteFile = join(root, relative(config.dist.base, file.path));
+				const remoteFile = join(root, relative(config.hasBackend ? getDirectory(config.dist.atlas) : config.dist.base, file.path));
 				const relativePath = relative(previousDirectory, dirname(remoteFile));
 
 				if (relativePath.length > 0) {

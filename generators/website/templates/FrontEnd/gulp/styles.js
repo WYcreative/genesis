@@ -37,7 +37,7 @@ function build() {
 		.pipe(reload({
 			stream: true,
 		}))
-		.pipe(dest(getDirectory(config.build.styles)));
+		.pipe(dest(getDirectory(config.build.styles.general)));
 }
 
 
@@ -47,8 +47,8 @@ function dist() {
 		? readFileSync(config.revManifest)
 		: undefined;
 
-	return src(config.build.styles[0], {
-		base: getDirectory(config.build.styles[0], 2),
+	return src(config.build.styles.general, {
+		base: config.build.assets,
 	})
 		.pipe(postcss([
 			cssnano(),
@@ -64,7 +64,7 @@ function dist() {
 			modifyUnreved: (path, {relative}) => getRelativePath(path, relative),
 			modifyReved: (path, {relative}) => getRelativePath(path, relative),
 		}))
-		.pipe(dest(getDirectory(config.dist.styles, 2)))
+		.pipe(dest(config.dist.assets))
 		.pipe(rev.manifest({
 			merge: true,
 		}))
@@ -75,12 +75,12 @@ function dist() {
 
 function backend(done) {
 	src([
-		config.dist.styles[0],
-		`!${config.dist.styles[1]}`,
+		config.dist.styles.general,
+		`!${config.dist.styles.rte}`,
 	])
-		.pipe(dest(getDirectory(config.backend.styles[0])));
+		.pipe(dest(getDirectory(config.backend.styles.general)));
 
-	src(config.build.styles[1])
+	src(config.build.styles.rte)
 		.pipe(rename(path => {
 			if (path.basename.startsWith('rte')) {
 				let suffix = '';
@@ -95,7 +95,7 @@ function backend(done) {
 				path.basename = `RteStyle${suffix}`;
 			}
 		}))
-		.pipe(dest(getDirectory(config.backend.styles[1])));
+		.pipe(dest(getDirectory(config.backend.styles.rte)));
 
 	done();
 }

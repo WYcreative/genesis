@@ -5,6 +5,23 @@ import {previewAnswer} from '../_common/utilities.js';
 
 
 /**
+ * Prompts the user wether the project has Back-End.
+ *
+ * @param {Generator} generator - The Yeoman Generator instance.
+ *
+ * @returns {{String: String}} The list of answers, containing the `hasBackEnd` property.
+ */
+const hasBackendPrompt = generator =>
+	generator.prompt({
+		type: 'confirm',
+		name: 'hasBackend',
+		message: 'Will the project have Back-End?',
+		default: true,
+	});
+
+
+
+/**
  * Prompts the user the Back-End project name.
  *
  * @param {Generator} generator - The Yeoman Generator instance.
@@ -15,6 +32,7 @@ const backendNamePrompt = generator =>
 	generator.prompt({
 		name: 'backendName',
 		message: 'Back-End Project Name:',
+		when: generator.answers.hasBackend,
 		default() {
 			const name = generator.answers.packageName.replace(/((?:^|[\s_-]+)\S)([^\s_-]*)/g, (_, p1, p2) =>
 				p1.trim().replace(/[_-]+/g, '').toUpperCase() + p2.toLowerCase(),
@@ -169,6 +187,7 @@ const homepagePrompt = generator =>
 
 
 export {
+	hasBackendPrompt,
 	backendNamePrompt,
 	hasThemesPrompt,
 	designPrompt,

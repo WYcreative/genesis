@@ -25,7 +25,7 @@ function backend() {
 	return deleteAsync([
 		config.backend.fonts,
 		config.backend.images,
-		...config.backend.styles,
+		...Object.values(config.backend.styles),
 		config.backend.libs,
 		config.backend.scripts,
 	], {

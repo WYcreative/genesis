@@ -11,14 +11,8 @@ const browserSyncInstance = getBrowserSync();
 function build(done) {
 	browserSyncInstance.init({
 		server: config.build.base,
+		startPath: config.hasBackend ? null : '/atlas',
 		ghostMode: false,
-		middleware: [
-			(request, _, next) => {
-				request.url = request.url.replace('atlas/', '');
-
-				next();
-			},
-		],
 	});
 
 	done();

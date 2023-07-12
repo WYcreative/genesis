@@ -85,7 +85,7 @@ function dist() {
 		: undefined;
 
 	return src(config.build.libs, {
-		base: getDirectory(config.build.libs, 2),
+		base: config.build.assets,
 	})
 		.pipe(rev())
 		.pipe(revRewrite({
@@ -93,7 +93,7 @@ function dist() {
 			modifyUnreved: (path, {relative}) => getRelativePath(path, relative),
 			modifyReved: (path, {relative}) => getRelativePath(path, relative),
 		}))
-		.pipe(dest(getDirectory(config.dist.libs, 2)))
+		.pipe(dest(config.dist.assets))
 		.pipe(rev.manifest({
 			merge: true,
 		}))

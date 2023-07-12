@@ -7,11 +7,14 @@ const pkg = createRequire(import.meta.url)('../package.json');
 
 const data = './data/';
 const src = './src/';
+const examples = './examples/';
 const build = './build/';
 const dist = './dist/';
-const backend = '../<%= backendName %>/<%= backendName %>/wwwroot';
+const backend = '../<% if (hasBackend) { %><%= backendName %>/<%= backendName %>/wwwroot/<% } else { %>BackEnd/<% } %>';
 
+const assetsPath = 'assets/';
 const examplesPath = 'examples/';
+const atlasPath = 'atlas/';
 
 const config = {
 	name: pkg.name,
@@ -48,58 +51,67 @@ const config = {
 		],
 		backend: join(src, 'backend/**/*.pug'),
 	},
+	examples: {
+		base: examples,
+		images: join(examples, 'images/**/*.{webp,png,jp?(e)g,gif,svg}'),
+		views: [
+			join(examples, 'views/**/*.pug'),
+			'!**/_*/**',
+			'!**/_*',
+		],
+	},
 	build: {
 		base: build,
-		fonts: join(build, examplesPath, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
-		images: join(build, examplesPath, 'assets/images/**/*.{webp,png,jp?(e)g,gif,svg}'),
-		styles: [
-			join(build, examplesPath, 'assets/styles/**/*.css'),
-			join(build, examplesPath, 'assets/styles/rte*.css'),
-		],
-		libs: join(build, examplesPath, 'assets/libs/**'),
-		scripts: join(build, examplesPath, 'assets/scripts/**/*.js'),
-		views: join(build, examplesPath, '**/*.html'),
-		atlas: {
-			assets: join(build, 'assets/**/*.{css,woff?(2),@(o|t)tf,webp,png,jp?(e)g,gif,svg,js}'),
-			views: [
-				join(build, '**/*.html'),
-				join(`!${build}`, examplesPath, '**'),
-			],
+		assets: join(build, assetsPath),
+		fonts: join(build, assetsPath, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
+		images: join(build, assetsPath, 'images/**/*.{webp,png,jp?(e)g,gif,svg}'),
+		styles: {
+			general: join(build, assetsPath, 'styles/**/*.css'),
+			rte: join(build, assetsPath, 'styles/rte*.css'),
 		},
+		libs: join(build, assetsPath, 'libs/**'),
+		scripts: join(build, assetsPath, 'scripts/**/*.js'),
+		views: join(build, '**/*.html'),
+		atlas: join(build, atlasPath, '**'),
+	},
+	buildExamples: {
+		base: join(build, atlasPath, examplesPath),
+		assets: join(build, atlasPath, examplesPath, assetsPath),
+		images: join(build, atlasPath, examplesPath, assetsPath, 'images/**/*.{webp,png,jp?(e)g,gif,svg}'),
+		views: join(build, atlasPath, examplesPath, '**/*.html'),
 	},
 	dist: {
 		base: dist,
-		fonts: join(dist, examplesPath, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
-		images: [
-			join(dist, examplesPath, 'assets/images/**/*.{webp,png,jp?(e)g,gif,svg}'),
-			'!**/dummy/**',
-		],
-		styles: [
-			join(dist, examplesPath, 'assets/styles/**/*.css'),
-			join(dist, examplesPath, 'assets/styles/rte*.css'),
-		],
-		libs: join(dist, examplesPath, 'assets/libs/**'),
-		scripts: join(dist, examplesPath, 'assets/scripts/**/*.js'),
-		views: join(dist, examplesPath, '**/*.html'),
-		atlas: {
-			assets: join(dist, 'assets/**/*.{css,woff?(2),@(o|t)tf,webp,png,jp?(e)g,gif,svg,js}'),
-			views: [
-				join(dist, '**/*.html'),
-				join(`!${dist}`, examplesPath, '**'),
-			],
+		assets: join(dist, assetsPath),
+		fonts: join(dist, assetsPath, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
+		images: join(dist, assetsPath, 'images/**/*.{webp,png,jp?(e)g,gif,svg}'),
+		styles: {
+			general: join(dist, assetsPath, 'styles/**/*.css'),
+			rte: join(dist, assetsPath, 'styles/rte*.css'),
 		},
+		libs: join(dist, assetsPath, 'libs/**'),
+		scripts: join(dist, assetsPath, 'scripts/**/*.js'),
+		views: join(dist, '**/*.html'),
+		atlas: join(dist, atlasPath, '**'),
+	},
+	distExamples: {
+		base: join(dist, atlasPath, examplesPath),
+		assets: join(dist, atlasPath, examplesPath, assetsPath),
+		images: join(dist, atlasPath, examplesPath, assetsPath, 'images/**/*.{webp,png,jp?(e)g,gif,svg}'),
+		views: join(dist, atlasPath, examplesPath, '**/*.html'),
 	},
 	revManifest: './rev-manifest.json',
+	hasBackend: <%= hasBackend %>,
 	backend: {
 		base: backend,
-		fonts: join(backend, 'assets/fonts/**/*.{woff?(2),@(o|t)tf}'),
-		images: join(backend, 'assets/images/**/*.{webp,png,jp?(e)g,gif,svg}'),
-		styles: [
-			join(backend, 'assets/styles/**/*.css'),
-			join(backend, 'css/RteStyle*.css'),
-		],
-		libs: join(backend, 'assets/libs/**'),
-		scripts: join(backend, 'assets/scripts/**/*.js'),
+		fonts: join(backend, assetsPath, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
+		images: join(backend, assetsPath, 'images/**/*.{webp,png,jp?(e)g,gif,svg}'),
+		styles: {
+			general: join(backend, assetsPath, 'styles/**/*.css'),
+			rte: join(backend, 'css/RteStyle*.css'),
+		},
+		libs: join(backend, assetsPath, 'libs/**'),
+		scripts: join(backend, assetsPath, 'scripts/**/*.js'),
 	},
 };
 

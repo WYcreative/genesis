@@ -1,4 +1,3 @@
-import {createRequire} from 'node:module';
 import {join, relative, resolve} from 'node:path/posix';
 import {existsSync, readFileSync} from 'node:fs';
 
@@ -19,8 +18,6 @@ import {getDirectory, getRelativePath} from './utilities.js';
 
 
 
-// TODO: Use import assertions once they become stable.
-const pkg = createRequire(import.meta.url)('../package.json');
 const {src, dest} = gulp;
 const {default: uglify} = uglifyEs;
 
@@ -73,7 +70,7 @@ function dist() {
 		: undefined;
 
 	return src(config.build.scripts, {
-		base: getDirectory(config.build.scripts, 2),
+		base: config.build.assets,
 	})
 		.pipe(plumber())
 		.pipe(uglify())
@@ -83,7 +80,7 @@ function dist() {
 			modifyUnreved: (path, {relative}) => getRelativePath(path, relative),
 			modifyReved: (path, {relative}) => getRelativePath(path, relative),
 		}))
-		.pipe(dest(getDirectory(config.dist.scripts, 2)))
+		.pipe(dest(config.dist.assets))
 		.pipe(rev.manifest({
 			merge: true,
 		}))

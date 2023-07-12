@@ -13,6 +13,7 @@ import * as atlas from './gulp/atlas.js';
 import * as browser from './gulp/browser.js';
 import * as watch from './gulp/watch.js';
 import * as deployTasks from './gulp/deploy.js';
+import config from './config/index.js';
 
 
 
@@ -32,10 +33,12 @@ const build = parallel(
 	fonts.build,
 	symbols.build,
 	images.build,
+	images.examples,
 	styles.build,
 	libs.build,
 	scripts.build,
 	views.build,
+	views.examples,
 	atlas.build,
 );
 
@@ -63,20 +66,24 @@ export const dist = series(
 	cleanTasks.dist,
 	fonts.dist,
 	images.dist,
+	images.distExamples,
 	styles.dist,
 	libs.dist,
 	scripts.dist,
 	views.dist,
+	views.distExamples,
 	atlas.dist,
 	cleanTasks.backend,
-	parallel(
-		fonts.backend,
-		images.backend,
-		styles.backend,
-		libs.backend,
-		scripts.backend,
-		views.backend,
-	),
+	config.hasBackend
+		? parallel(
+			fonts.backend,
+			images.backend,
+			styles.backend,
+			libs.backend,
+			scripts.backend,
+			views.backend,
+		)
+		: [],
 );
 
 

@@ -16,40 +16,51 @@ import {getDirectory, resolveTildePath} from './utilities.js';
 
 const {src, dest} = gulp;
 
+const pugOptions = {
+	pretty: true,
+	plugins: [
+		{
+			postParse: (ast, {filename}) =>
+				walk(ast, (node, replace) => {
+					if (['Include', 'RawInclude'].includes(node.type) && node.file.path.startsWith('~')) {
+						const path = node.file.path
+							.slice(0, /^~(?:@.+\/.+|[^@].+)\/.+/.test(node.file.path) === false ? -4 : undefined);
+
+						const resolvedPath = resolveTildePath(path, filename, 'pug');
+
+						if (resolvedPath) {
+							const clone = JSON.parse(JSON.stringify(node));
+
+							clone.file.path = resolvedPath;
+
+							replace(clone);
+
+							return false;
+						}
+					}
+
+					return true;
+				}),
+		},
+	],
+};
+
 
 
 function build() {
 	return src(config.src.views)
 		.pipe(plumber())
-		.pipe(pug({
-			pretty: true,
-			plugins: [
-				{
-					postParse: (ast, {filename}) =>
-						walk(ast, (node, replace) => {
-							if (['Include', 'RawInclude'].includes(node.type) && node.file.path.startsWith('~')) {
-								const path = node.file.path
-									.slice(0, /^~(?:@.+\/.+|[^@].+)\/.+/.test(node.file.path) === false ? -4 : undefined);
-
-								const resolvedPath = resolveTildePath(path, filename, 'pug');
-
-								if (resolvedPath) {
-									const clone = JSON.parse(JSON.stringify(node));
-
-									clone.file.path = resolvedPath;
-
-									replace(clone);
-
-									return false;
-								}
-							}
-
-							return true;
-						}),
-				},
-			],
-		}))
+		.pipe(pug(pugOptions))
 		.pipe(dest(getDirectory(config.build.views)));
+}
+
+
+
+function examples() {
+	return src(config.examples.views)
+		.pipe(plumber())
+		.pipe(pug(pugOptions))
+		.pipe(dest(getDirectory(config.buildExamples.views)));
 }
 
 
@@ -64,6 +75,20 @@ function dist() {
 			manifest,
 		}))
 		.pipe(dest(getDirectory(config.dist.views)));
+}
+
+
+
+function distExamples() {
+	const manifest = existsSync(config.revManifest)
+		? readFileSync(config.revManifest)
+		: undefined;
+
+	return src(config.buildExamples.views)
+		.pipe(revRewrite({
+			manifest,
+		}))
+		.pipe(dest(getDirectory(config.distExamples.views)));
 }
 
 
@@ -97,11 +122,15 @@ function backend() {
 
 
 build.displayName = 'build:views';
+examples.displayName = 'examples:views';
 dist.displayName = 'dist:views';
+distExamples.displayName = 'dist:examples:views';
 backend.displayName = 'backend:views';
 
 export {
 	build,
+	examples,
 	dist,
+	distExamples,
 	backend,
 };

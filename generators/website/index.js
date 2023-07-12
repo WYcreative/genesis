@@ -8,7 +8,7 @@ import {intro, say} from '../_common/utilities.js';
 import {getEngineVersions} from '../_common/versions.js';
 
 import getDevDependencies from './dependencies.js';
-import {backendNamePrompt, designPrompt, designLibraryPrompt, prototypeDesktopPrompt, prototypeMobilePrompt, hasThemesPrompt, subdomainPrompt, homepagePrompt} from './prompts.js';
+import {designPrompt, designLibraryPrompt, prototypeDesktopPrompt, prototypeMobilePrompt, hasThemesPrompt, hasBackendPrompt, backendNamePrompt, subdomainPrompt, homepagePrompt} from './prompts.js';
 
 
 
@@ -54,13 +54,14 @@ export default class websiteGenesis extends Generator {
 		// -----------------------------------------------------------------------------
 		Object.assign(this.answers, await namePrompt(this));
 		Object.assign(this.answers, await packageNamePrompt(this));
-		Object.assign(this.answers, await backendNamePrompt(this));
 		Object.assign(this.answers, await descriptionPrompt(this));
 		Object.assign(this.answers, await designPrompt(this));
 		Object.assign(this.answers, await designLibraryPrompt(this));
 		Object.assign(this.answers, await prototypeDesktopPrompt(this));
 		Object.assign(this.answers, await prototypeMobilePrompt(this));
 		Object.assign(this.answers, await hasThemesPrompt(this));
+		Object.assign(this.answers, await hasBackendPrompt(this));
+		Object.assign(this.answers, await backendNamePrompt(this));
 		Object.assign(this.answers, await subdomainPrompt(this));
 		Object.assign(this.answers, await homepagePrompt(this));
 		Object.assign(this.answers, await repositoryPrompt(this,
@@ -142,13 +143,15 @@ export default class websiteGenesis extends Generator {
 			ignoreGlobs.push('**/themes/.gitkeep');
 		}
 
-		this.renderTemplate('src/**', 'src', this.answers, {}, {
-			ignoreNoMatch: true,
-			globOptions: {
-				ignore: ignoreGlobs,
-				dot: true, // HACK: Workaround for ignored files to work as expected when inside nvm.
-			},
-		});
+		for (const directory of ['src', 'examples']) {
+			this.renderTemplate(`${directory}/**`, directory, this.answers, {}, {
+				ignoreNoMatch: true,
+				globOptions: {
+					ignore: ignoreGlobs,
+					dot: true, // HACK: Workaround for ignored files to work as expected when inside nvm.
+				},
+			});
+		}
 
 
 		// Get dependencies.

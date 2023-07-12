@@ -27,7 +27,7 @@ function dist() {
 		: undefined;
 
 	return src(config.build.fonts, {
-		base: getDirectory(config.build.fonts, 2),
+		base: config.build.assets,
 	})
 		.pipe(rev())
 		.pipe(revRewrite({
@@ -35,7 +35,7 @@ function dist() {
 			modifyUnreved: (path, {relative}) => getRelativePath(path, relative),
 			modifyReved: (path, {relative}) => getRelativePath(path, relative),
 		}))
-		.pipe(dest(getDirectory(config.dist.fonts, 2)))
+		.pipe(dest(config.dist.assets))
 		.pipe(rev.manifest({
 			merge: true,
 		}))

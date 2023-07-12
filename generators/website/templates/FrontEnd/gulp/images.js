@@ -27,13 +27,22 @@ function build() {
 
 
 
+function examples() {
+	return src(config.examples.images)
+		.pipe(plumber())
+		.pipe(imagemin())
+		.pipe(dest(getDirectory(config.buildExamples.images)));
+}
+
+
+
 function dist() {
 	const manifest = existsSync(config.revManifest)
 		? readFileSync(config.revManifest)
 		: undefined;
 
 	return src(config.build.images, {
-		base: getDirectory(config.build.images, 2),
+		base: config.build.assets,
 	})
 		.pipe(rev())
 		// TODO: Remove this once BE finds a method for handling image file revisions.
@@ -45,7 +54,34 @@ function dist() {
 			modifyUnreved: (path, {relative}) => getRelativePath(path, relative),
 			modifyReved: (path, {relative}) => getRelativePath(path, relative),
 		}))
-		.pipe(dest(getDirectory(config.dist.images[0], 2)))
+		.pipe(dest(config.dist.assets))
+		.pipe(rev.manifest({
+			merge: true,
+		}))
+		.pipe(dest(getDirectory(config.revManifest)));
+}
+
+
+
+function distExamples() {
+	const manifest = existsSync(config.revManifest)
+		? readFileSync(config.revManifest)
+		: undefined;
+
+	return src(config.buildExamples.images, {
+		base: config.buildExamples.assets,
+	})
+		.pipe(rev())
+		// TODO: Remove this once BE finds a method for handling image file revisions.
+		.pipe(rename((path, {revOrigPath}) => {
+			path.basename = basename(revOrigPath, extname(revOrigPath));
+		}))
+		.pipe(revRewrite({
+			manifest,
+			modifyUnreved: (path, {relative}) => getRelativePath(path, relative),
+			modifyReved: (path, {relative}) => getRelativePath(path, relative),
+		}))
+		.pipe(dest(config.distExamples.assets))
 		.pipe(rev.manifest({
 			merge: true,
 		}))
@@ -62,11 +98,15 @@ function backend() {
 
 
 build.displayName = 'build:images';
+examples.displayName = 'examples:images';
 dist.displayName = 'dist:images';
+distExamples.displayName = 'dist:examples:images';
 backend.displayName = 'backend:images';
 
 export {
 	build,
+	examples,
 	dist,
+	distExamples,
 	backend,
 };
