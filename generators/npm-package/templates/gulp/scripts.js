@@ -33,7 +33,9 @@ function examples() {
 	return rollup({
 		input: globbySync(config.examples.scripts),
 		plugins: [
-			nodeResolve(),
+			nodeResolve({
+				browser: true,
+			}),
 			commonjs(),
 			babel({
 				babelHelpers: 'bundled',
