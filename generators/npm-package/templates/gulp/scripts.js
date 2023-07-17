@@ -41,6 +41,16 @@ function examples() {
 				babelHelpers: 'bundled',
 			}),
 		],
+		onwarn(warning, warn) {
+			if (
+				(
+					warning.code === 'CIRCULAR_DEPENDENCY'
+					&& warning.ids[0].startsWith(resolve('node_modules'))
+				) === false
+			) {
+				warn(warning);
+			}
+		},
 	})
 		.then(({write}) => write({
 			preserveModules: true,
