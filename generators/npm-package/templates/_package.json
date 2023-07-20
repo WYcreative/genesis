@@ -67,7 +67,7 @@
 			]
 		],
 		"only": [
-			"./@(config|data|src)/**"
+			"./@(config|data|src|examples)/**"
 		]
 	},
 	"xo": {
