@@ -27,7 +27,13 @@ function examples() {
 			],
 		}).on('error', sass.logError))
 		.pipe(postcss([
-			presetEnv(),
+			presetEnv({
+				features: {
+					'custom-properties': false,
+					'prefers-color-scheme-query': false,
+					'logical-properties-and-values': false,
+				},
+			}),
 		]))
 		.pipe(reload({
 			stream: true,
