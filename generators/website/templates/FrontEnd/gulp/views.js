@@ -101,7 +101,7 @@ function backend() {
 	return src(config.src.backend)
 		.pipe(plumber())
 		.pipe(pug({
-			pretty: true,
+			...pugOptions,
 			locals: {
 				files: JSON.parse(manifest),
 			},
