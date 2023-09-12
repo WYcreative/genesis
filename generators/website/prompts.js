@@ -159,7 +159,7 @@ const subdomainPrompt = generator =>
 							default: generator.answers.packageName,
 						},
 						{
-							text: `.${env}.byclients.com`,
+							text: `.${env}.wycreative.com`,
 						},
 					]),
 				isFinal,
