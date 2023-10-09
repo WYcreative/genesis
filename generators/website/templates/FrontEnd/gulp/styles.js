@@ -3,6 +3,7 @@ import {existsSync, readFileSync} from 'node:fs';
 import gulp from 'gulp';
 import gulpSass from 'gulp-sass';
 import * as dartSass from 'sass';
+import jsonImporter from 'node-sass-json-importer';
 import postcss from 'gulp-postcss';
 import presetEnv from 'postcss-preset-env';
 import cssnano from 'cssnano';
@@ -29,6 +30,7 @@ function build() {
 				(url, filename) => url.startsWith('~')
 					? {file: resolveTildePath(url, filename, 'sass')}
 					: null,
+					jsonImporter(),
 			],
 		}).on('error', sass.logError))
 		.pipe(postcss([

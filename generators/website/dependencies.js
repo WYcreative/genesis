@@ -40,6 +40,7 @@ async function getDevDependencies(generator) {
 		'imagemin-webp': '',
 		inquirer: '',
 		jsdom: '',
+		'node-sass-json-importer': '',
 		ora: '',
 		postcss: '',
 		'postcss-preset-env': '',
