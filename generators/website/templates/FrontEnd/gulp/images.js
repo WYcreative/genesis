@@ -4,6 +4,7 @@ import {basename, extname} from 'node:path/posix';
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
 import imagemin from 'gulp-imagemin';
+import webp from 'imagemin-webp';
 import rev from 'gulp-rev';
 import rename from 'gulp-rename';
 import revRewrite from 'gulp-rev-rewrite';
@@ -22,6 +23,15 @@ function build() {
 	return src(config.src.images)
 		.pipe(plumber())
 		.pipe(imagemin())
+		.pipe(dest(getDirectory(config.build.images)))
+		.pipe(imagemin([
+			webp({
+				quality: 90,
+			}),
+		]))
+		.pipe(rename(path => {
+			path.extname = '.webp';
+		}))
 		.pipe(dest(getDirectory(config.build.images)));
 }
 
