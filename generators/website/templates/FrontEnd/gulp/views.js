@@ -18,6 +18,9 @@ const {src, dest} = gulp;
 
 const pugOptions = {
 	pretty: true,
+	locals: {
+		readFileSync,
+	},
 	plugins: [
 		{
 			postParse: (ast, {filename}) =>
