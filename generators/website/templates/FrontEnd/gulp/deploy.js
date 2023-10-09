@@ -214,7 +214,7 @@ function upload(done) {
 			}
 		}
 
-		const root = join('/', new URL(atlas.url.development).hostname, 'httpdocs', config.hasBackend ? 'wwwroot/atlas' : '');
+		const root = join('/wwwroot', new URL(atlas.url.development).hostname, 'httpdocs', config.hasBackend ? 'wwwroot/atlas' : '');
 		const files = globbySync(config.hasBackend ? config.dist.atlas : join(config.dist.base, '**'), {
 			stats: true,
 		});
