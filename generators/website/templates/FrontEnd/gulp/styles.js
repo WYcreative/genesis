@@ -30,7 +30,7 @@ function build() {
 				(url, filename) => url.startsWith('~')
 					? {file: resolveTildePath(url, filename, 'sass')}
 					: null,
-					jsonImporter(),
+				jsonImporter(),
 			],
 		}).on('error', sass.logError))
 		.pipe(postcss([
