@@ -26,7 +26,7 @@ function build(done) {
 	watch(config.examples.images, series(images.examples, reload));
 	watch(config.libs, series(libs.build, reload));
 	watch(config.src.scripts, series(scripts.build, reload));
-	watch(config.src.views[0], series(parallel(views.build), reload));
+	watch(config.src.views[0], series(parallel(views.build, views.examples), reload));
 	watch(config.examples.views[0], series(parallel(views.examples, atlas.build), reload));
 	watch([config.atlas, './package.json'], series(atlas.build, reload));
 
