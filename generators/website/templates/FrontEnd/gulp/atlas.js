@@ -65,7 +65,12 @@ async function build(done) {
 
 
 function dist() {
-	return src(config.build.atlas)
+	return src(config.build.atlas, {
+		ignore: [
+			config.buildExamples.images,
+			config.buildExamples.views,
+		],
+	})
 		.pipe(dest(getDirectory(config.dist.atlas)));
 }
 
