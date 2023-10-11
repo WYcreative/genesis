@@ -32,7 +32,7 @@ async function getDevDependencies(generator) {
 		'gulp-pug': '',
 		'gulp-rename': '',
 		'gulp-rev': '',
-		'gulp-rev-rewrite': '',
+		'gulp-rev-rewrite': '5.0.0',
 		'gulp-sass': '',
 		'gulp-svgstore': '',
 		'gulp-tap': '',
