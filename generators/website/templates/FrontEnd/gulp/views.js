@@ -106,6 +106,7 @@ function backend() {
 		.pipe(pug({
 			...pugOptions,
 			locals: {
+				...pugOptions.locals,
 				files: JSON.parse(manifest),
 			},
 		}))
