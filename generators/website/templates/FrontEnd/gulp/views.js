@@ -112,7 +112,7 @@ function backend() {
 		}))
 		.pipe(revRewrite({
 			manifest,
-			modifyUnreved: path => join('/atlas/examples/assets', path),
+			modifyUnreved: path => join('/assets', path),
 			modifyReved: path => join('/assets', path),
 		}))
 		.pipe(rename(path => {

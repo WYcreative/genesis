@@ -5,7 +5,7 @@ each revved, original in files
 		]
 
 	if (original === 'scripts/main.js')
-		script(src=`/assets/${revved}` type="module")
+		script(src=`/assets/${original}` type="module")
 
 	else if (additionalScripts.includes(original))
-		script(src=`/assets/${revved}`)
+		script(src=`/assets/${original}`)
