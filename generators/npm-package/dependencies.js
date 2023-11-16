@@ -33,6 +33,7 @@ async function getDevDependencies(tasks, generator) {
 
 	if (tasks.includes('symbols')) {
 		Object.assign(devDependencies, {
+			'@sindresorhus/slugify': '',
 			'gulp-svgstore': '',
 			'gulp-tap': '',
 			jsdom: '',

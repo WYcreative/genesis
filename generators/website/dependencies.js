@@ -12,6 +12,7 @@ async function getDevDependencies(generator) {
 	const devDependencies = {
 		'@babel/core': '',
 		'@babel/preset-env': '',
+		'@sindresorhus/slugify': '',
 		'@wycreative/atlas': '',
 		'@rollup/plugin-babel': '',
 		'@rollup/plugin-commonjs': '',

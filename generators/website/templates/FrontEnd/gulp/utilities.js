@@ -1,10 +1,12 @@
-import {dirname, join, relative, sep} from 'node:path/posix';
+import {dirname, join, relative, sep, basename} from 'node:path/posix';
 import {cwd} from 'node:process';
 
 import browserSync from 'browser-sync';
 import globParent from 'glob-parent';
 import {readPackageUpSync} from 'read-pkg-up';
 import {resolve} from 'resolve.exports';
+import {globbySync} from 'globby';
+import slugify from '@sindresorhus/slugify';
 
 import config from '../config/index.js';
 
@@ -80,6 +82,44 @@ function resolveTildePath(url, filename, language) {
 }
 
 
+function getSymbols(symbolsPath) {
+	const icons = globbySync('**/*.svg', {
+		cwd: getDirectory(symbolsPath),
+	});
+
+	const result = [];
+
+	for (const icon of icons) {
+		const id = slugify(basename(icon, '.svg'));
+
+		let path = dirname(dirname(icon));
+		let name = basename(dirname(icon));
+
+		path = slugify(path === '.' ? '' : path, {
+			preserveCharacters: [
+				'/',
+			],
+		});
+		name = slugify(name === '.' ? basename(getDirectory(symbolsPath)) : name);
+
+		if (result.some(file => file.path === path && file.name === name) === false) {
+			result.push({
+				name,
+				path,
+				file: join(path, `${name}.svg`),
+				list: [],
+			});
+		}
+
+		const fileIndex = result.findIndex(file => file.path === path && file.name === name);
+
+		result[fileIndex].list.push(id);
+	}
+
+	return result;
+}
+
+
 
 export {
 	getBrowserSync,
@@ -87,4 +127,5 @@ export {
 	getRelativePath,
 	formatBytes,
 	resolveTildePath,
+	getSymbols,
 };

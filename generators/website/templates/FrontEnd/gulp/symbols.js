@@ -4,11 +4,12 @@ import {Buffer} from 'node:buffer';
 import {globbySync} from 'globby';
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
+import rename from 'gulp-rename';
+import slugify from '@sindresorhus/slugify';
 import tap from 'gulp-tap';
 import {JSDOM} from 'jsdom';
 import imagemin, {svgo} from 'gulp-imagemin';
 import svgstore from 'gulp-svgstore';
-import rename from 'gulp-rename';
 
 import config from '../config/index.js';
 
@@ -40,6 +41,9 @@ function build(done) {
 	for (const directory of directories) {
 		src(`${directory}/*.${extensions}`)
 			.pipe(plumber())
+			.pipe(rename(path => {
+				path.basename = slugify(path.basename);
+			}))
 			.pipe(tap(file => {
 				const {window: {document: {body: svg}}} = new JSDOM(file.contents.toString());
 				const elements = svg.querySelectorAll('[fill], [stroke]');
@@ -103,8 +107,8 @@ function build(done) {
 			.pipe(svgstore())
 			.pipe(rename(path => {
 				if (directory.startsWith(base) && directory.length > base.length) {
-					path.dirname = dirname(directory.slice(base.length));
-					path.basename = basename(directory);
+					path.dirname = slugify(dirname(directory.slice(base.length)));
+					path.basename = slugify(basename(directory));
 				}
 			}))
 			.pipe(dest(getDirectory(config.build.images)));

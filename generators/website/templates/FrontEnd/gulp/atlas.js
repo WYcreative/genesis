@@ -7,7 +7,7 @@ import gulp from 'gulp';
 
 import config from '../config/index.js';
 
-import {getDirectory} from './utilities.js';
+import {getDirectory, getSymbols} from './utilities.js';
 
 
 
@@ -49,8 +49,8 @@ async function build(done) {
 			paths: {
 				destination: getDirectory(config.build.atlas),
 				buildBase: config.build.base,
-				symbols: config.src.symbols,
-				symbolsBuild: getDirectory(config.build.images),
+				symbols: getSymbols(config.src.symbols),
+				symbolsRoot: getDirectory(config.build.images),
 				examples: config.examples.base,
 				views: config.examples.views,
 			},
