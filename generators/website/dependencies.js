@@ -50,6 +50,7 @@ async function getDevDependencies(generator) {
 		rollup: '',
 		sass: '',
 		semver: '',
+		'strip-json-comments': '',
 		'style-dictionary': '',
 		xo: '',
 	};

@@ -3,6 +3,7 @@ import gulp from 'gulp';
 import config from '../config/index.js';
 
 import * as fonts from './fonts.js';
+import * as data from './data.js';
 import * as styles from './styles.js';
 import * as symbols from './symbols.js';
 import * as images from './images.js';
@@ -20,6 +21,7 @@ const {watch, series, parallel} = gulp;
 
 function build(done) {
 	watch(config.src.fonts, series(fonts.build, reload));
+	watch(config.src.data, series(data.build, reload));
 	watch(config.src.styles, styles.build);
 	watch(config.src.symbols, series(symbols.build, reload));
 	watch(config.src.images, series(images.build, reload));

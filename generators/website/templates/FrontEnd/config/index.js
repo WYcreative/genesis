@@ -40,6 +40,7 @@ const config = {
 	src: {
 		base: src,
 		fonts: join(src, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
+		data: join(src, 'data/**'),
 		symbols: join(src, 'symbols/**/*.svg'),
 		images: join(src, 'images/**/*.{webp,png,jp?(e)g,gif,svg}'),
 		styles: join(src, 'styles/**/*.s@(a|c)ss'),
@@ -64,6 +65,7 @@ const config = {
 		base: build,
 		assets: join(build, assetsPath),
 		fonts: join(build, assetsPath, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
+		data: join(build, assetsPath, 'data/**'),
 		images: join(build, assetsPath, 'images/**/*.{webp,png,jp?(e)g,gif,svg}'),
 		styles: {
 			general: join(build, assetsPath, 'styles/**/*.css'),
@@ -84,6 +86,7 @@ const config = {
 		base: dist,
 		assets: join(dist, assetsPath),
 		fonts: join(dist, assetsPath, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
+		data: join(dist, assetsPath, 'data/**'),
 		images: join(dist, assetsPath, 'images/**/*.{webp,png,jp?(e)g,gif,svg}'),
 		styles: {
 			general: join(dist, assetsPath, 'styles/**/*.css'),
@@ -105,6 +108,7 @@ const config = {
 	backend: {
 		base: backend,
 		fonts: join(backend, assetsPath, 'fonts/**/*.{woff?(2),@(o|t)tf}'),
+		data: join(backend, assetsPath, 'data/**'),
 		images: join(backend, assetsPath, 'images/**/*.{webp,png,jp?(e)g,gif,svg}'),
 		styles: {
 			general: join(backend, assetsPath, 'styles/**/*.css'),

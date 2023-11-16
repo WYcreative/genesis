@@ -4,6 +4,7 @@ import * as cleanTasks from './gulp/clean.js';
 import * as tokens from './gulp/tokens.js';
 import * as styles from './gulp/styles.js';
 import * as fonts from './gulp/fonts.js';
+import * as data from './gulp/data.js';
 import * as symbols from './gulp/symbols.js';
 import * as images from './gulp/images.js';
 import * as libs from './gulp/libs.js';
@@ -31,6 +32,7 @@ export const clean = parallel(
 const build = parallel(
 	tokens.build,
 	fonts.build,
+	data.build,
 	symbols.build,
 	images.build,
 	images.examples,
@@ -65,6 +67,7 @@ export const serve = series(
 export const dist = series(
 	cleanTasks.dist,
 	fonts.dist,
+	data.dist,
 	images.dist,
 	images.distExamples,
 	styles.dist,
@@ -77,6 +80,7 @@ export const dist = series(
 	config.hasBackend
 		? parallel(
 			fonts.backend,
+			data.backend,
 			images.backend,
 			styles.backend,
 			libs.backend,
