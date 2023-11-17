@@ -86,7 +86,7 @@ function intro(generator, silentIntro) {
 function parseList(list) {
 	list = list
 		.split(/[,\r\n\f]+/)
-		.map(item => item.replace(/\s+/g, ' ').trim())
+		.map(item => item.replaceAll(/\s+/g, ' ').trim())
 		.filter(item => item.length > 0)
 		.sort();
 

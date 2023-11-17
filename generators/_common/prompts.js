@@ -18,7 +18,7 @@ const namePrompt = (generator, overrides = {}) =>
 	generator.prompt({
 		name: 'name',
 		message: 'Project Name:',
-		default: generator.appname.replace(/(?:^|\s)\S/g, match => match.toUpperCase()),
+		default: generator.appname.replaceAll(/(?:^|\s)\S/g, match => match.toUpperCase()),
 		validate: answer => answer.length > 0 ? true : 'Project Name is required!',
 		filter: answer => answer.trim(),
 		...overrides,

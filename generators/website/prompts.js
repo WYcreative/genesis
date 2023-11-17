@@ -34,8 +34,8 @@ const backendNamePrompt = generator =>
 		message: 'Back-End Project Name:',
 		when: generator.answers.hasBackend,
 		default() {
-			const name = generator.answers.packageName.replace(/((?:^|[\s_-]+)\S)([^\s_-]*)/g, (_, p1, p2) =>
-				p1.trim().replace(/[_-]+/g, '').toUpperCase() + p2.toLowerCase(),
+			const name = generator.answers.packageName.replaceAll(/((?:^|[\s_-]+)\S)([^\s_-]*)/g, (_, p1, p2) =>
+				p1.trim().replaceAll(/[_-]+/g, '').toUpperCase() + p2.toLowerCase(),
 			);
 
 			return `${name}.Web`;

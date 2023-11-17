@@ -51,7 +51,7 @@ export default class npmPackageGenesis extends Generator {
 		const packageName = this.packageJson.get('name')?.split('/').at(-1) || this.appname;
 
 		Object.assign(this.answers, await namePrompt(this, {
-			default: packageName.replace(/(?:^|\s)\S/g, match => match.toUpperCase()),
+			default: packageName.replaceAll(/(?:^|\s)\S/g, match => match.toUpperCase()),
 		}));
 		Object.assign(this.answers, await packageNamePrompt(this, {
 			default: `@wycreative/${slugify(packageName)}`,
@@ -103,12 +103,12 @@ export default class npmPackageGenesis extends Generator {
 		this.answers.importName = this.answers.packageName
 			.split('/')
 			.at(-1)
-			.replace(
+			.replaceAll(
 				/((?:^|[\s_-]+)\S)([^\s_-]*)/g,
 				(_, firstCharacter, remainingCharacters) =>
 					firstCharacter
 						.trim()
-						.replace(/[_-]+/g, '')
+						.replaceAll(/[_-]+/g, '')
 						.toUpperCase()
 					+ remainingCharacters
 						.toLowerCase(),
