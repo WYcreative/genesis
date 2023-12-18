@@ -3,8 +3,9 @@ import {basename, extname} from 'node:path/posix';
 
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
-import imagemin from 'gulp-imagemin';
-import webp from 'imagemin-webp';
+import svgmin from 'gulp-svgmin';
+import filter from 'gulp-filter';
+import sharp from 'gulp-sharp-responsive';
 import rev from 'gulp-rev';
 import rename from 'gulp-rename';
 import revRewrite from 'gulp-rev-rewrite';
@@ -15,32 +16,71 @@ import {getDirectory, getRelativePath} from './utilities.js';
 
 
 
-const {src, dest} = gulp;
+const {src, dest, lastRun} = gulp;
 
 
 
 function build() {
-	return src(config.src.images)
+	const vector = filter('**/*.svg', {restore: true});
+	const raster = filter(['**', '!**/*.svg'], {restore: true});
+	const ignoreWebP = filter(['**', '!**/favicons/**/*.webp'], {restore: true});
+
+	return src(config.src.images, {
+		since: lastRun(build),
+	})
 		.pipe(plumber())
-		.pipe(imagemin())
-		.pipe(dest(getDirectory(config.build.images)))
-		.pipe(imagemin([
-			webp({
-				quality: 90,
-			}),
-		]))
-		.pipe(rename(path => {
-			path.extname = '.webp';
+		.pipe(vector)
+		.pipe(svgmin({
+			multipass: true,
 		}))
+		.pipe(vector.restore)
+		.pipe(raster)
+		.pipe(sharp({
+			formats: [
+				{
+					pngOptions: {
+						quality: 90,
+					},
+				},
+				{
+					format: 'webp',
+				},
+			],
+		}))
+		.pipe(raster.restore)
+		.pipe(ignoreWebP)
 		.pipe(dest(getDirectory(config.build.images)));
 }
 
 
 
 function examples() {
-	return src(config.examples.images)
+	const vector = filter('**/*.svg', {restore: true});
+	const raster = filter(['**', '!**/*.svg'], {restore: true});
+
+	return src(config.examples.images, {
+		since: lastRun(examples),
+	})
 		.pipe(plumber())
-		.pipe(imagemin())
+		.pipe(vector)
+		.pipe(svgmin({
+			multipass: true,
+		}))
+		.pipe(vector.restore)
+		.pipe(raster)
+		.pipe(sharp({
+			formats: [
+				{
+					pngOptions: {
+						quality: 90,
+					},
+				},
+				{
+					format: 'webp',
+				},
+			],
+		}))
+		.pipe(raster.restore)
 		.pipe(dest(getDirectory(config.buildExamples.images)));
 }
 

@@ -27,7 +27,7 @@ async function getDevDependencies(tasks, generator) {
 
 	if (tasks.some(task => ['symbols', 'images'].includes(task))) {
 		Object.assign(devDependencies, {
-			'gulp-imagemin': '',
+			'gulp-svgmin': '',
 		});
 	}
 
@@ -42,7 +42,8 @@ async function getDevDependencies(tasks, generator) {
 
 	if (tasks.includes('images')) {
 		Object.assign(devDependencies, {
-			'imagemin-webp': '',
+			'gulp-filter': '',
+			'gulp-sharp-responsive': '',
 		});
 	}
 

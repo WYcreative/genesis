@@ -1,8 +1,9 @@
 import gulp from 'gulp';
 <% if (tasks.includes('images')) { -%>
 import plumber from 'gulp-plumber';
-import imagemin from 'gulp-imagemin';
-import webp from 'imagemin-webp';
+import svgmin from 'gulp-svgmin';
+import filter from 'gulp-filter';
+import sharp from 'gulp-sharp-responsive';
 import rename from 'gulp-rename';
 <% } -%>
 
@@ -12,24 +13,38 @@ import {getDirectory} from './utilities.js';
 
 
 
-const {src, dest} = gulp;
+const {src, dest<% if (tasks.includes('images')) { %>, lastRun<% } %>} = gulp;
 <% if (tasks.includes('images')) { -%>
 
 
 
 function examples() {
-	return src(config.examples.images)
+	const vector = filter('**/*.svg', {restore: true});
+	const raster = filter(['**', '!**/*.svg'], {restore: true});
+
+	return src(config.examples.images, {
+		since: lastRun(examples),
+	})
 		.pipe(plumber())
-		.pipe(imagemin())
-		.pipe(dest(getDirectory(config.build.images)))
-		.pipe(imagemin([
-			webp({
-				quality: 90,
-			}),
-		]))
-		.pipe(rename(path => {
-			path.extname = '.webp';
+		.pipe(vector)
+		.pipe(svgmin({
+			multipass: true,
 		}))
+		.pipe(vector.restore)
+		.pipe(raster)
+		.pipe(sharp({
+			formats: [
+				{
+					pngOptions: {
+						quality: 90,
+					},
+				},
+				{
+					format: 'webp',
+				},
+			],
+		}))
+		.pipe(raster.restore)
 		.pipe(dest(getDirectory(config.build.images)));
 }
 <%_ } -%>

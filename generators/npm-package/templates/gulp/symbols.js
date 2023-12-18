@@ -8,7 +8,7 @@ import rename from 'gulp-rename';
 import slugify from '@sindresorhus/slugify';
 import tap from 'gulp-tap';
 import {JSDOM} from 'jsdom';
-import imagemin, {svgo} from 'gulp-imagemin';
+import svgmin from 'gulp-svgmin';
 import svgstore from 'gulp-svgstore';
 
 import config from '../config/index.js';
@@ -94,16 +94,15 @@ function examples(done) {
 
 				file.contents = Buffer.from(svg.innerHTML);
 			}))
-			.pipe(imagemin([
-				svgo({
-					plugins: [
-						{
-							name: 'removeViewBox',
-							active: false,
-						},
-					],
-				}),
-			]))
+			.pipe(svgmin({
+				multipass: true,
+				plugins: [
+					{
+						name: 'removeViewBox',
+						active: false,
+					},
+				],
+			}))
 			.pipe(svgstore())
 			.pipe(rename(path => {
 				if (directory.startsWith(base) && directory.length > base.length) {
