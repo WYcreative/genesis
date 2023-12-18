@@ -3,6 +3,7 @@ import {existsSync, readFileSync} from 'node:fs';
 import {basename, extname} from 'node:path/posix';
 
 import gulp from 'gulp';
+import isBinary from 'gulp-is-binary';
 import tap from 'gulp-tap';
 import stripJsonComments from 'strip-json-comments';
 import rename from 'gulp-rename';
@@ -21,8 +22,9 @@ const {src, dest} = gulp;
 
 function build() {
 	return src(config.src.data)
+		.pipe(isBinary())
 		.pipe(tap(file => {
-			if (file.isNull()) {
+			if (file.isNull() || file.isBinary()) {
 				return;
 			}
 
@@ -54,9 +56,9 @@ function dist() {
 	return src(config.build.data, {
 		base: config.build.assets,
 	})
-		.pipe(rev())
+		.pipe(isBinary())
 		.pipe(tap(file => {
-			if (file.isNull()) {
+			if (file.isNull() || file.isBinary()) {
 				return;
 			}
 
@@ -68,6 +70,7 @@ function dist() {
 
 			file.contents = Buffer.from(contents);
 		}))
+		.pipe(rev())
 		.pipe(revRewrite({
 			manifest,
 			modifyUnreved: (path, {relative}) => getRelativePath(path, relative),

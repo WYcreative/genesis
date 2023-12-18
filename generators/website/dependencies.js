@@ -28,6 +28,7 @@ async function getDevDependencies(generator) {
 		globby: '',
 		gulp: '',
 		'gulp-imagemin': '',
+		'gulp-is-binary': '',
 		'gulp-plumber': '',
 		'gulp-postcss': '',
 		'gulp-pug': '',
