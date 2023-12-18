@@ -50,6 +50,7 @@ const config = {
 			'!**/_*/**',
 			'!**/_*',
 		],
+		copy: join(src, '*'),
 		backend: join(src, 'backend/**/*.pug'),
 	},
 	examples: {
@@ -74,6 +75,10 @@ const config = {
 		libs: join(build, assetsPath, 'libs/**'),
 		scripts: join(build, assetsPath, 'scripts/**/*.js'),
 		views: join(build, '**/*.html'),
+		copy: [
+			join(build, '*'),
+			'!*.html',
+		],
 		atlas: join(build, atlasPath, '**'),
 	},
 	buildExamples: {
@@ -95,6 +100,10 @@ const config = {
 		libs: join(dist, assetsPath, 'libs/**'),
 		scripts: join(dist, assetsPath, 'scripts/**/*.js'),
 		views: join(dist, '**/*.html'),
+		copy: [
+			join(dist, '*'),
+			'!*.html',
+		],
 		atlas: join(dist, atlasPath, '**'),
 	},
 	distExamples: {

@@ -9,6 +9,7 @@ import * as symbols from './gulp/symbols.js';
 import * as images from './gulp/images.js';
 import * as libs from './gulp/libs.js';
 import * as scripts from './gulp/scripts.js';
+import * as copy from './gulp/copy.js';
 import * as views from './gulp/views.js';
 import * as atlas from './gulp/atlas.js';
 import * as browser from './gulp/browser.js';
@@ -39,6 +40,7 @@ const build = parallel(
 	styles.build,
 	libs.build,
 	scripts.build,
+	copy.build,
 	views.build,
 	views.examples,
 	atlas.build,
@@ -73,6 +75,7 @@ export const dist = series(
 	styles.dist,
 	libs.dist,
 	scripts.dist,
+	copy.dist,
 	views.dist,
 	views.distExamples,
 	atlas.dist,
