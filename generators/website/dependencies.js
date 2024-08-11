@@ -54,7 +54,7 @@ async function getDevDependencies(generator) {
 		sass: '',
 		semver: '',
 		'strip-json-comments': '',
-		'style-dictionary': '',
+		'style-dictionary': '^3.0.0',
 		xo: '',
 	};
 
